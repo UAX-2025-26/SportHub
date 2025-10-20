@@ -1,0 +1,74 @@
+# ----- Project-wide .gitignore for SportHub -----
+
+# Node dependencies
+node_modules/
+**/node_modules/
+
+# Build outputs and caches
+/dist/
+**/dist/
+/build/
+/out/
+.cache/
+.parcel-cache/
+.turbo/
+.vite/
+.storybook-out/
+storybook-static/
+.next/
+.nuxt/
+
+# TypeScript build info
+*.tsbuildinfo
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Environment files (keep examples tracked)
+.env
+.env.*
+!.env.example
+!.env*.example
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Test / coverage artifacts
+coverage/
+.nyc_output/
+playwright-report/
+test-results/
+cypress/screenshots/
+cypress/videos/
+
+# Lint/cache
+.eslintcache
+
+# Package manager (Yarn PnP)
+.pnp.*
+
+# OS / Editor junk
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+.fleet/
+.history/
+*.swp
+*.swo
+*.swn
+*.swm
+
+# Runtime/temporary
+**/.server_pid
+*.tgz
+
+# ----- End -----
+
