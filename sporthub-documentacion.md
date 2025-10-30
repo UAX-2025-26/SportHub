@@ -38,6 +38,92 @@ Este documento describe la arquitectura y el diseño técnico de una aplicación
 
 **Tecnologías principales:** Frontend en React (JavaScript/TypeScript) para una SPA responsiva; Backend en Node.js con Express para exponer una API REST segura; Base de datos PostgreSQL gestionada a través de Supabase, que provee autentificación, almacenamiento de archivos, funciones serverless (Edge Functions) y capacidades realtime. Se optó por Supabase por ser una plataforma abierta y escalable que incluye los servicios esenciales (BBDD relacional, auth JWT, storage, WebSockets, etc.) de forma integrada, acelerando el desarrollo.
 
+#### Diagrama de clases
+
+```mermaid
+classDiagram
+    direction LR
+
+    class Profile {
+        +UUID id
+        +text nombre
+        +UserRole rol
+        +UUID center_id
+    }
+
+    class Center {
+        +UUID id
+        +text nombre
+        +text direccion
+        +UUID admin_user_id
+    }
+
+    class Facility {
+        +UUID id
+        +UUID center_id
+        +text nombre
+        +FacilityType tipo
+        +Decimal precio_hora
+    }
+
+    class Booking {
+        +UUID id
+        +UUID facility_id
+        +UUID user_id
+        +Date fecha
+        +Time hora_inicio
+        +BookingStatus estado
+    }
+
+    class Promotion {
+        +Serial id
+        +varchar codigo
+        +DiscountType tipo_descuento
+        +Decimal valor_descuento
+        +UUID center_id
+    }
+    
+    class UserRole {
+      <<enumeration>>
+      player
+      center_admin
+      coach
+      referee
+      admin
+    }
+
+    class FacilityType {
+      <<enumeration>>
+      tenis
+      fútbol
+      gimnasio
+    }
+
+    class BookingStatus {
+      <<enumeration>>
+      CONFIRMED
+      CANCELLED
+      COMPLETED
+    }
+    
+    class DiscountType {
+      <<enumeration>>
+      PERCENTAGE
+      FIXED
+    }
+
+    Center "1" -- "1..*" Facility : contiene
+    Facility "1" -- "0..*" Booking : tiene
+    Profile "1" -- "0..*" Booking : realiza
+    Center "1" -- "1" Profile : es administrado por
+    Promotion "0..*" -- "1" Center : aplica a
+    
+    Profile ..> UserRole : usa
+    Facility ..> FacilityType : usa
+    Booking ..> BookingStatus : usa
+    Promotion ..> DiscountType : usa
+```
+
 #### Arquitectura General del Sistema
 
 La solución seguirá una arquitectura de cliente-servidor tradicional, con separación clara de responsabilidades:
