@@ -1,0 +1,80 @@
+graph TB
+    subgraph Cliente["Cliente / Navegador"]
+        UI[React SPA<br/>Vite + TypeScript<br/>Tailwind CSS]
+        Router[React Router<br/>Rutas Públicas/Privadas]
+        State[Estado<br/>React Query<br/>Context API]
+        I18n[react-i18next<br/>ES / EN]
+    end
+
+    subgraph Auth["Autenticación"]
+        Auth0[Auth0 OIDC<br/>JWT Tokens]
+    end
+
+    subgraph Backend["Backend - Node.js + Express"]
+        Gateway[API Gateway<br/>CORS + Helmet]
+        
+        MW1[Auth Middleware<br/>Valida JWT JWKS]
+        MW2[Validation<br/>Celebrate/Joi]
+        MW3[Logging<br/>Morgan]
+        MW4[Rate Limiting]
+        
+        Routes[Rutas REST<br/>/usuarios /centros<br/>/instalaciones /reservas<br/>/admin-centro /admin]
+        
+        Controllers[Controladores<br/>Users Centers Facilities<br/>Bookings Admin]
+        
+        Services[Servicios<br/>Lógica de Negocio<br/>Validación Disponibilidad<br/>Prevención Doble Reserva]
+    end
+
+    subgraph Supabase["Supabase Platform"]
+        DB[(PostgreSQL<br/>profiles centers<br/>facilities bookings<br/>payments promotions)]
+        RLS[Row Level Security<br/>Políticas por Rol]
+        RT[Realtime<br/>WebSockets<br/>Notificaciones]
+        ST[Storage<br/>Avatares<br/>Imágenes]
+        EF[Edge Functions<br/>Triggers + CRON]
+    end
+
+    subgraph Roles["Roles del Sistema"]
+        R1[player]
+        R2[center_admin]
+        R3[coach]
+        R4[referee]
+        R5[admin]
+    end
+
+    UI --> Router
+    Router --> State
+    State --> I18n
+    
+    UI -->|Login/Register| Auth0
+    Auth0 -->|JWT| UI
+    
+    UI -->|API + JWT| Gateway
+    Gateway --> MW1
+    MW1 -->|Valida| Auth0
+    MW1 --> MW2
+    MW2 --> MW3
+    MW3 --> MW4
+    MW4 --> Routes
+    
+    Routes --> Controllers
+    Controllers --> Services
+    Services --> DB
+    
+    DB --> RLS
+    DB --> EF
+    DB --> RT
+    
+    RT -.->|Push| UI
+    ST <-->|Files| UI
+    ST <--> Services
+    
+    R1 & R2 & R3 & R4 & R5 -.-> UI
+    
+    style Auth0 fill:#EB5424,color:#fff
+    style DB fill:#3ECF8E,color:#000
+    style RT fill:#3ECF8E,color:#000
+    style ST fill:#3ECF8E,color:#000
+    style EF fill:#3ECF8E,color:#000
+    style Gateway fill:#0066CC,color:#fff
+    style Services fill:#FFD700,color:#000
+    style RLS fill:#FF6B6B,color:#fff
