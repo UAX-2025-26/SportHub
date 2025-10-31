@@ -49,6 +49,11 @@ classDiagram
         +text nombre
         +UserRole rol
         +UUID center_id
+        +getProfile() Profile
+        +updateProfile(nombre: text) boolean
+        +hasRole(rol: UserRole) boolean
+        +isAdmin() boolean
+        +getCenter() Center
     }
 
     class Center {
@@ -56,6 +61,12 @@ classDiagram
         +text nombre
         +text direccion
         +UUID admin_user_id
+        +getCenter() Center
+        +updateCenter(nombre: text, direccion: text) boolean
+        +getFacilities() List~Facility~
+        +getAdmin() Profile
+        +addFacility(facility: Facility) boolean
+        +getPromotions() List~Promotion~
     }
 
     class Facility {
@@ -64,6 +75,12 @@ classDiagram
         +text nombre
         +FacilityType tipo
         +Decimal precio_hora
+        +getFacility() Facility
+        +updateFacility(nombre: text, precio: Decimal) boolean
+        +isAvailable(fecha: Date, hora: Time) boolean
+        +calculatePrice(horas: int, promocion: Promotion) Decimal
+        +getBookings(fecha: Date) List~Booking~
+        +getCenter() Center
     }
 
     class Booking {
@@ -73,6 +90,15 @@ classDiagram
         +Date fecha
         +Time hora_inicio
         +BookingStatus estado
+        +createBooking() boolean
+        +cancelBooking() boolean
+        +confirmBooking() boolean
+        +completeBooking() boolean
+        +getBooking() Booking
+        +isActive() boolean
+        +canBeCancelled() boolean
+        +getFacility() Facility
+        +getUser() Profile
     }
 
     class Promotion {
@@ -81,35 +107,41 @@ classDiagram
         +DiscountType tipo_descuento
         +Decimal valor_descuento
         +UUID center_id
+        +getPromotion() Promotion
+        +createPromotion() boolean
+        +validateCode(codigo: varchar) boolean
+        +applyDiscount(precio: Decimal) Decimal
+        +isValid() boolean
+        +getCenter() Center
     }
-    
+
     class UserRole {
-      <<enumeration>>
-      player
-      center_admin
-      coach
-      referee
-      admin
+        <<enumeration>>
+        player
+        center_admin
+        coach
+        referee
+        admin
     }
 
     class FacilityType {
-      <<enumeration>>
-      tenis
-      fútbol
-      gimnasio
+        <<enumeration>>
+        tenis
+        fútbol
+        gimnasio
     }
 
     class BookingStatus {
-      <<enumeration>>
-      CONFIRMED
-      CANCELLED
-      COMPLETED
+        <<enumeration>>
+        CONFIRMED
+        CANCELLED
+        COMPLETED
     }
-    
+
     class DiscountType {
-      <<enumeration>>
-      PERCENTAGE
-      FIXED
+        <<enumeration>>
+        PERCENTAGE
+        FIXED
     }
 
     Center "1" -- "1..*" Facility : contiene
@@ -117,7 +149,7 @@ classDiagram
     Profile "1" -- "0..*" Booking : realiza
     Center "1" -- "1" Profile : es administrado por
     Promotion "0..*" -- "1" Center : aplica a
-    
+
     Profile ..> UserRole : usa
     Facility ..> FacilityType : usa
     Booking ..> BookingStatus : usa
