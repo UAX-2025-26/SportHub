@@ -17,6 +17,7 @@ Bienvenido a la documentación consolidada del proyecto SportHub. Aquí encontra
   - 8. Requisitos no funcionales
   - 9. Equipo
   - 10. Licencia
+  - 11. Configuración de IDE (JetBrains/WebStorm/IntelliJ)
 
 ## 1. Resumen ejecutivo
 
@@ -182,3 +183,10 @@ Javier · Rares · Pablo · Mario
 ## 10. Licencia
 
 No se ha definido una licencia específica para este repositorio. Añade una si vas a publicar o distribuir el proyecto.
+
+## 11. Configuración de IDE (JetBrains/WebStorm/IntelliJ)
+
+- Abre el proyecto desde la carpeta raíz del repositorio (`SportHub/`). Así, los subproyectos `frontend/`, `backend/` y `docs/` comparten una única configuración de proyecto.
+- La carpeta `.idea/` se creará en la raíz y está incluida en `.gitignore` para evitar que se suba al repositorio. Si ya tenías `.idea` en subcarpetas o versionado, elimínalo del control de versiones:
+  - Eliminar del índice de git (si existiera): `git rm -r --cached .idea` y confirma el commit.
+- Archivos específicos del IDE como `*.iml` también están ignorados globalmente.
