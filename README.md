@@ -1,5 +1,7 @@
 # SportHub – Documentación Unificada
 
+Repositorio Github: https://github.com/UAX-2025-26/SportHub.git
+
 Documentación del proyecto SportHub. Contiene el resumen ejecutivo, el alcance, la arquitectura propuesta, los modelos y diagramas (casos de uso, actividad, secuencia y clases), el esquema de datos en SQL, endpoints indicativos, requisitos no funcionales, equipo y licencia.
 
 - Índice
