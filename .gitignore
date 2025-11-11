@@ -1,0 +1,22 @@
+# Raíz del monorepo: ignora configuraciones de JetBrains y artefactos IDE
+# Asegura que los 3 proyectos (frontend, backend y docs) compartan un único .idea en la raíz
+# y que no se suba a git.
+
+# JetBrains / IntelliJ / WebStorm
+.idea/
+**/.idea/
+*.iml
+*.iws
+*.ipr
+
+# VS Code (por si acaso)
+.vscode/
+
+# Node.js (aplica a subproyectos)
+node_modules/
+**/node_modules/
+
+# Sistemas
+.DS_Store
+Thumbs.db
+
