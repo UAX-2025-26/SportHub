@@ -1,0 +1,29 @@
+.homepageBody {
+    font-family: 'Inter', sans-serif;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background-image: url('/home-page.svg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.title {
+    font-size: 6rem;
+    color: black;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+    text-align: center;
+}
+
+.authTitle {
+    font-size: 3rem;
+    color: black;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+    text-align: center;
+    top: 20px;
+    position: absolute;
+}
