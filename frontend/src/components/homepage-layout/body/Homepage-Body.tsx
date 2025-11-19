@@ -1,18 +1,25 @@
 import React from 'react';
+import clsx from 'clsx';
 
 interface HomepageBodyProps {
-    bodyClassName?: string;
-    titleClassName?: string;
-    children?: React.ReactNode; // Added children prop to allow dynamic content
+    bodyClassName?: string; // Class for the body container
+    titleClassName?: string; // Class for the title
+    title?: string; // Title text, default to "SPORTHUB."
+    children?: React.ReactNode; // Content to render inside the body
 }
 
-const HomepageBody: React.FC<HomepageBodyProps> = ({ bodyClassName, titleClassName, children }) => {
+const HomepageBody: React.FC<HomepageBodyProps> = ({
+    bodyClassName,
+    titleClassName,
+    title = "SPORTHUB.", // Default title
+    children
+}) => {
     return (
-        <div className={bodyClassName}>
-            <h1 className={titleClassName}>SPORTHUB.</h1>
-            {children} {/* Render children directly */}
+        <div className={clsx(bodyClassName)}>
+            <h1 className={clsx(titleClassName)}>{title}</h1>
+            {children}
         </div>
     );
 };
 
-export default HomepageBody;
+export default React.memo(HomepageBody);

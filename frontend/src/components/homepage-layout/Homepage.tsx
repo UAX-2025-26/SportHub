@@ -2,7 +2,12 @@ import React from 'react';
 import styles from './HomePage.module.css';
 import HomepageBody from "@/components/homepage-layout/body/Homepage-Body";
 import HomePageFooter from "@/components/homepage-layout/footer/HomePage-Footer";
-import {HomepageProps} from "@/components/homepage-layout/HomepageProps";
+import AuthButton from "@/components/common/button/auth-button/AuthButton";
+
+interface HomepageProps {
+    bodyClassName?: string;
+    titleClassName?: string;
+}
 
 const Homepage: React.FC<HomepageProps> = ({ bodyClassName, titleClassName }) => {
     return (
@@ -13,7 +18,10 @@ const Homepage: React.FC<HomepageProps> = ({ bodyClassName, titleClassName }) =>
                     titleClassName={titleClassName}
                 />
             </div>
-            <HomePageFooter />
+            <HomePageFooter>
+                <AuthButton label="Register" />
+                <AuthButton label="Login" />
+            </HomePageFooter>
         </div>
     );
 };

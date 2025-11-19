@@ -1,7 +1,8 @@
 import { FunctionComponent } from 'react';
 import styles from "@/components/homepage-layout/body/Homepage-Body.module.css";
 import HomepageBody from "@/components/homepage-layout/body/Homepage-Body";
-import Registro from "@/components/auth/form/register-form/Register";
+import Registro from "@/components/common/form/register-form/Register";
+import RegistroForm from "@/components/desarrollo/RegistroForm";
 
 const HomePage: FunctionComponent = () => {
     return (
@@ -9,7 +10,7 @@ const HomePage: FunctionComponent = () => {
             bodyClassName={styles.homepageBody}
             titleClassName={styles.authTitle}>
             <div>
-                <Registro />
+                <RegistroForm/>
             </div>
         </HomepageBody>
     );

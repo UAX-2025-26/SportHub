@@ -1,8 +1,8 @@
-'use client'
+'use client';
 
 import React, { useState } from 'react';
-import FormContainer from "@/components/auth/form/FormContainer";
-import Input from "@/components/auth/form/input/Input";
+import FormContainer from "@/components/common/form/FormContainer";
+import Input from "@/components/common/form/input/Input";
 import styles from "./Login.module.css";
 
 interface LoginState {
@@ -33,30 +33,20 @@ const Login: React.FC = () => {
     return (
         <FormContainer title="Login">
             <form onSubmit={handleSubmit} className={styles["login-form"]}>
-                <div className={styles["grid-item"]}>
+                {Object.keys(formData).map((key) => (
                     <Input
-                        type="email"
-                        name="email"
-                        placeholder="Email address"
-                        value={formData.email}
+                        key={key}
+                        name={key}
+                        type={key === 'password' ? 'password' : 'email'}
+                        placeholder={key.charAt(0).toUpperCase() + key.slice(1)}
+                        value={formData[key as keyof LoginState]}
                         onChange={handleChange}
                     />
-                </div>
-                <div className={styles["grid-item"]}>
-                    <Input
-                        type="password"
-                        name="password"
-                        placeholder="Password"
-                        value={formData.password}
-                        onChange={handleChange}
-                    />
-                </div>
-                <button type="submit" className={styles["submit-button"]}>
-                    Login
-                </button>
+                ))}
+                <button type="submit" className={styles["submit-button"]}>Login</button>
             </form>
         </FormContainer>
     );
 };
 
-export default Login;
+export default React.memo(Login);

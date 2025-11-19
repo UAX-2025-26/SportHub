@@ -1,0 +1,52 @@
+/* Input Styles */
+
+.inputContainer {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.label {
+    position: absolute;
+    top: 50%;
+    left: 0.5rem;
+    transform: translateY(-50%);
+    font-size: 1rem;
+    color: #FFFFFF;
+    transition: all 0.3s ease;
+    pointer-events: none;
+}
+
+.labelFloating {
+    top: -0.75rem;
+    font-size: 0.875rem;
+    color: #007bff;
+}
+
+.errorLabel {
+    color: #dc3545;
+}
+
+.input {
+    background-color: transparent; /* Make input background transparent */
+    padding: 0.5rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+.input:focus {
+    border-color: #007bff;
+}
+
+.error {
+    border-color: #dc3545;
+}
+
+.errorMessage {
+    font-size: 0.875rem;
+    color: #dc3545;
+}

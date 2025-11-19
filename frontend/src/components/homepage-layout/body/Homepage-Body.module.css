@@ -10,6 +10,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
 }
 
 .title {
@@ -20,10 +21,8 @@
 }
 
 .authTitle {
-    font-size: 3rem;
+    font-size: 4rem;
     color: black;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
     text-align: center;
-    top: 20px;
-    position: absolute;
 }
