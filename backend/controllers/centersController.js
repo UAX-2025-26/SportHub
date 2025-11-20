@@ -2,12 +2,22 @@ const { supabase, adminSupabase } = require('../src/supabase');
 const { getRoleFromToken } = require('../src/auth');
 const { getUserProfileId } = require('../utils/user.js');
 const { pick } = require('../utils/pick.js');
+const { paginationSchema, createCenterSchema } = require('../src/validation');
+const { validate } = require('../src/validator');
 
-async function list(req, res) {
-  const { data, error } = await supabase.from('centers').select('*').order('created_at', { ascending: false });
-  if (error) return res.status(500).json({ error: error.message });
-  res.json(data);
-}
+const list = [
+  validate(paginationSchema, 'query'),
+  async (req, res) => {
+    const { limit, offset } = req.query;
+    const { data, error } = await supabase
+      .from('centers')
+      .select('*')
+      .order('created_at', { ascending: false })
+      .range(offset, offset + limit - 1);
+    if (error) return res.status(500).json({ error: error.message });
+    res.json(data);
+  }
+];
 
 async function detail(req, res) {
   const { data, error } = await supabase.from('centers').select('*').eq('id', req.params.id).single();
@@ -15,12 +25,15 @@ async function detail(req, res) {
   res.json(data);
 }
 
-async function create(req, res) {
-  const client = adminSupabase || supabase;
-  const { data, error } = await client.from('centers').insert(req.body).select('*').single();
-  if (error) return res.status(400).json({ error: error.message });
-  res.status(201).json(data);
-}
+const create = [
+  validate(createCenterSchema),
+  async (req, res) => {
+    const client = adminSupabase || supabase;
+    const { data, error } = await client.from('centers').insert(req.body).select('*').single();
+    if (error) return res.status(400).json({ error: error.message });
+    res.status(201).json(data);
+  }
+];
 
 async function update(req, res) {
   const client = adminSupabase || supabase;
