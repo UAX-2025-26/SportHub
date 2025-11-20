@@ -218,7 +218,3 @@ Se fomenta la programación sin ego, la revisión de código por pares y la comu
 ## 10. Licencia
 
 Apache License 2.0
-
-## 11. Configuración de IDE (JetBrains/WebStorm/IntelliJ)
-
-Configura el proyecto como un monorepo con al menos dos módulos/carpetas principales (`frontend` y `backend`). Asegúrate de instalar las dependencias usando el gestor correspondiente (por ejemplo, `npm install` o `pnpm install`) en cada una de ellas y configura las **Run Configurations** necesarias para arrancar cliente y servidor en paralelo.
