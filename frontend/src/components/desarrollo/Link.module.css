@@ -1,0 +1,28 @@
+/* components/Link/Link.module.css */
+
+.link {
+    font-size: 0.95rem;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: inline-block;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+.default {
+    color: #007aff;
+}
+
+.default:hover {
+    color: #0051d5;
+    text-decoration: underline;
+}
+
+.muted {
+    color: #aeaeb2; /* Gris claro como en la imagen */
+}
+
+.muted:hover {
+    color: #8e8e93;
+    text-decoration: underline;
+}

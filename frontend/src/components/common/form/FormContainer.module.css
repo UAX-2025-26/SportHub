@@ -1,0 +1,49 @@
+.container {
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 1000px;
+    height: auto;
+    overflow: hidden;
+}
+
+.titleBar {
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 1rem;
+    border-bottom: 1px solid #ddd;
+}
+
+.title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #555;
+    margin: 0;
+    text-align: center;
+}
+
+.content {
+    padding: 2rem 2.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(51, 51, 51, 0.4);
+    border: 1px solid black;
+}
+
+.inputSection {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    width: 100%;
+    border: 1px solid red;
+}
+
+.buttonSection {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-top: 1.5rem;
+}

@@ -1,0 +1,9 @@
+.custom-input {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    background-color: #f9f9f9;
+    box-sizing: border-box; /* Importante para que el padding no afecte al ancho */
+}
