@@ -3,7 +3,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  height: 15vh;
+  height: 17vh;
 
   background: rgba(201, 201, 193, 0.92);
   backdrop-filter: blur(6px);
@@ -35,13 +35,9 @@
 }
 
 .inner {
-  position: relative;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
-  flex-wrap: wrap;
-  z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10vw;
+    z-index: 1;
 }

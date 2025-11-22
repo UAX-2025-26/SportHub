@@ -1,0 +1,28 @@
+/* Button.module.css */
+.base {
+    border: none;
+    border-radius: 6px;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.primary {
+    background-color: #3b82f6;
+    color: white;
+}
+
+.secondary {
+    background-color: #e5e7eb;
+    color: #374151;
+}
+
+/* Nueva clase para el ejemplo */
+.fullWidth {
+    width: 100%;
+}

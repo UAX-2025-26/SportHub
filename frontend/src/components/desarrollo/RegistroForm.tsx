@@ -176,8 +176,6 @@ export default function RegistroForm() {
         <div className={styles.actionSection}>
             <Button
                 type="submit" // ⬅️ Cambio importante
-                variant="primary"
-                loading={loading}
             >
                 Registrarse
             </Button>

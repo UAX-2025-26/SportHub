@@ -28,3 +28,6 @@ const RoundedButton: React.FC<RoundedButtonProps> = ({
 };
 
 export default React.memo(RoundedButton); // Memoized for performance
+
+
+//También en desarrollo

@@ -49,7 +49,7 @@ const Registro: React.FC = () => {
                     />
                 ))
             )}
-            buttonContent={<AuthButton label="Register" size="small" />}
+            buttonContent={<AuthButton size="small" />}
         />
     );
 };

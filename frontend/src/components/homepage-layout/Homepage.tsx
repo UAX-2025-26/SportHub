@@ -19,8 +19,8 @@ const Homepage: React.FC<HomepageProps> = ({ bodyClassName, titleClassName }) =>
                 />
             </div>
             <HomePageFooter>
-                <AuthButton label="Register" />
-                <AuthButton label="Login" />
+                <AuthButton size="medium"> Register </AuthButton>
+                <AuthButton size="medium"> Login </AuthButton>
             </HomePageFooter>
         </div>
     );
