@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import FormContainer from "@/components/common/form/FormContainer";
 import Input from "@/components/common/input/Input";
 import AuthButton from "@/components/common/button/auth-button/AuthButton";
+import HomepageBody from "@/components/homepage-layout/body/Homepage-Body";
 
 interface RegistroState {
     email: string;
@@ -35,7 +36,7 @@ const Registro: React.FC = () => {
     };
 
     return (
-        <FormContainer
+        <><HomepageBody/><FormContainer
             title="Registro"
             inputContent={(
                 (Object.keys(formData) as (keyof RegistroState)[]).map((key) => (
@@ -45,12 +46,10 @@ const Registro: React.FC = () => {
                         name={key}
                         value={formData[key]}
                         error={errors[key]} // Ensure errors object is optional
-                        onChange={handleChange}
-                    />
+                        onChange={handleChange}/>
                 ))
             )}
-            buttonContent={<AuthButton size="small" />}
-        />
+            buttonContent={<AuthButton size="small"/>}/></>
     );
 };
 
