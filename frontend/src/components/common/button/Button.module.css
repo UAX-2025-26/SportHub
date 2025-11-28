@@ -1,0 +1,37 @@
+/* Button Styles */
+
+.button {
+    border-radius: 170px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Variants */
+.primary {
+    background-color: white;
+    color: black;
+}
+
+.primary:hover {
+    background-color: gray;
+}
+
+.primary:active {
+    background-color: black;
+}
+
+/* Sizes */
+.small {
+    padding: 0.85rem 3rem;
+    font-size: 1rem;
+}
+
+.medium {
+    padding: 1rem 2rem;
+    font-size: 3rem;
+}
+
+.large {
+    padding: 3rem 5rem;
+    font-size: 6rem;
+}

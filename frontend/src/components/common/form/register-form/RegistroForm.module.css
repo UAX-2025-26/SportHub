@@ -1,0 +1,44 @@
+.actionSection {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    width: 100%;
+}
+
+.inputSection {
+    display: grid;
+    gap: 1.25rem 1.5rem;
+    width: 100%;
+}
+
+/* Distribución específica de los inputs */
+.inputSection > :nth-child(1) { /* Email */
+    grid-column: 1;
+    grid-row: 1;
+}
+
+.inputSection > :nth-child(2) { /* Telefono */
+    grid-column: 2;
+    grid-row: 1;
+}
+
+.inputSection > :nth-child(3) { /* Nombre */
+    grid-column: 1;
+    grid-row: 2;
+}
+
+.inputSection > :nth-child(4) { /* Apellidos */
+    grid-column: 2;
+    grid-row: 2;
+}
+
+.inputSection > :nth-child(5) { /* Ciudad */
+    grid-column: 1;
+    grid-row: 3;
+}
+
+.inputSection > :nth-child(6) { /* Contraseña */
+    grid-column: 1;
+    grid-row: 4;
+}

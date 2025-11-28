@@ -1,0 +1,14 @@
+.actionSection {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    width: 100%;
+}
+
+.inputSection {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem 1.5rem;
+    width: 100%;
+}
