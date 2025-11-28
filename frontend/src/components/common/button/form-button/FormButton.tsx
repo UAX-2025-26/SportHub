@@ -6,8 +6,8 @@ import styles from './FormButton.module.css';
 const FormButton = ({ className, children, ...props }: ButtonProps) => {
     return (
         <Button
-            {...props}
             className={clsx(styles.formButton, className)}
+            {...props}
         >
             {children}
         </Button>

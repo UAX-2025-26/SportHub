@@ -1,7 +1,7 @@
 import { FunctionComponent } from 'react';
 import styles from "@/components/homepage-layout/body/Homepage-Body.module.css";
 import HomepageBody from "@/components/homepage-layout/body/Homepage-Body";
-import Login from "@/components/common/form/login-form/Login";
+import LoginForm from "@/components/common/form/login-form/LoginForm";
 
 const HomePage: FunctionComponent = () => {
     return (
@@ -9,7 +9,7 @@ const HomePage: FunctionComponent = () => {
             bodyClassName={styles.homepageBody}
             titleClassName={styles.authTitle}>
             <div>
-                <Login />
+                <LoginForm />
             </div>
         </HomepageBody>
     );

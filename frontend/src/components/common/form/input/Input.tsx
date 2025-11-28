@@ -7,12 +7,13 @@ import styles from './Input.module.css';
 
 // 1. Definimos la interfaz de las Props
 export interface InputProps {
-    name: string; // Para el 'name' del input, vital para el formulario
-    type: 'text' | 'email' | 'password' | 'tel'; // Tipos permitidos
-    placeholder: string; // El texto a mostrar
-    value: string; // El valor (para un componente controlado)
-    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void; // El manejador
-    className?: string; // Added optional className for flexibility
+    name: string,
+    type: 'text' | 'email' | 'password' | 'tel',
+    placeholder: string,
+    value: string,
+    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void,
+    className?: string,
+    label?: string
 }
 
 // 2. Creamos el componente funcional
@@ -22,7 +23,7 @@ const Input: React.FC<InputProps> = ({
                                          placeholder,
                                          value,
                                          onChange,
-                                         className,
+                                         className
                                      }) => {
     return (
         <input

@@ -2,10 +2,10 @@
 "use client";
 
 import React, { useState } from "react";
-import Button from "@/components/desarrollo/FormButton";
-import Link from "@/components/desarrollo/Link";
-import Input from "@/components/desarrollo/Input";
-import FormContainer from "@/components/desarrollo/FormContainer";
+import Button from "@/components/common/button/form-button/FormButton";
+import Link from "@/components/common/link/Link";
+import Input from "@/components/common/input/Input";
+import FormContainer from "@/components/common/form/FormContainer";
 import styles from "./RegistroForm.module.css";
 
 interface FormData {
@@ -94,7 +94,6 @@ export default function RegistroForm() {
         return Object.keys(newErrors).length === 0;
     };
 
-    // Maneja el submit
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
@@ -120,7 +119,6 @@ export default function RegistroForm() {
         }
     };
 
-    // Contenido de los inputs (grid 2 columnas)
     const inputContent = (
         <>
             <Input
@@ -171,12 +169,9 @@ export default function RegistroForm() {
         </>
     );
 
-    // Contenido de botones y links
     const buttonContent = (
         <div className={styles.actionSection}>
-            <Button
-                type="submit" // ⬅️ Cambio importante
-            >
+            <Button type="submit">
                 Registrarse
             </Button>
             <Link variant="muted" href="/login">
@@ -187,12 +182,13 @@ export default function RegistroForm() {
 
 
     return (
-        <div className={styles.pageContainer}>
+        <div>
             <FormContainer
                 title="Registro"
                 inputContent={inputContent}
                 buttonContent={buttonContent}
-                onSubmit={handleSubmit} // ⬅️ Pasa el handler directamente
+                onSubmit={handleSubmit}
+                inputSectionClassName={styles.inputSection} // Añadido para estilos específicos
             />
 
         </div>
