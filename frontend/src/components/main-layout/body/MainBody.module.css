@@ -1,0 +1,17 @@
+.content {
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(142, 142, 147, 0.2);
+}
+
+.header {
+    height: 20vh;
+}
+.body {
+    height: 62vh;
+}
+.footer {
+    height: 18vh;
+}

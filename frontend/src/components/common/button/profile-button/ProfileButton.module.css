@@ -1,0 +1,5 @@
+.profButton{
+    background-color: #E3E8EF;
+    border: 4px solid #34BEED;
+    box-shadow: 0 0 5px #34BEED, inset 10px 10px 60px #FFFFFF, inset 0 -5px 10px 10px #B1BCCA;
+}

@@ -1,0 +1,15 @@
+.container {
+    margin: 0 auto;
+    padding: 0 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.title {
+    font-size: 4rem;
+    color: black;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+    text-align: center;
+    letter-spacing: -0.07em; /* Reduce el espacio entre letras */
+}
