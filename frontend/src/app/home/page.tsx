@@ -17,18 +17,18 @@ const HomePage: FunctionComponent = () => {
             <MainHeader bodyClassName={clsx(headerStyles.container, headerStyles.title, bodyStyles.header)} />
             <MainContent bodyClassName={clsx(contentStyles.container, bodyStyles.body)}>
                 <div className={clsx(contentStyles.flexContainer)}>
-                    <Imagen />
-                    <Imagen />
-                    <Imagen />
-                    <Imagen />
-                    <Imagen />
-                    <Imagen />
-                    <Imagen />
-                    <Imagen />
-                    <Imagen />
-                    <Imagen />
-                    <Imagen />
-                    <Imagen />
+                    <Imagen src={"/deportes/archery.jpg"} alt={"archery"} />
+                    <Imagen src={"/deportes/basketball.jpg"} alt={"basketball"} />
+                    <Imagen src={"/deportes/golf.jpg"} alt={"golf"} />
+                    <Imagen src={"/deportes/volleyball.jpg"} alt={"volleyball"} />
+                    <Imagen src={"/deportes/boxing.jpg"} alt={"boxing"} />
+                    <Imagen src={"/deportes/rock-climbing.jpg"} alt={"rock-climbing"} />
+                    <Imagen src={"/deportes/swimming.jpg"} alt={"swimming"} />
+                    <Imagen src={"/deportes/trampolining.jpg"} alt={"trampolining"} />
+                    <Imagen src={"/deportes/equitation.jpg"} alt={"equitation"} />
+                    <Imagen src={"/deportes/bowling.jpg"} alt={"bowling"} />
+                    <Imagen src={"/deportes/baseball.jpg"} alt={"baseball"} />
+                    <Imagen src={"/deportes/tennis.jpg"} alt={"tennis"} />
                 </div>
             </MainContent>
             <div className={clsx(bodyStyles.footer)}>

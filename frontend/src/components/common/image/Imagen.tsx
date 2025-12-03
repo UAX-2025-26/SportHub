@@ -4,11 +4,19 @@ import React from 'react';
 import styles from './Imagen.module.css';
 import Link from "next/link";
 
-const Imagen: React.FC = () => {
+type ImagenProps = {
+    src: string;
+    alt: string;
+    href?: string;
+};
+
+const Imagen: React.FC<ImagenProps> = ({ src, alt, href }) => {
+    const dynamicHref = href || `/centers/${alt.toLowerCase()}`;
+
     return (
         <div className={styles.imagenContainer}>
-            <Link href="/frontend/public" className={styles.imagen}>
-                <img src={"imagen1.svg"} alt="Imagen de desarrollo" className={styles.imagen} />
+            <Link href={dynamicHref} className={styles.imagen}>
+                <img src={src} alt={alt} className={styles.imagen} />
             </Link>
         </div>
     );
