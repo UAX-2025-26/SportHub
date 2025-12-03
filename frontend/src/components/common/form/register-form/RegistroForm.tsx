@@ -2,8 +2,6 @@
 "use client";
 
 import React, { useState } from "react";
-import { useRouter } from "next/navigation";
-import { useAuth } from "@/contexts/AuthContext";
 import Button from "@/components/common/button/form-button/FormButton";
 import Link from "@/components/common/link/Link";
 import Input from "@/components/common/input/Input";
@@ -29,9 +27,6 @@ interface FormErrors {
 }
 
 export default function RegistroForm() {
-    const router = useRouter();
-    const { signUp } = useAuth();
-
     const [formData, setFormData] = useState<FormData>({
         email: "",
         telefono: "",
@@ -43,7 +38,6 @@ export default function RegistroForm() {
 
     const [errors, setErrors] = useState<FormErrors>({});
     const [loading, setLoading] = useState(false);
-    const [apiError, setApiError] = useState<string | null>(null);
 
     // Maneja cambios en los inputs
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -108,28 +102,18 @@ export default function RegistroForm() {
         }
 
         setLoading(true);
-        setApiError(null);
 
         try {
-            // Registro real con Supabase, incluyendo metadata del usuario
-            const { error } = await signUp(formData.email, formData.contraseña, {
-                nombre: formData.nombre,
-                apellidos: formData.apellidos,
-                telefono: formData.telefono,
-                ciudad: formData.ciudad,
-            });
+            // Aquí iría tu lógica de registro (API call)
+            console.log("Datos del formulario:", formData);
 
-            if (error) {
-                setApiError(error.message || "Error al registrarse");
-                console.error("Error al registrar:", error);
-            } else {
-                // Redirigir al usuario a la página de login o mostrar mensaje de confirmación
-                alert("¡Registro exitoso! Por favor, revisa tu email para verificar tu cuenta.");
-                router.push("/login");
-            }
+            // Simula una llamada API
+            await new Promise((resolve) => setTimeout(resolve, 2000));
+
+            alert("¡Registro exitoso!");
         } catch (error) {
-            console.error("Error inesperado:", error);
-            setApiError("Error inesperado al registrarse. Intenta de nuevo.");
+            console.error("Error al registrar:", error);
+            alert("Error al registrar. Intenta de nuevo.");
         } finally {
             setLoading(false);
         }
@@ -187,16 +171,11 @@ export default function RegistroForm() {
 
     const buttonContent = (
         <div className={styles.actionSection}>
-            {apiError && (
-                <div style={{ color: 'red', marginBottom: '1rem', textAlign: 'center' }}>
-                    {apiError}
-                </div>
-            )}
-            <Button type="submit" disabled={loading}>
-                {loading ? "Registrando..." : "Registrarse"}
+            <Button type="submit">
+                Registrarse
             </Button>
             <Link variant="muted" href="/login">
-                ¿Ya tienes cuenta? Inicia sesión aquí
+                Click to login
             </Link>
         </div>
     );

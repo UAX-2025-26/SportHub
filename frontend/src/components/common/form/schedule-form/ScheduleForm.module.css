@@ -1,0 +1,26 @@
+.formContainer {
+    max-width: 420px;
+    margin: 0 auto;
+}
+
+.label {
+    display: flex;
+    flex-direction: column;
+    font-weight: 600;
+    color: #1f2933;
+}
+
+.input {
+    margin-top: 0.25rem;
+    padding: 0.75rem;
+    border-radius: 8px;
+    border: 1px solid #cbd5e1;
+    background: #f8fafc;
+}
+
+.input:focus {
+    outline: none;
+    border-color: #34beed;
+    box-shadow: 0 0 0 2px rgba(52, 190, 237, 0.2);
+}
+

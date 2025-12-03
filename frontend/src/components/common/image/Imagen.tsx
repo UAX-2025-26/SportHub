@@ -7,7 +7,7 @@ import Link from "next/link";
 const Imagen: React.FC = () => {
     return (
         <div className={styles.imagenContainer}>
-            <Link href="/" className={styles.imagen}>
+            <Link href="/frontend/public" className={styles.imagen}>
                 <img src={"imagen1.svg"} alt="Imagen de desarrollo" className={styles.imagen} />
             </Link>
         </div>

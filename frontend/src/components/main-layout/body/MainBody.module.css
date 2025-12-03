@@ -11,7 +11,18 @@
 }
 .body {
     height: 62vh;
+    display: flex;
+    align-items: center;
 }
 .footer {
     height: 18vh;
+}
+
+.footerButtons {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+    padding-left: 10vw;
+    padding-right: 10vw;
 }

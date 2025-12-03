@@ -2,8 +2,6 @@
 "use client";
 
 import React, { useState } from "react";
-import { useRouter } from "next/navigation";
-import { useAuth } from "@/contexts/AuthContext";
 import Button from "@/components/common/button/form-button/FormButton";
 import Link from "@/components/common/link/Link";
 import Input from "@/components/common/input/Input";
@@ -21,9 +19,6 @@ interface FormErrors {
 }
 
 export default function LoginForm() {
-    const router = useRouter();
-    const { signIn } = useAuth();
-
     const [formData, setFormData] = useState<FormData>({
         email: "",
         contraseña: "",
@@ -31,7 +26,6 @@ export default function LoginForm() {
 
     const [errors, setErrors] = useState<FormErrors>({});
     const [loading, setLoading] = useState(false);
-    const [apiError, setApiError] = useState<string | null>(null);
 
     // Maneja cambios en los inputs
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -78,22 +72,18 @@ export default function LoginForm() {
         }
 
         setLoading(true);
-        setApiError(null);
 
         try {
-            // Autenticación real con Supabase
-            const { error } = await signIn(formData.email, formData.contraseña);
+            // Aquí iría tu lógica de registro (API call)
+            console.log("Datos del formulario:", formData);
 
-            if (error) {
-                setApiError(error.message || "Error al iniciar sesión");
-                console.error("Error al iniciar sesión:", error);
-            } else {
-                // Redirigir al usuario a la página principal después del login exitoso
-                router.push("/home");
-            }
+            // Simula una llamada API
+            await new Promise((resolve) => setTimeout(resolve, 2000));
+
+            alert("¡Inicio de sesión exitoso!");
         } catch (error) {
-            console.error("Error inesperado:", error);
-            setApiError("Error inesperado al iniciar sesión. Intenta de nuevo.");
+            console.error("Error al iniciar sesión:", error);
+            alert("Error al iniciar sesión. Intenta de nuevo.");
         } finally {
             setLoading(false);
         }
@@ -122,16 +112,11 @@ export default function LoginForm() {
 
     const buttonContent = (
         <div className={styles.actionSection}>
-            {apiError && (
-                <div style={{ color: 'red', marginBottom: '1rem', textAlign: 'center' }}>
-                    {apiError}
-                </div>
-            )}
-            <Button type="submit" disabled={loading}>
-                {loading ? "Iniciando sesión..." : "Iniciar sesión"}
+            <Button type="submit">
+                Registrarse
             </Button>
             <Link variant="muted" href="/register">
-                ¿No tienes cuenta? Regístrate aquí
+                Click to register
             </Link>
         </div>
     );
