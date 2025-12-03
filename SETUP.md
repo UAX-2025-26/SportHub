@@ -57,8 +57,8 @@ npm install
 Crea un archivo `.env` basándote en `.env.example`:
 
 ```env
-PORT=3000
-CORS_ORIGIN=http://localhost:3001
+PORT=3001
+CORS_ORIGIN=http://localhost:3000
 
 SUPABASE_URL=https://tu-proyecto.supabase.co
 SUPABASE_ANON_KEY=tu-anon-key
@@ -79,7 +79,7 @@ Edita el archivo `.env.local` con tus credenciales de Supabase:
 ```env
 NEXT_PUBLIC_SUPABASE_URL=https://tu-proyecto.supabase.co
 NEXT_PUBLIC_SUPABASE_ANON_KEY=tu-anon-key
-NEXT_PUBLIC_API_URL=http://localhost:3000
+NEXT_PUBLIC_API_URL=http://localhost:3001
 ```
 
 ### 3. Obtener Credenciales de Supabase
@@ -101,14 +101,14 @@ NEXT_PUBLIC_API_URL=http://localhost:3000
 cd backend
 npm run dev
 ```
-Servidor corriendo en: http://localhost:3000
+Servidor corriendo en: http://localhost:3001
 
 ### Frontend
 ```bash
 cd frontend
 npm run dev
 ```
-Aplicación corriendo en: http://localhost:3001
+Aplicación corriendo en: http://localhost:3000
 
 ---
 
@@ -237,4 +237,3 @@ El `tsconfig.json` ya está configurado. Reinicia tu IDE.
 - [Supabase Documentation](https://supabase.com/docs)
 - [TypeScript Documentation](https://www.typescriptlang.org/docs)
 - [TailwindCSS Documentation](https://tailwindcss.com/docs)
-

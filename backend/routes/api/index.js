@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
+router.use('/auth', require('./auth.js'));
 router.use('/centros', require('./centers.js'));
 router.use('/instalaciones', require('./facilities.js'));
 router.use('/reservas', require('./bookings.js'));

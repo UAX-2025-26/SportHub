@@ -2,11 +2,13 @@
 "use client";
 
 import React, { useState } from "react";
+import { useRouter } from "next/navigation";
 import Button from "@/components/common/button/form-button/FormButton";
 import Link from "@/components/common/link/Link";
 import Input from "@/components/common/input/Input";
 import FormContainer from "@/components/common/form/FormContainer";
 import styles from "./LoginForm.module.css";
+import { useAuth } from "@/lib/auth";
 
 interface FormData {
     email: string;
@@ -19,6 +21,8 @@ interface FormErrors {
 }
 
 export default function LoginForm() {
+    const router = useRouter();
+    const { login, isLoading: authLoading } = useAuth();
     const [formData, setFormData] = useState<FormData>({
         email: "",
         contraseña: "",
@@ -26,6 +30,7 @@ export default function LoginForm() {
 
     const [errors, setErrors] = useState<FormErrors>({});
     const [loading, setLoading] = useState(false);
+    const [apiError, setApiError] = useState<string>("");
 
     // Maneja cambios en los inputs
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -41,6 +46,11 @@ export default function LoginForm() {
                 ...prev,
                 [name]: undefined,
             }));
+        }
+
+        // Limpia el error de la API
+        if (apiError) {
+            setApiError("");
         }
     };
 
@@ -72,25 +82,35 @@ export default function LoginForm() {
         }
 
         setLoading(true);
+        setApiError("");
 
         try {
-            // Aquí iría tu lógica de registro (API call)
-            console.log("Datos del formulario:", formData);
+            const result = await login(formData.email, formData.contraseña);
 
-            // Simula una llamada API
-            await new Promise((resolve) => setTimeout(resolve, 2000));
+            if (!result.success) {
+                setApiError(result.error || "Error al iniciar sesión");
+                return;
+            }
 
-            alert("¡Inicio de sesión exitoso!");
+            // Redirigir a la página principal o home
+            router.push('/home');
         } catch (error) {
             console.error("Error al iniciar sesión:", error);
-            alert("Error al iniciar sesión. Intenta de nuevo.");
+            setApiError("Error al iniciar sesión. Por favor, intenta de nuevo.");
         } finally {
             setLoading(false);
         }
     };
 
+    const isFormLoading = loading || authLoading;
+
     const inputContent = (
         <>
+            {apiError && (
+                <div className={styles.errorMessage}>
+                    {apiError}
+                </div>
+            )}
             <Input
                 label="Email address"
                 name="email"
@@ -98,6 +118,7 @@ export default function LoginForm() {
                 value={formData.email}
                 onChange={handleChange}
                 error={errors.email}
+                disabled={isFormLoading}
             />
             <Input
                 label="Contraseña"
@@ -106,17 +127,18 @@ export default function LoginForm() {
                 value={formData.contraseña}
                 onChange={handleChange}
                 error={errors.contraseña}
+                disabled={isFormLoading}
             />
         </>
     );
 
     const buttonContent = (
         <div className={styles.actionSection}>
-            <Button type="submit">
-                Registrarse
+            <Button type="submit" disabled={isFormLoading}>
+                {isFormLoading ? "Iniciando sesión..." : "Iniciar sesión"}
             </Button>
             <Link variant="muted" href="/register">
-                Click to register
+                ¿No tienes cuenta? Regístrate aquí
             </Link>
         </div>
     );

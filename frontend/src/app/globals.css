@@ -1,8 +1,38 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,800&display=swap');
+
+:root {
+    /* Escala tipográfica base, consistente entre dispositivos */
+    font-size: 62.5%; /* 1rem = 10px, facilita el cálculo */
+}
+
+html {
+    box-sizing: border-box;
+    /* Prevenir zoom automático en inputs en iOS */
+    -webkit-text-size-adjust: 100%;
+    -moz-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+}
+
+*, *::before, *::after {
+    box-sizing: inherit;
+}
 
 body {
-    margin: 0; line-height: normal;
-    width: 100vw;
-    height: 100vh;
+    margin: 0;
+    line-height: 1.5;
+    /* Evitar forzar viewport fijo, permitir que el contenido fluya */
+    min-height: 100vh;
+    font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, 'Helvetica Neue', Arial, sans-serif;
+    font-size: 1.6rem; /* 16px - tamaño base consistente */
+    /* Suavizado de fuentes consistente */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Sistema de contenedores responsivos base (opcional) */
+.container {
+    inline-size: min(100%, 80rem);
+    margin-inline: auto;
+    padding-inline: clamp(1rem, 2vw, 2rem);
 }

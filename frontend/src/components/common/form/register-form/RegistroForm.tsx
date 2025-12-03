@@ -2,11 +2,13 @@
 "use client";
 
 import React, { useState } from "react";
+import { useRouter } from "next/navigation";
 import Button from "@/components/common/button/form-button/FormButton";
 import Link from "@/components/common/link/Link";
 import Input from "@/components/common/input/Input";
 import FormContainer from "@/components/common/form/FormContainer";
 import styles from "./RegistroForm.module.css";
+import { useAuth } from "@/lib/auth";
 
 interface FormData {
     email: string;
@@ -27,6 +29,8 @@ interface FormErrors {
 }
 
 export default function RegistroForm() {
+    const router = useRouter();
+    const { register, isLoading: authLoading } = useAuth();
     const [formData, setFormData] = useState<FormData>({
         email: "",
         telefono: "",
@@ -38,6 +42,7 @@ export default function RegistroForm() {
 
     const [errors, setErrors] = useState<FormErrors>({});
     const [loading, setLoading] = useState(false);
+    const [apiError, setApiError] = useState<string>("");
 
     // Maneja cambios en los inputs
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -53,6 +58,11 @@ export default function RegistroForm() {
                 ...prev,
                 [name]: undefined,
             }));
+        }
+
+        // Limpia el error de la API
+        if (apiError) {
+            setApiError("");
         }
     };
 
@@ -102,25 +112,42 @@ export default function RegistroForm() {
         }
 
         setLoading(true);
+        setApiError("");
 
         try {
-            // Aquí iría tu lógica de registro (API call)
-            console.log("Datos del formulario:", formData);
+            const result = await register({
+                email: formData.email,
+                password: formData.contraseña,
+                nombre: formData.nombre,
+                apellidos: formData.apellidos,
+                telefono: formData.telefono,
+                ciudad: formData.ciudad,
+            });
 
-            // Simula una llamada API
-            await new Promise((resolve) => setTimeout(resolve, 2000));
+            if (!result.success) {
+                setApiError(result.error || "Error al registrar");
+                return;
+            }
 
-            alert("¡Registro exitoso!");
+            // Redirigir a la página principal o home
+            router.push('/home');
         } catch (error) {
             console.error("Error al registrar:", error);
-            alert("Error al registrar. Intenta de nuevo.");
+            setApiError("Error al registrar. Por favor, intenta de nuevo.");
         } finally {
             setLoading(false);
         }
     };
 
+    const isFormLoading = loading || authLoading;
+
     const inputContent = (
         <>
+            {apiError && (
+                <div className={styles.errorMessage}>
+                    {apiError}
+                </div>
+            )}
             <Input
                 label="Email address"
                 name="email"
@@ -128,6 +155,7 @@ export default function RegistroForm() {
                 value={formData.email}
                 onChange={handleChange}
                 error={errors.email}
+                disabled={isFormLoading}
             />
             <Input
                 label="Telefono"
@@ -136,6 +164,7 @@ export default function RegistroForm() {
                 value={formData.telefono}
                 onChange={handleChange}
                 error={errors.telefono}
+                disabled={isFormLoading}
             />
             <Input
                 label="Nombre"
@@ -143,6 +172,7 @@ export default function RegistroForm() {
                 value={formData.nombre}
                 onChange={handleChange}
                 error={errors.nombre}
+                disabled={isFormLoading}
             />
             <Input
                 label="Apellidos"
@@ -150,6 +180,7 @@ export default function RegistroForm() {
                 value={formData.apellidos}
                 onChange={handleChange}
                 error={errors.apellidos}
+                disabled={isFormLoading}
             />
             <Input
                 label="Ciudad"
@@ -157,6 +188,7 @@ export default function RegistroForm() {
                 value={formData.ciudad}
                 onChange={handleChange}
                 error={errors.ciudad}
+                disabled={isFormLoading}
             />
             <Input
                 label="Contraseña"
@@ -165,17 +197,18 @@ export default function RegistroForm() {
                 value={formData.contraseña}
                 onChange={handleChange}
                 error={errors.contraseña}
+                disabled={isFormLoading}
             />
         </>
     );
 
     const buttonContent = (
         <div className={styles.actionSection}>
-            <Button type="submit">
-                Registrarse
+            <Button type="submit" disabled={isFormLoading}>
+                {isFormLoading ? "Registrando..." : "Registrarse"}
             </Button>
             <Link variant="muted" href="/login">
-                Click to login
+                ¿Ya tienes cuenta? Inicia sesión aquí
             </Link>
         </div>
     );

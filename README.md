@@ -58,19 +58,19 @@ La separación entre incluido y excluido ayuda a que los requisitos sean claros,
 
 La arquitectura se ha elegido buscando fiabilidad (integridad y restricciones en BBDD), usabilidad (SPA responsiva), eficiencia (caché y consultas optimizadas) y mantenibilidad (separación frontend/backend, linters). En coherencia con el modelo en V, el diseño se formaliza antes de su implementación y las pruebas se planifican en paralelo a cada nivel de diseño.
 
-## 4. Modelos y diagramas
+### 3.1 Integración Backend-Frontend
 
-Los modelos ayudan a aclarar requisitos, comportamiento y estructura antes y durante la implementación.
+El frontend y backend están completamente sincronizados a través de servicios API tipados con TypeScript:
 
-### 4.1 Casos de uso
+- **Servicios API**: Ubicados en `frontend/src/lib/api/`, proporcionan métodos para todas las operaciones del backend
+- **Configuración**: Los endpoints están centralizados en `config.ts` y se configuran mediante variables de entorno
+- **Cliente HTTP**: Un cliente genérico en `client.ts` maneja autenticación, errores y respuestas
+- **Tipado completo**: Todas las interfaces TypeScript coinciden con los modelos del backend
 
-![Diagrama de casos de uso](docs/Diagrama%20de%20Casos%20de%20Uso.svg)
-
-El diagrama de casos de uso recoge los requisitos funcionales a alto nivel, mostrando las interacciones de los actores (jugadores, administradores de centro, administradores globales) con el sistema.
-
-### 4.2 Actividad: Realizar una reserva
-
-![Diagrama de Actividad](docs/Diagrama%20de%20Actividad.svg)
+Documentación detallada:
+- [Mapeo completo Backend-Frontend](docs/BACKEND_FRONTEND_MAPPING.md)
+- [Documentación de Rutas API](docs/API_ROUTES.md)
+- [Guía de Servicios Frontend](frontend/src/lib/api/README.md)
 
 El diagrama de actividad describe el flujo de interacción para realizar una reserva, permitiendo ver decisiones, bifurcaciones y sincronizaciones.
 

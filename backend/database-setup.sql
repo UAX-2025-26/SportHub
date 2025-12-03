@@ -9,10 +9,13 @@
 -- ============================================
 CREATE TABLE IF NOT EXISTS profiles (
     id UUID PRIMARY KEY REFERENCES auth.users(id) ON DELETE CASCADE,
+    email TEXT,
     nombre TEXT,
+    apellidos TEXT,
+    telefono TEXT,
+    ciudad TEXT,
     rol TEXT CHECK (rol IN ('player', 'center_admin', 'coach', 'referee', 'admin')) DEFAULT 'player',
     center_id UUID,
-    telefono TEXT,
     foto_url TEXT,
     created_at TIMESTAMPTZ DEFAULT NOW()
 );
@@ -287,10 +290,14 @@ ON CONFLICT (codigo) DO NOTHING;
 CREATE OR REPLACE FUNCTION public.handle_new_user()
 RETURNS TRIGGER AS $$
 BEGIN
-  INSERT INTO public.profiles (id, nombre, rol, created_at)
+  INSERT INTO public.profiles (id, email, nombre, apellidos, telefono, ciudad, rol, created_at)
   VALUES (
     NEW.id,
-    COALESCE(NEW.raw_user_meta_data->>'nombre', NEW.email),
+    NEW.email,
+    COALESCE(NEW.raw_user_meta_data->>'nombre', ''),
+    COALESCE(NEW.raw_user_meta_data->>'apellidos', ''),
+    COALESCE(NEW.raw_user_meta_data->>'telefono', ''),
+    COALESCE(NEW.raw_user_meta_data->>'ciudad', ''),
     COALESCE(NEW.raw_user_meta_data->>'rol', 'player'),
     NOW()
   );
