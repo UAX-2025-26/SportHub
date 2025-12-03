@@ -15,17 +15,18 @@ Documentación del proyecto SportHub. Contiene el resumen ejecutivo, el alcance,
     - 4.4 Diagrama de clases
   - 5. Modelo de datos (SQL en Supabase/PostgreSQL)
   - 6. Endpoints indicativos
-  - 7. Seguridad e identidad (Auth0 + RLS)
+  - 7. Seguridad e identidad (Supabase Auth + RLS)
   - 8. Requisitos no funcionales, calidad y pruebas
   - 9. Equipo y roles
   - 10. Licencia
-  - 11. Configuración de IDE (JetBrains/WebStorm/IntelliJ)
+  - 11. Metodología de desarrollo (Modelo en V)
+  - 12. Estrategia de pruebas y calidad (tests)
 
 ## 1. Resumen ejecutivo
 
-SportHub es una plataforma web para la reserva y gestión de instalaciones deportivas. Esta edición, orientada a cliente y al ámbito académico, elimina integraciones de pagos y correo SMTP. La autenticación se realiza con Auth0 (OIDC), mientras que datos, tiempo real y almacenamiento se gestionan con Supabase (PostgreSQL, Realtime, Storage, Edge Functions).
+SportHub es una plataforma web para la reserva y gestión de instalaciones deportivas. Esta edición, orientada a cliente y al ámbito académico, elimina integraciones de pagos y correo SMTP. La autenticación se realiza con Supabase Auth (OIDC/JWT), mientras que datos, tiempo real y almacenamiento se gestionan con Supabase (PostgreSQL, Realtime, Storage, Edge Functions).
 
-El software se concibe como un producto a medida que se desarrolla de forma iterativa: análisis, diseño, desarrollo, pruebas y mantenimiento/evolución. Existen riesgos típicos (sobrecarga en horas punta, dobles reservas, problemas de seguridad o cambios de requisitos) que condicionan la planificación y obligan a priorizar el descubrimiento temprano de errores.
+El software se concibe como un producto a medida que se desarrolla de forma iterativa a través de las fases del modelo en V: requisitos y diseño en el lado izquierdo, e implementación y verificación/validación en el lado derecho. Existen riesgos típicos (sobrecarga en horas punta, dobles reservas, seguridad o cambios de requisitos) que condicionan la planificación y obligan a priorizar el descubrimiento temprano de errores.
 
 El objetivo del MVP es ofrecer una experiencia fluida para jugadores y administradores de centro: descubrir centros, consultar disponibilidad sin choques de horario, reservar/cancelar dentro de política y administrar la operativa del centro, con seguridad por roles y actualizaciones en tiempo real in‑app.
 
@@ -49,13 +50,13 @@ La separación entre incluido y excluido ayuda a que los requisitos sean claros,
 
 ## 3. Arquitectura general y tecnologías
 
-- Frontend: React (SPA). Estado local + Context; datos remotos con React Query/SWR; i18n con react‑i18next; estilos con Tailwind CSS.
-- Backend: Node.js + Express. API REST stateless con validación de JWT de Auth0.
+- Frontend: Next.js (React). Estado local + Context; datos remotos con fetch/React Query; estilos con CSS Modules/Tailwind.
+- Backend: Node.js + Express. API REST stateless.
 - Base de datos: Supabase (PostgreSQL) con RLS, integridad referencial, índices y constraints (incluyendo UNIQUE para evitar dobles reservas).
 - Tiempo real: Supabase Realtime para notificaciones y actualizaciones in‑app.
 - Almacenamiento: Supabase Storage (avatars, imágenes de centros).
 
-La arquitectura se ha elegido buscando fiabilidad (integridad y restricciones en BBDD), usabilidad (SPA responsiva), eficiencia (caché y consultas optimizadas) y mantenibilidad (separación frontend/backend, tipos, linters). El enfoque es iterativo e incremental, compatible con prácticas ágiles, refactorización frecuente e integración continua.
+La arquitectura se ha elegido buscando fiabilidad (integridad y restricciones en BBDD), usabilidad (SPA responsiva), eficiencia (caché y consultas optimizadas) y mantenibilidad (separación frontend/backend, linters). En coherencia con el modelo en V, el diseño se formaliza antes de su implementación y las pruebas se planifican en paralelo a cada nivel de diseño.
 
 ## 4. Modelos y diagramas
 
@@ -165,7 +166,7 @@ Se busca que el modelo sea relevante (solo información necesaria), claro (nombr
 
 Los endpoints listados implementan los requisitos funcionales derivados de los casos de uso e historias de usuario.
 
-- Auth: gestionado en frontend con Auth0; el backend valida JWT.
+- Auth: gestionado con Supabase Auth en frontend; el backend valida JWT con Supabase.
 - Usuarios: `GET /usuarios/me`, `PUT /usuarios/me`, (admin) `GET/PUT /admin/usuarios/:id`.
 - Centros: `GET /centros`, `GET /centros/:id`, `POST/PUT /centros/:id`.
 - Instalaciones: `GET /centros/:id/instalaciones`, `POST /centros/:id/instalaciones`, `PUT/DELETE /instalaciones/:id`.
@@ -174,9 +175,9 @@ Los endpoints listados implementan los requisitos funcionales derivados de los c
 - Admin-Centro: `GET /admin-centro/resumen`, `GET /admin-centro/reservas`, `POST /admin-centro/personal`.
 - Backoffice: `GET /admin/estadisticas`, `POST /admin/promociones`, `GET /admin/centros`.
 
-## 7. Seguridad e identidad (Auth0 + RLS)
+## 7. Seguridad e identidad (Supabase Auth + RLS)
 
-- Validación de JWT emitido por Auth0 (firma via JWKS, expiración, scopes/roles).
+- Validación de JWT emitido por Supabase (firma, expiración) vía SDK; datos de perfil complementarios en tabla `profiles`.
 - RLS en Postgres para limitar acceso por usuario/rol. Ejemplos:
 
 ```sql
@@ -192,17 +193,15 @@ TO authenticated
 WITH CHECK (user_id = auth.uid());
 ```
 
-La seguridad se trata de forma defensiva, asumiendo errores y accesos no deseados y aplicando controles en distintas capas (frontend, backend y base de datos) para reducir riesgos.
+La seguridad se trata de forma defensiva, aplicando controles en distintas capas (frontend, backend y base de datos) para reducir riesgos.
 
 ## 8. Requisitos no funcionales, calidad y pruebas
 
 - Seguridad: HTTPS, CORS restringido, Helmet, rate limiting, RLS en BBDD.
-- Calidad: TypeScript, ESLint + Prettier, tests (Jest/RTL, Supertest, Cypress).
-- Rendimiento: API stateless, caché en cliente (React Query/SWR), índices y EXPLAIN en Postgres.
+- Calidad: ESLint + Prettier; tests automatizados con Jest (backend).
+- Rendimiento: API stateless, caché en cliente (React Query), índices y EXPLAIN en Postgres.
 - Accesibilidad y UX: ARIA, navegación por teclado, responsive mobile‑first.
 - Observabilidad: logs estructurados y trazas básicas; métricas según necesidad.
-
-Se combinan análisis estático (tipos, linters) y dinámico (profiling, métricas en ejecución), y se contemplan distintos tipos de pruebas (unitarias, integración, sistema, aceptación, rendimiento/estrés, regresión). El proyecto es adecuado para aplicar desarrollo guiado por pruebas y para usar métricas (como cobertura o tiempos de respuesta) en la mejora de la calidad.
 
 ## 9. Equipo y roles
 
@@ -211,10 +210,60 @@ Javier · Rares · Pablo · Mario
 El equipo puede asumir distintos roles:
 - **Ingeniería**: definición de requisitos, arquitectura, modelo de datos, diagramas.
 - **Programación**: implementación de frontend, backend y scripts de despliegue.
-- **Gestión**: planificación (Gantt/PERT), seguimiento de hitos, coordinación de tareas y gestión de riesgos.
-
-Se fomenta la programación sin ego, la revisión de código por pares y la comunicación frecuente (reuniones breves y retrospectivas), favoreciendo la difusión del conocimiento dentro del equipo.
+- **Gestión**: planificación, seguimiento de hitos, coordinación y gestión de riesgos.
 
 ## 10. Licencia
 
 Apache License 2.0
+
+## 11. Metodología de desarrollo (Modelo en V)
+
+Se ha seguido un Modelo en V, que alinea cada nivel de diseño con sus pruebas correspondientes:
+
+- Requisitos del sistema ↔ Pruebas de aceptación (validación con usuario/cliente).
+- Requisitos software ↔ Pruebas de sistema (verificación del sistema completo).
+- Diseño arquitectónico ↔ Pruebas de integración (interacción entre módulos/servicios y BBDD).
+- Diseño detallado ↔ Pruebas unitarias (funciones/controladores/middlewares).
+
+Artefactos y flujo:
+- Especificación de requisitos (incluyendo prioridades MoSCoW y alcance controlado para evitar scope creep).
+- Modelado UML (casos de uso, actividad, secuencia y clases en `docs/`).
+- Diseño de datos y API (esquema SQL y rutas/contratos indicativos).
+- Plan de pruebas por nivel, definido en paralelo al diseño correspondiente.
+- Gestión de riesgos basada en detección temprana y revisión en hitos (dobles reservas, cargas punta, seguridad, cambios de requisitos).
+
+## 12. Estrategia de pruebas y calidad (tests)
+
+La calidad se asegura mediante pruebas planificadas y ejecutadas conforme al modelo en V.
+
+### 12.1 Tipos y niveles de prueba (implementados en backend)
+
+- Unitarias: controladores y middlewares (Jest) con mocks de Supabase y utilidades.
+- Integración: (pendiente) endpoints con Supertest contra app Express con dobles de BBDD.
+- E2E/aceptación: (pendiente) flujos críticos desde el navegador.
+
+### 12.2 Casos de prueba implementados (backend)
+
+- Reserva sin solapamiento: inserción duplicada retorna 409 `duplicate_booking`.
+- Política de cancelación: transición a `CANCELLED` y restricciones de propietario.
+- Autorización por rol: `requireRole` niega acceso (403) a roles no permitidos.
+- Validación de entrada: middleware `validate` responde 400 en formatos inválidos.
+
+### 12.3 Cómo ejecutar (backend)
+
+```powershell
+npm install --prefix backend
+npm test --prefix backend
+```
+
+Notas:
+- Las pruebas no requieren conexión real a Supabase: se mockea el cliente.
+- Para pruebas de integración/E2E futuras, usar entorno y datos de prueba separados.
+
+---
+
+Anexo: Fundamentos de la asignatura (resumen)
+
+- El coste de corregir errores crece exponencialmente a lo largo de las fases; priorizar análisis/diseño rigurosos.
+- Modelos de proceso: Cascada, Prototipos, Espiral y Ágil; metodología seguida: Modelo en V.
+- Estándares de calidad: CMM e ISO/IEC 9126→25010 (funcionalidad, fiabilidad, usabilidad, eficiencia, mantenibilidad, portabilidad).
