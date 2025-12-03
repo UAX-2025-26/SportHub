@@ -1,11 +1,11 @@
 import React from 'react';
-import styles from './MainDownComponent.module.css';
+import styles from './MainFooter.module.css';
 
 interface Props {
     children?: React.ReactNode;
 }
 
-const MainDownComponent: React.FC<Props> = ({ children }) => {
+const MainFooter: React.FC<Props> = ({ children }) => {
     // 1. Define a unique ID for the gradient so the path can find it
     const gradientId = "customGradient";
 
@@ -61,4 +61,4 @@ const MainDownComponent: React.FC<Props> = ({ children }) => {
     );
 }
 
-export default React.memo(MainDownComponent);
+export default React.memo(MainFooter);
