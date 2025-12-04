@@ -1,0 +1,169 @@
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  gap: 1rem;
+}
+
+.header h2 {
+  margin: 0;
+  font-size: 1.75rem;
+  color: #333;
+}
+
+.createButton {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  background-color: #007bff;
+  color: white;
+  text-decoration: none;
+  border-radius: 4px;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
+}
+
+.createButton:hover {
+  background-color: #0056b3;
+}
+
+.emptyState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 2rem;
+  text-align: center;
+  background-color: #f5f5f5;
+  border-radius: 8px;
+}
+
+.emptyState p {
+  color: #666;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+}
+
+.createButtonEmpty {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  background-color: #007bff;
+  color: white;
+  text-decoration: none;
+  border-radius: 4px;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
+}
+
+.createButtonEmpty:hover {
+  background-color: #0056b3;
+}
+
+.facilitiesTable {
+  overflow-x: auto;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.facilitiesTable table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: white;
+}
+
+.tableHead {
+  background-color: #f8f9fa;
+  border-bottom: 2px solid #dee2e6;
+}
+
+.tableHead th {
+  padding: 1rem;
+  text-align: left;
+  font-weight: 600;
+  color: #495057;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.tableBody tr {
+  border-bottom: 1px solid #dee2e6;
+  transition: background-color 0.2s ease;
+}
+
+.tableBody tr:hover {
+  background-color: #f8f9fa;
+}
+
+.tableBody td {
+  padding: 1rem;
+  color: #333;
+  font-size: 0.95rem;
+}
+
+.boldText {
+  font-weight: 600;
+  color: #007bff;
+}
+
+.status {
+  display: inline-block;
+  padding: 0.4rem 0.8rem;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.active {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.inactive {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+.errorMessage {
+  padding: 1rem;
+  background-color: #ffebee;
+  color: #c62828;
+  border-radius: 4px;
+  border-left: 4px solid #c62828;
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 1rem;
+  }
+
+  .header {
+    flex-direction: column;
+  }
+
+  .header h2 {
+    font-size: 1.5rem;
+  }
+
+  .createButton {
+    width: 100%;
+    text-align: center;
+  }
+
+  .facilitiesTable {
+    font-size: 0.85rem;
+  }
+
+  .tableHead th,
+  .tableBody td {
+    padding: 0.75rem 0.5rem;
+  }
+}
+

@@ -18,10 +18,9 @@ export interface Booking {
 }
 
 export interface CreateBookingData {
-  instalacion_id: string;
+  facility_id: string;
   fecha: string;
   hora_inicio: string;
-  hora_fin: string;
 }
 
 /**

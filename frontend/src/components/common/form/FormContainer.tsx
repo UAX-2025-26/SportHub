@@ -9,7 +9,7 @@ interface FormContainerProps {
     className?: string;
     titleClassName?: string;
     contentClassName?: string;
-    inputSectionClassName?: string; // Nueva prop para clases adicionales en inputSection
+    inputSectionClassName?: string;
     onSubmit?: (e: React.FormEvent<HTMLFormElement>) => void;
 }
 

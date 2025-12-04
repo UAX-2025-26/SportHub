@@ -7,13 +7,12 @@ import { API_ENDPOINTS } from './config';
 
 export interface Facility {
   id: string;
-  centro_id: string;
+  center_id: string;
   nombre: string;
   tipo: string;
   capacidad?: number;
-  precio_hora: number;
-  descripcion?: string;
-  estado: 'activa' | 'mantenimiento' | 'inactiva';
+  precio_hora?: number;
+  activo?: boolean;
   created_at?: string;
 }
 
@@ -21,16 +20,13 @@ export interface CreateFacilityData {
   nombre: string;
   tipo: string;
   capacidad?: number;
-  precio_hora: number;
-  descripcion?: string;
-  estado?: 'activa' | 'mantenimiento' | 'inactiva';
+  precio_hora?: number;
+  activo?: boolean;
 }
 
 export interface TimeSlot {
   hora_inicio: string;
-  hora_fin: string;
   disponible: boolean;
-  reserva_id?: string;
 }
 
 /**

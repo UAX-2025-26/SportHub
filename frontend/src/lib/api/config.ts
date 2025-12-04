@@ -42,6 +42,7 @@ export const API_ENDPOINTS = {
     create: (centerId: string) => `/api/instalaciones/centros/${centerId}`,
     update: (id: string) => `/api/instalaciones/${id}`,
     delete: (id: string) => `/api/instalaciones/${id}`,
+    byCenter: (centerId: string) => `/api/centros/${centerId}/instalaciones`,
   },
 
   // Reservas
@@ -49,6 +50,7 @@ export const API_ENDPOINTS = {
     list: '/api/reservas',
     create: '/api/reservas',
     cancel: (id: string) => `/api/reservas/${id}`,
+    availability: (facilityId: string) => `/api/instalaciones/${facilityId}/disponibilidad`,
   },
 
   // Admin

@@ -1,0 +1,185 @@
+.carouselContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  padding: 2rem;
+  min-height: 400px;
+}
+
+.carouselContainer h2 {
+  font-size: 1.5rem;
+  text-align: center;
+  color: #333;
+  margin-bottom: 1rem;
+}
+
+.carouselWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  width: 100%;
+  max-width: 600px;
+}
+
+.navButton {
+  background: none;
+  border: none;
+  font-size: 2.5rem;
+  cursor: pointer;
+  padding: 0.5rem;
+  color: #333;
+  transition: color 0.3s ease;
+  flex-shrink: 0;
+}
+
+.navButton:hover {
+  color: #007bff;
+}
+
+.centerCard {
+  display: flex;
+  flex-direction: column;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  flex: 1;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.centerCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.cardImage {
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+  background: #f0f0f0;
+  position: relative;
+}
+
+.cardImage img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.cardContent {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.cardContent h3 {
+  margin: 0;
+  font-size: 1.25rem;
+  color: #333;
+}
+
+.location {
+  margin: 0;
+  font-size: 0.875rem;
+  color: #666;
+}
+
+.facilitiesInfo {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.facilitiesCount {
+  margin: 0;
+  font-size: 0.875rem;
+  color: #555;
+  background: #f0f0f0;
+  padding: 0.25rem 0.75rem;
+  border-radius: 4px;
+}
+
+.buttonContainer {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.paginationDots {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #ddd;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.dot:hover {
+  background: #bbb;
+}
+
+.activeDot {
+  background: #007bff;
+}
+
+.loadingContainer,
+.errorContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 2rem;
+  text-align: center;
+  min-height: 300px;
+}
+
+.errorContainer p {
+  color: #d32f2f;
+  font-size: 1rem;
+  margin: 0;
+}
+
+.loadingContainer p {
+  color: #666;
+  font-size: 1rem;
+}
+
+@media (max-width: 768px) {
+  .carouselWrapper {
+    gap: 1rem;
+  }
+
+  .navButton {
+    font-size: 2rem;
+  }
+
+  .carouselContainer h2 {
+    font-size: 1.25rem;
+  }
+
+  .cardImage {
+    height: 150px;
+  }
+
+  .cardContent {
+    padding: 1rem;
+  }
+
+  .cardContent h3 {
+    font-size: 1.1rem;
+  }
+}
+
