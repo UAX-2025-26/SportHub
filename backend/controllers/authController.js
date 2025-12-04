@@ -106,7 +106,15 @@ async function register(req, res, next) {
     }
 
     // Insertar o actualizar perfil en la tabla profiles
-    const { data: profile, error: profileError } = await supabase
+    // Usar adminSupabase para omitir políticas RLS durante el registro
+    const clientToUse = adminSupabase || supabase;
+
+    if (!adminSupabase) {
+      console.warn('⚠️ ADVERTENCIA: adminSupabase no configurado. Usando cliente normal.');
+      console.warn('💡 Esto puede causar problemas con RLS. Verifica SUPABASE_SERVICE_ROLE_KEY en .env');
+    }
+
+    const { data: profile, error: profileError } = await clientToUse
       .from('profiles')
       .upsert({
         id: authData.user.id,
@@ -132,7 +140,8 @@ async function register(req, res, next) {
       } catch (delErr) {
         console.error('Error eliminando usuario tras fallo de perfil:', delErr);
       }
-      return next(createError(500, 'Error al crear perfil de usuario'));
+
+      return next(createError(500, 'Error al crear perfil de usuario. Verifica las políticas RLS en Supabase.'));
     }
 
     // Devolver token y datos del usuario
