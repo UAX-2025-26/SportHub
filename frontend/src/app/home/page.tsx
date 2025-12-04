@@ -35,9 +35,11 @@ const HomePage: FunctionComponent = () => {
             <MainDownComponent>
                 <h1>Elige tu deporte</h1>
                 <div className={clsx(bodyStyles.footerButtons)}>
-                    <ProfileButton>SH</ProfileButton>
                     <ProfileButton>
-                        <img src={"/perfil.svg"} alt={"logo"}/>
+                        <Imagen src={"/reservas.svg"} alt={"reservas"} href={"/reservas"}/>
+                    </ProfileButton>
+                    <ProfileButton>
+                        <Imagen src={"/perfil.svg"} alt={"perfil"} href={"/perfil"}/>
                     </ProfileButton>
                 </div>
             </MainDownComponent>

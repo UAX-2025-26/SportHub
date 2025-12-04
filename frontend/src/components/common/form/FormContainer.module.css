@@ -1,10 +1,8 @@
 .container {
     border-radius: 25px;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
-    width: 100%;
-    min-width: 720px;
-    min-height: 510px;
-    max-width: 820px;
+    width: 40vw;
+    height: 50vh;
     overflow: hidden;
     background-color: #ffffff;
 }
@@ -42,6 +40,6 @@
     align-items: center;
     gap: 1rem;
     width: 100%;
-    margin-top: 1rem;
+    margin-top: 7rem;
 }
 
