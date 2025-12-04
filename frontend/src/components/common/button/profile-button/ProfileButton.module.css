@@ -1,7 +1,7 @@
 .container {
     position: relative;
-    width: 150px;
-    height: 150px;
+    width: 8vw;
+    height: 12vh;
 }
 
 .bgSvg {
@@ -35,9 +35,6 @@
 }
 
 .profButton img {
-    position: relative;
-    top: 20%;
-    width: 100%;
-    height: 50%;
+    object-fit: contain;
     clip-path: circle(50%);
 }

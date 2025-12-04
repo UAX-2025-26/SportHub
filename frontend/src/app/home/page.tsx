@@ -36,10 +36,10 @@ const HomePage: FunctionComponent = () => {
                 <h1>Elige tu deporte</h1>
                 <div className={clsx(bodyStyles.footerButtons)}>
                     <ProfileButton>
-                        <Imagen src={"/reservas.svg"} alt={"reservas"} href={"/reservas"}/>
+                        <Imagen src={"/botones/reservas.svg"} alt={"reservas"} href={"/reservas"}/>
                     </ProfileButton>
                     <ProfileButton>
-                        <Imagen src={"/perfil.svg"} alt={"perfil"} href={"/perfil"}/>
+                        <Imagen src={"/botones/perfil.svg"} alt={"perfil"} href={"/perfil"}/>
                     </ProfileButton>
                 </div>
             </MainDownComponent>
