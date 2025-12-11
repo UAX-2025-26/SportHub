@@ -125,7 +125,7 @@ const CreateFacilityForm: React.FC = () => {
           precio_hora: "",
         });
         setTimeout(() => {
-          router.push(`/admin/centers/${centerId}/facilities`);
+          router.push(`/admin/${centerId}/facilities`);
         }, 2000);
       } else {
         setApiError(result.error || "Error al crear la instalación");

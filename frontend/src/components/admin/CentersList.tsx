@@ -21,6 +21,7 @@ const CentersList: React.FC = () => {
   const [centers, setCenters] = useState<Center[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string>("");
+  const [deleting, setDeleting] = useState<string | null>(null);
 
   useEffect(() => {
     if (!isAuthenticated || !token) return;
@@ -45,6 +46,31 @@ const CentersList: React.FC = () => {
     loadCenters();
   }, [token, isAuthenticated]);
 
+  const handleDeleteCenter = async (centerId: string, centerName: string) => {
+    if (!token) return;
+
+    if (!confirm(`¿Estás seguro de que quieres eliminar el centro "${centerName}"? Esta acción no se puede deshacer.`)) {
+      return;
+    }
+
+    try {
+      setDeleting(centerId);
+      const response = await adminService.deleteCenter(centerId, token);
+
+      if (response.data?.ok) {
+        // Actualizar lista de centros eliminando el borrado
+        setCenters(centers.filter(c => c.id !== centerId));
+      } else {
+        alert(`Error al eliminar: ${response.error || 'Error desconocido'}`);
+      }
+    } catch (err) {
+      console.error("Error deleting center:", err);
+      alert("Error al eliminar el centro");
+    } finally {
+      setDeleting(null);
+    }
+  };
+
   if (loading) {
     return <div className={styles.container}><p>Cargando centros...</p></div>;
   }
@@ -61,7 +87,7 @@ const CentersList: React.FC = () => {
     <div className={styles.container}>
       <div className={styles.header}>
         <h2>Centros Deportivos</h2>
-        <Link href="/admin/centers/new" className={styles.createButton}>
+        <Link href="/admin/new" className={styles.createButton}>
           + Crear Centro
         </Link>
       </div>
@@ -69,7 +95,7 @@ const CentersList: React.FC = () => {
       {centers.length === 0 ? (
         <div className={styles.emptyState}>
           <p>No hay centros registrados</p>
-          <Link href="/admin/centers/new" className={styles.createButtonEmpty}>
+          <Link href="/admin/new" className={styles.createButtonEmpty}>
             Crear primer centro
           </Link>
         </div>
@@ -98,12 +124,19 @@ const CentersList: React.FC = () => {
                   </td>
                   <td>
                     <div className={styles.actions}>
-                      <Link href={`/admin/centers/${center.id}/facilities`} className={styles.linkButton}>
+                      <Link href={`/admin/${center.id}/facilities`} className={styles.linkButton}>
                         Instalaciones
                       </Link>
-                      <Link href={`/admin/centers/${center.id}`} className={styles.linkButton}>
+                      <Link href={`/admin/${center.id}`} className={styles.linkButton}>
                         Editar
                       </Link>
+                      <button
+                        onClick={() => handleDeleteCenter(center.id, center.nombre)}
+                        disabled={deleting === center.id}
+                        className={styles.deleteButton}
+                      >
+                        {deleting === center.id ? 'Borrando...' : 'Borrar'}
+                      </button>
                     </div>
                   </td>
                 </tr>

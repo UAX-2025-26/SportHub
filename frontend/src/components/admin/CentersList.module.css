@@ -15,23 +15,31 @@
 
 .header h2 {
   margin: 0;
-  font-size: 1.75rem;
-  color: #333;
+  font-size: 2rem;
+  color: #636366;
+  text-shadow: none;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-weight: 400;
 }
 
 .createButton {
   display: inline-block;
   padding: 0.75rem 1.5rem;
-  background-color: #007bff;
+  background: #34beed;
   color: white;
   text-decoration: none;
-  border-radius: 4px;
-  font-weight: 500;
-  transition: background-color 0.3s ease;
+  border-radius: 25px;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(52, 190, 237, 0.3);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .createButton:hover {
-  background-color: #0056b3;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(52, 190, 237, 0.4);
+  background: #0473a9;
 }
 
 .emptyState {
@@ -41,76 +49,85 @@
   justify-content: center;
   padding: 3rem 2rem;
   text-align: center;
-  background-color: #f5f5f5;
-  border-radius: 8px;
+  background: #ffffff;
+  border-radius: 25px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
 }
 
 .emptyState p {
-  color: #666;
-  font-size: 1rem;
-  margin-bottom: 1rem;
+  color: #636366;
+  font-size: 1.1rem;
+  margin-bottom: 1.5rem;
+  font-weight: 500;
 }
 
 .createButtonEmpty {
   display: inline-block;
   padding: 0.75rem 1.5rem;
-  background-color: #007bff;
+  background: #34beed;
   color: white;
   text-decoration: none;
-  border-radius: 4px;
-  font-weight: 500;
-  transition: background-color 0.3s ease;
+  border-radius: 25px;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(52, 190, 237, 0.3);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .createButtonEmpty:hover {
-  background-color: #0056b3;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(52, 190, 237, 0.4);
+  background: #0473a9;
 }
 
 .centersTable {
   overflow-x: auto;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 25px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
 }
 
 .centersTable table {
   width: 100%;
   border-collapse: collapse;
-  background-color: white;
+  background: #ffffff;
 }
 
 .tableHead {
-  background-color: #f8f9fa;
-  border-bottom: 2px solid #dee2e6;
+  background: #d1d1d6;
+  border-bottom: 2px solid #b8b8bd;
 }
 
 .tableHead th {
   padding: 1rem;
   text-align: left;
   font-weight: 600;
-  color: #495057;
-  font-size: 0.9rem;
+  color: #636366;
+  font-size: 0.95rem;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 }
 
 .tableBody tr {
-  border-bottom: 1px solid #dee2e6;
-  transition: background-color 0.2s ease;
+  border-bottom: 1px solid #d1d1d6;
+  transition: all 0.3s ease;
 }
 
 .tableBody tr:hover {
-  background-color: #f8f9fa;
+  background-color: rgba(52, 190, 237, 0.05);
 }
 
 .tableBody td {
   padding: 1rem;
-  color: #333;
+  color: #1f2933;
   font-size: 0.95rem;
+  font-weight: 500;
 }
 
 .boldText {
   font-weight: 600;
-  color: #007bff;
+  color: #34beed;
 }
 
 .actions {
@@ -122,26 +139,59 @@
 .linkButton {
   display: inline-block;
   padding: 0.5rem 0.75rem;
-  background-color: #e9ecef;
-  color: #495057;
+  background: #34beed;
+  color: white;
   text-decoration: none;
-  border-radius: 4px;
+  border-radius: 15px;
   font-size: 0.85rem;
-  font-weight: 500;
+  font-weight: bold;
   transition: all 0.3s ease;
+  box-shadow: 0 2px 6px rgba(52, 190, 237, 0.3);
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
 }
 
 .linkButton:hover {
-  background-color: #007bff;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(52, 190, 237, 0.4);
+  background: #0473a9;
+}
+
+.deleteButton {
+  padding: 0.5rem 0.75rem;
+  background: #f44336;
   color: white;
+  border: none;
+  border-radius: 15px;
+  font-size: 0.85rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 6px rgba(244, 67, 54, 0.3);
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.deleteButton:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(244, 67, 54, 0.4);
+  background: #d32f2f;
+}
+
+.deleteButton:disabled {
+  background: #cccccc;
+  cursor: not-allowed;
+  box-shadow: none;
 }
 
 .errorMessage {
-  padding: 1rem;
-  background-color: #ffebee;
+  padding: 1rem 1.5rem;
+  background: #ffebee;
   color: #c62828;
-  border-radius: 4px;
-  border-left: 4px solid #c62828;
+  border-radius: 15px;
+  border-left: 4px solid #ee5a52;
+  font-weight: 500;
+  box-shadow: 0 4px 10px rgba(198, 40, 40, 0.2);
 }
 
 @media (max-width: 768px) {
@@ -157,7 +207,8 @@
     font-size: 1.5rem;
   }
 
-  .createButton {
+  .createButton,
+  .createButtonEmpty {
     width: 100%;
     text-align: center;
   }

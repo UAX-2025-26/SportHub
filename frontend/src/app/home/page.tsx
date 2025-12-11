@@ -17,18 +17,18 @@ const HomePage: FunctionComponent = () => {
             <MainHeader bodyClassName={clsx(headerStyles.container, headerStyles.title, bodyStyles.header)} />
             <MainContent bodyClassName={clsx(contentStyles.container, bodyStyles.body)}>
                 <div className={clsx(contentStyles.flexContainer)}>
-                    <Imagen src={"/deportes/archery.jpg"} alt={"archery"} isSport />
-                    <Imagen src={"/deportes/basketball.jpg"} alt={"basketball"} isSport />
+                    <Imagen src={"/deportes/archery.jpg"} alt={"tiro-con-arco"} isSport />
+                    <Imagen src={"/deportes/basketball.jpg"} alt={"baloncesto"} isSport />
                     <Imagen src={"/deportes/golf.jpg"} alt={"golf"} isSport />
-                    <Imagen src={"/deportes/volleyball.jpg"} alt={"volleyball"} isSport />
-                    <Imagen src={"/deportes/boxing.jpg"} alt={"boxing"} isSport />
-                    <Imagen src={"/deportes/rock-climbing.jpg"} alt={"rock-climbing"} isSport />
-                    <Imagen src={"/deportes/swimming.jpg"} alt={"swimming"} isSport />
-                    <Imagen src={"/deportes/trampolining.jpg"} alt={"trampolining"} isSport />
-                    <Imagen src={"/deportes/equitation.jpg"} alt={"equitation"} isSport />
-                    <Imagen src={"/deportes/bowling.jpg"} alt={"bowling"} isSport />
-                    <Imagen src={"/deportes/baseball.jpg"} alt={"baseball"} isSport />
-                    <Imagen src={"/deportes/tennis.jpg"} alt={"tennis"} isSport />
+                    <Imagen src={"/deportes/volleyball.jpg"} alt={"voleibol"} isSport />
+                    <Imagen src={"/deportes/boxing.jpg"} alt={"boxeo"} isSport />
+                    <Imagen src={"/deportes/rock-climbing.jpg"} alt={"escalada"} isSport />
+                    <Imagen src={"/deportes/swimming.jpg"} alt={"natacion"} isSport />
+                    <Imagen src={"/deportes/trampolining.jpg"} alt={"trampolin"} isSport />
+                    <Imagen src={"/deportes/equitation.jpg"} alt={"equitacion"} isSport />
+                    <Imagen src={"/deportes/bowling.jpg"} alt={"bolos"} isSport />
+                    <Imagen src={"/deportes/baseball.jpg"} alt={"beisbol"} isSport />
+                    <Imagen src={"/deportes/tennis.jpg"} alt={"tenis"} isSport />
                 </div>
             </MainContent>
             <div className={clsx(bodyStyles.footer)}>

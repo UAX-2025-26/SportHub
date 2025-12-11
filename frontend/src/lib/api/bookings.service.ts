@@ -7,13 +7,16 @@ import { API_ENDPOINTS } from './config';
 
 export interface Booking {
   id: string;
-  usuario_id: string;
-  instalacion_id: string;
+  user_id: string;
+  facility_id: string;
   fecha: string;
   hora_inicio: string;
-  hora_fin: string;
-  estado: 'pendiente' | 'confirmada' | 'cancelada' | 'completada';
-  precio_total: number;
+  hora_fin?: string;
+  estado: 'PENDING_PAYMENT' | 'CONFIRMED' | 'CANCELLED' | 'COMPLETED';
+  precio_total?: number;
+  price_paid?: number;
+  payment_id?: string;
+  cancelled_at?: string;
   created_at?: string;
 }
 
@@ -21,6 +24,7 @@ export interface CreateBookingData {
   facility_id: string;
   fecha: string;
   hora_inicio: string;
+  hora_fin?: string;
 }
 
 /**

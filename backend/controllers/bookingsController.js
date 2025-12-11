@@ -63,7 +63,7 @@ async function cancel(req, res) {
     .select('*')
     .single();
   if (error) return res.status(400).json({ error: error.message });
-  res.json(data);
+  res.json({ ok: true, booking: data });
 }
 
 module.exports = { availability, create, list, cancel };

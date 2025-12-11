@@ -22,7 +22,11 @@ interface FormErrors {
   ciudad?: string;
 }
 
-const CreateCenterForm: React.FC = () => {
+interface EditCenterFormProps {
+  centerId: string;
+}
+
+const EditCenterForm: React.FC<EditCenterFormProps> = ({ centerId }) => {
   const router = useRouter();
   const { token, isAuthenticated } = useAuth();
 
@@ -36,15 +40,45 @@ const CreateCenterForm: React.FC = () => {
 
   const [errors, setErrors] = useState<FormErrors>({});
   const [loading, setLoading] = useState(false);
+  const [loadingData, setLoadingData] = useState(true);
   const [apiError, setApiError] = useState<string>("");
   const [success, setSuccess] = useState(false);
 
-  // Redirigir si no es admin
+  // Cargar datos del centro
   useEffect(() => {
     if (isAuthenticated === false) {
       router.push("/login");
+      return;
     }
-  }, [isAuthenticated, router]);
+
+    const loadCenter = async () => {
+      if (!token || !centerId) return;
+
+      try {
+        setLoadingData(true);
+        const result = await centersService.getCenterById(centerId);
+
+        if (result.data) {
+          setFormData({
+            nombre: result.data.nombre || "",
+            direccion: result.data.direccion || "",
+            ciudad: result.data.ciudad || "",
+            horario_apertura: result.data.horario_apertura || "",
+            horario_cierre: result.data.horario_cierre || "",
+          });
+        } else {
+          setApiError(result.error || "Error al cargar el centro");
+        }
+      } catch (error) {
+        console.error("Error loading center:", error);
+        setApiError("Error al cargar el centro");
+      } finally {
+        setLoadingData(false);
+      }
+    };
+
+    loadCenter();
+  }, [isAuthenticated, router, token, centerId]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -53,7 +87,6 @@ const CreateCenterForm: React.FC = () => {
       [name]: value,
     }));
 
-    // Limpiar errores al escribir
     if (errors[name as keyof FormErrors]) {
       setErrors((prev) => ({
         ...prev,
@@ -93,7 +126,7 @@ const CreateCenterForm: React.FC = () => {
     }
 
     if (!token) {
-      setApiError("No tienes permiso para crear centros");
+      setApiError("No tienes permiso para editar centros");
       return;
     }
 
@@ -101,32 +134,33 @@ const CreateCenterForm: React.FC = () => {
     setApiError("");
 
     try {
-      const result = await centersService.createCenter(formData, token);
+      const result = await centersService.updateCenter(centerId, formData, token);
 
       if (result.data) {
         setSuccess(true);
-        // Limpiar formulario
-        setFormData({
-          nombre: "",
-          direccion: "",
-          ciudad: "",
-          horario_apertura: "",
-          horario_cierre: "",
-        });
-        // Redirigir después de 2 segundos
         setTimeout(() => {
           router.push("/admin");
         }, 2000);
       } else {
-        setApiError(result.error || "Error al crear el centro");
+        setApiError(result.error || "Error al actualizar el centro");
       }
     } catch (error) {
-      console.error("Error creating center:", error);
-      setApiError("Error al crear el centro. Por favor intenta de nuevo.");
+      console.error("Error updating center:", error);
+      setApiError("Error al actualizar el centro. Por favor intenta de nuevo.");
     } finally {
       setLoading(false);
     }
   };
+
+  if (loadingData) {
+    return (
+      <div className={styles.formContainer}>
+        <div style={{ padding: "2rem", textAlign: "center" }}>
+          <p>Cargando datos del centro...</p>
+        </div>
+      </div>
+    );
+  }
 
   const inputContent = (
     <>
@@ -151,39 +185,40 @@ const CreateCenterForm: React.FC = () => {
           fontSize: "0.875rem",
           borderLeft: "4px solid #2e7d32",
         }}>
-          ¡Centro creado exitosamente!
+          ¡Centro actualizado exitosamente! Redirigiendo...
         </div>
       )}
+
       <label className={styles.label}>
-        Nombre del Centro *
+        <span>Nombre del Centro *</span>
         <input
           type="text"
           name="nombre"
           value={formData.nombre}
           onChange={handleChange}
           className={styles.input}
-          placeholder="Ej: Centro de Deportes Madrid"
-          required
+          placeholder="Ej: Centro Deportivo Municipal"
+          disabled={loading}
         />
         {errors.nombre && <span className={styles.error}>{errors.nombre}</span>}
       </label>
 
       <label className={styles.label}>
-        Dirección *
+        <span>Dirección *</span>
         <input
           type="text"
           name="direccion"
           value={formData.direccion}
           onChange={handleChange}
           className={styles.input}
-          placeholder="Ej: Calle Principal 123"
-          required
+          placeholder="Ej: Calle Mayor 123"
+          disabled={loading}
         />
         {errors.direccion && <span className={styles.error}>{errors.direccion}</span>}
       </label>
 
       <label className={styles.label}>
-        Ciudad *
+        <span>Ciudad *</span>
         <input
           type="text"
           name="ciudad"
@@ -191,44 +226,46 @@ const CreateCenterForm: React.FC = () => {
           onChange={handleChange}
           className={styles.input}
           placeholder="Ej: Madrid"
-          required
+          disabled={loading}
         />
         {errors.ciudad && <span className={styles.error}>{errors.ciudad}</span>}
       </label>
 
       <label className={styles.label}>
-        Horario de Apertura
+        <span>Horario de Apertura</span>
         <input
           type="time"
           name="horario_apertura"
           value={formData.horario_apertura}
           onChange={handleChange}
           className={styles.input}
+          disabled={loading}
         />
       </label>
 
       <label className={styles.label}>
-        Horario de Cierre
+        <span>Horario de Cierre</span>
         <input
           type="time"
           name="horario_cierre"
           value={formData.horario_cierre}
           onChange={handleChange}
           className={styles.input}
+          disabled={loading}
         />
       </label>
     </>
   );
 
   const buttonContent = (
-    <FormButton type="submit" disabled={loading || success}>
-      {loading ? "Creando..." : success ? "¡Creado!" : "Crear Centro"}
+    <FormButton disabled={loading}>
+      {loading ? "Actualizando..." : "Actualizar Centro"}
     </FormButton>
   );
 
   return (
     <FormContainer
-      title="Crear Nuevo Centro Deportivo"
+      title="Editar Centro Deportivo"
       inputContent={inputContent}
       buttonContent={buttonContent}
       onSubmit={handleSubmit}
@@ -237,5 +274,5 @@ const CreateCenterForm: React.FC = () => {
   );
 };
 
-export default CreateCenterForm;
+export default EditCenterForm;
 
