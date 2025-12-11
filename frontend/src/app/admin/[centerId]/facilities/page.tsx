@@ -44,7 +44,7 @@ const CenterFacilitiesPage: React.FC = () => {
           <h1>Instalaciones del Centro</h1>
           <div className={clsx(bodyStyles.footerButtons)}>
             <ProfileButton onClick={() => router.back()}>
-              ←
+              <span style={{ fontSize: '2.5rem', fontWeight: 'bold' }}>←</span>
             </ProfileButton>
           </div>
         </MainDownComponent>

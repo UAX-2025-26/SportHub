@@ -44,7 +44,7 @@ const CreateFacilityPage: React.FC = () => {
           <h1>Crear Instalación</h1>
           <div className={clsx(bodyStyles.footerButtons)}>
             <ProfileButton onClick={() => router.back()}>
-              ←
+              <span style={{ fontSize: '2.5rem', fontWeight: 'bold' }}>←</span>
             </ProfileButton>
           </div>
         </MainDownComponent>

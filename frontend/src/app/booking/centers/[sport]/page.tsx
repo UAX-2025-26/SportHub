@@ -223,7 +223,7 @@ const CenterCarouselPage: React.FC = () => {
           <h1>Centro {currentIndex + 1} de {centers.length}</h1>
           <div className={clsx(bodyStyles.footerButtons)}>
             <ProfileButton onClick={() => router.back()}>
-              ←
+              <span style={{ fontSize: '2.5rem', fontWeight: 'bold' }}>←</span>
             </ProfileButton>
           </div>
         </MainDownComponent>

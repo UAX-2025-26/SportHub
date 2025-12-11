@@ -38,7 +38,7 @@ const CreateCenterPage: React.FC = () => {
           <h1>Crear Centro Deportivo</h1>
           <div className={clsx(bodyStyles.footerButtons)}>
             <ProfileButton onClick={() => router.back()}>
-              ←
+              <span style={{ fontSize: '2.5rem', fontWeight: 'bold' }}>←</span>
             </ProfileButton>
           </div>
         </MainDownComponent>
