@@ -39,8 +39,7 @@ Esta sección define el alcance del proyecto y ayuda a evitar crecimiento descon
   - Centros e instalaciones: catálogo, horarios base y bloqueos puntuales.
   - Disponibilidad y reservas con prevención de doble reserva a nivel de BBDD.
   - Panel de administración de centro y backoffice global.
-  - Notificaciones in‑app (Realtime).
-  - Soporte multilenguaje (ES/EN) y diseño responsive.
+  - Diseño responsive.
 - Fuera de alcance (evaluar a futuro), equivalente a Could/Won't por ahora:
   - Cobros online y reembolsos.
   - Envío de correos (SMTP/servicios de e‑mail).
@@ -249,21 +248,7 @@ La calidad se asegura mediante pruebas planificadas y ejecutadas conforme al mod
 - Autorización por rol: `requireRole` niega acceso (403) a roles no permitidos.
 - Validación de entrada: middleware `validate` responde 400 en formatos inválidos.
 
-### 12.3 Cómo ejecutar (backend)
-
-```powershell
-npm install --prefix backend
-npm test --prefix backend
-```
-
-Notas:
-- Las pruebas no requieren conexión real a Supabase: se mockea el cliente.
-- Para pruebas de integración/E2E futuras, usar entorno y datos de prueba separados.
-
----
-
-Anexo: Fundamentos de la asignatura (resumen)
-
-- El coste de corregir errores crece exponencialmente a lo largo de las fases; priorizar análisis/diseño rigurosos.
-- Modelos de proceso: Cascada, Prototipos, Espiral y Ágil; metodología seguida: Modelo en V.
-- Estándares de calidad: CMM e ISO/IEC 9126→25010 (funcionalidad, fiabilidad, usabilidad, eficiencia, mantenibilidad, portabilidad).
+### 12.3 Despliegue de la aplicación
+- Backend: usaremos microsoft azure para desplegar un contenedor con el back, generando un punto de acceso desde el frontend
+- Frontend: desplegaremos la app en vercel aprovechando la alta compatibilidad con Next.js
+- BBDD: La base de datos ya está en producción desde un inicio habiendo usado supabase
