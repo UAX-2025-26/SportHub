@@ -2,7 +2,7 @@
  * Servicio para gestión de centros deportivos
  */
 
-import { get, post, put } from './client';
+import { get, post, put, del } from './client';
 import { API_ENDPOINTS } from './config';
 
 export interface Center {
@@ -59,10 +59,18 @@ export async function updateCenter(id: string, data: UpdateCenterData, token: st
   return await put<Center>(API_ENDPOINTS.centers.update(id), data, { token });
 }
 
+/**
+ * Elimina un centro (requiere rol admin)
+ */
+export async function deleteCenter(id: string, token: string) {
+  return await del<{ ok: boolean }>(API_ENDPOINTS.centers.delete(id), { token });
+}
+
 export const centersService = {
   getCenters,
   getCenterById,
   createCenter,
   updateCenter,
+  deleteCenter,
 };
 

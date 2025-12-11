@@ -15,7 +15,7 @@ import FormButton from "@/components/common/button/form-button/FormButton";
 import { centersService, Center } from '@/lib/api/centers.service';
 import { facilitiesService, Facility } from '@/lib/api/facilities.service';
 import { useBookingContext } from '@/lib/contexts/BookingContext';
-import { getSportDisplayName } from '@/lib/constants/sports';
+import { getSportDisplayName, getSportSearchVariants } from '@/lib/constants/sports';
 import styles from './centers-carousel.module.css';
 import Image from 'next/image';
 
@@ -47,16 +47,27 @@ const CenterCarouselPage: React.FC = () => {
           return;
         }
 
+        // Obtener todas las variantes de búsqueda para el deporte
+        const sportVariants = getSportSearchVariants(sport);
+
         // Para cada centro, obtener las instalaciones que coincidan con el deporte
         const centersWithFacilities = await Promise.all(
           response.data.map(async (center) => {
             const facilitiesResponse = await facilitiesService.getFacilitiesByCenter(center.id);
             const allFacilities = facilitiesResponse.data || [];
-            // Filtrar por tipo de deporte
-            const relevantFacilities = allFacilities.filter(f =>
-              f.tipo.toLowerCase().includes(sport.toLowerCase()) ||
-              f.nombre.toLowerCase().includes(sport.toLowerCase())
-            );
+
+            // Filtrar por tipo de deporte usando variantes
+            const relevantFacilities = allFacilities.filter(f => {
+              const facilityTypeToCheck = f.tipo.toLowerCase();
+              const facilityNameToCheck = f.nombre.toLowerCase();
+
+              // Buscar si alguna variante del deporte coincide
+              return sportVariants.some(variant =>
+                facilityTypeToCheck.includes(variant) ||
+                facilityNameToCheck.includes(variant)
+              );
+            });
+
             return {
               center,
               facilities: relevantFacilities,

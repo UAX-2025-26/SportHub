@@ -5,7 +5,8 @@ const adminCtrl = require('../../controllers/adminController.js');
 
 router.use(checkJwt);
 
-// center admin
+// center admin - gestión de su propio centro
+router.get('/mi-centro', requireRole('center_admin'), adminCtrl.getMyCenterData);
 router.get('/centro/resumen', requireRole('center_admin', 'admin'), adminCtrl.centerSummary);
 router.get('/centro/reservas', requireRole('center_admin', 'admin'), adminCtrl.centerBookings);
 

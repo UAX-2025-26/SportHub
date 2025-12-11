@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { adminService } from "@/lib/api/admin.service";
+import { centersService } from "@/lib/api/centers.service";
 import { useAuth } from "@/lib/auth";
 import styles from "./CentersList.module.css";
 
@@ -29,7 +29,7 @@ const CentersList: React.FC = () => {
     const loadCenters = async () => {
       try {
         setLoading(true);
-        const response = await adminService.listCenters(token);
+        const response = await centersService.getCenters();
         if (response.data) {
           setCenters(response.data);
         } else {
@@ -55,7 +55,7 @@ const CentersList: React.FC = () => {
 
     try {
       setDeleting(centerId);
-      const response = await adminService.deleteCenter(centerId, token);
+      const response = await centersService.deleteCenter(centerId, token);
 
       if (response.data?.ok) {
         // Actualizar lista de centros eliminando el borrado

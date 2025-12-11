@@ -21,6 +21,67 @@ const centerSummary = async (req, res) => {
   res.json({ center_id: profile.center_id, recent: data });
 };
 
+const getMyCenterData = async (req, res) => {
+  try {
+    const profileId = await getUserProfileId(req);
+    const { data: profile } = await supabase.from('profiles').select('center_id').eq('id', profileId).single();
+
+    if (!profile || !profile.center_id) {
+      return res.status(400).json({ error: 'No tienes un centro asignado' });
+    }
+
+    // Obtener datos del centro
+    const { data: center, error: centerError } = await supabase
+      .from('centers')
+      .select('*')
+      .eq('id', profile.center_id)
+      .single();
+
+    if (centerError || !center) {
+      return res.status(404).json({ error: 'Centro no encontrado' });
+    }
+
+    // Obtener instalaciones del centro
+    const { data: facilities, error: facilitiesError } = await supabase
+      .from('facilities')
+      .select('*')
+      .eq('center_id', profile.center_id);
+
+    if (facilitiesError) {
+      return res.status(400).json({ error: facilitiesError.message });
+    }
+
+    // Obtener estadísticas del centro
+    const facilityIds = (facilities || []).map(f => f.id);
+    let stats = {
+      total_facilities: facilities?.length || 0,
+      total_bookings: 0,
+      revenue: 0
+    };
+
+    if (facilityIds.length > 0) {
+      const { data: bookings, error: bookingsError } = await supabase
+        .from('bookings')
+        .select('*')
+        .in('facility_id', facilityIds)
+        .eq('estado', 'COMPLETED');
+
+      if (!bookingsError && bookings) {
+        stats.total_bookings = bookings.length;
+        stats.revenue = bookings.reduce((sum, b) => sum + (b.price_paid || 0), 0);
+      }
+    }
+
+    res.json({
+      center,
+      facilities,
+      stats
+    });
+  } catch (error) {
+    res.status(500).json({ error: 'Error al obtener datos del centro: ' + error.message });
+  }
+};
+
 const centerBookings = async (req, res) => {
   const profileId = await getUserProfileId(req);
   const { data: profile } = await supabase.from('profiles').select('center_id').eq('id', profileId).single();
@@ -90,6 +151,7 @@ const updateUserById = [
 module.exports = {
   centerSummary,
   centerBookings,
+  getMyCenterData,
   adminStats,
   createPromotion,
   listCenters,

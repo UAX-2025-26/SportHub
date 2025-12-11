@@ -15,6 +15,9 @@ export const sportToFacilityTypeMap: Record<string, string> = {
   'bolos': 'Bolera',
   'beisbol': 'Campo de Béisbol',
   'tenis': 'Cancha de Tenis',
+  'futbol': 'Campo de Fútbol',
+  'padel': 'Cancha de Pádel',
+  'gimnasio': 'Gimnasio',
 };
 
 // Mapeo de deportes en inglés a español (para compatibilidad)
@@ -31,6 +34,9 @@ export const sportTranslationMap: Record<string, string> = {
   'bowling': 'bolos',
   'baseball': 'beisbol',
   'tennis': 'tenis',
+  'football': 'futbol',
+  'padel': 'padel',
+  'gymnasium': 'gimnasio',
 };
 
 // Mapeo inverso (español a inglés)
@@ -47,6 +53,9 @@ export const sportReverseTranslationMap: Record<string, string> = {
   'bolos': 'bowling',
   'beisbol': 'baseball',
   'tenis': 'tennis',
+  'futbol': 'football',
+  'padel': 'padel',
+  'gimnasio': 'gymnasium',
 };
 
 export const getSportDisplayName = (sport: string): string => {
@@ -74,6 +83,36 @@ export const getFacilityTypeForSport = (sport: string): string => {
     return sportToFacilityTypeMap[spanishSport];
   }
   return sport;
+};
+
+/**
+ * Obtiene todas las variantes posibles de un deporte para buscar en la BD
+ * Retorna tanto el nombre en español como en inglés y sus variaciones
+ */
+export const getSportSearchVariants = (sport: string): string[] => {
+  const variants = new Set<string>();
+  const lowerSport = sport.toLowerCase().trim();
+
+  // Agregar el sport original
+  variants.add(lowerSport);
+  variants.add(lowerSport.replace('-', ' '));
+  variants.add(lowerSport.replace(' ', '-'));
+
+  // Si es español, buscar si existe traducción al inglés
+  const englishSport = sportReverseTranslationMap[lowerSport];
+  if (englishSport) {
+    variants.add(englishSport);
+    variants.add(englishSport.replace('-', ' '));
+  }
+
+  // Si es inglés, buscar si existe traducción al español
+  const spanishSport = sportTranslationMap[lowerSport];
+  if (spanishSport) {
+    variants.add(spanishSport);
+    variants.add(spanishSport.replace('-', ' '));
+  }
+
+  return Array.from(variants);
 };
 
 

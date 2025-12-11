@@ -30,6 +30,7 @@ export const API_ENDPOINTS = {
     detail: (id: string) => `/api/centros/${id}`,
     create: '/api/centros',
     update: (id: string) => `/api/centros/${id}`,
+    delete: (id: string) => `/api/centros/${id}`,
     facilities: (id: string) => `/api/centros/${id}/instalaciones`,
     createFacility: (id: string) => `/api/centros/${id}/instalaciones`,
   },

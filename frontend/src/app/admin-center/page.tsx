@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect } from 'react';
-import { useRouter, useParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { useAuth } from '@/lib/auth';
 import clsx from 'clsx';
 import MainBody from '@/components/main-layout/body/MainBody';
@@ -12,12 +12,10 @@ import ProfileButton from "@/components/common/button/profile-button/ProfileButt
 import bodyStyles from "@/components/main-layout/body/MainBody.module.css";
 import headerStyles from "@/components/main-layout/header/MainHeader.module.css";
 import contentStyles from "@/components/main-layout/content/MainContent.module.css";
-import EditCenterForm from '@/components/admin/forms/EditCenterForm';
+import CenterAdminPanel from '@/components/admin/CenterAdminPanel';
 
-const EditCenterPage: React.FC = () => {
+const CenterAdminPage: React.FC = () => {
   const router = useRouter();
-  const params = useParams();
-  const centerId = params?.centerId as string;
   const { userRole, isAuthenticated, isLoading } = useAuth();
 
   useEffect(() => {
@@ -25,7 +23,7 @@ const EditCenterPage: React.FC = () => {
 
     if (!isAuthenticated) {
       router.push('/login');
-    } else if (userRole !== 'admin') {
+    } else if (userRole !== 'center_admin') {
       router.push('/home');
     }
   }, [isAuthenticated, userRole, router, isLoading]);
@@ -43,7 +41,7 @@ const EditCenterPage: React.FC = () => {
     );
   }
 
-  if (!isAuthenticated || userRole !== 'admin') {
+  if (!isAuthenticated || userRole !== 'center_admin') {
     return null;
   }
 
@@ -51,13 +49,13 @@ const EditCenterPage: React.FC = () => {
     <MainBody bodyClassName={clsx(bodyStyles.content)}>
       <MainHeader bodyClassName={clsx(headerStyles.container, headerStyles.title, bodyStyles.header)} />
       <MainContent bodyClassName={clsx(contentStyles.container, bodyStyles.body)}>
-        <EditCenterForm centerId={centerId} />
+        <CenterAdminPanel />
       </MainContent>
       <div className={clsx(bodyStyles.footer)}>
         <MainDownComponent>
-          <h1>Editar Centro</h1>
+          <h1>Panel Admin Centro</h1>
           <div className={clsx(bodyStyles.footerButtons)}>
-            <ProfileButton onClick={() => router.push('/admin')}>
+            <ProfileButton onClick={() => router.push('/home')}>
               <span style={{ fontSize: '2.5rem', fontWeight: 'bold' }}>←</span>
             </ProfileButton>
           </div>
@@ -67,5 +65,5 @@ const EditCenterPage: React.FC = () => {
   );
 };
 
-export default EditCenterPage;
+export default CenterAdminPage;
 

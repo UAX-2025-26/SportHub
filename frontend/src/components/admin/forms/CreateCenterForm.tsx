@@ -22,7 +22,11 @@ interface FormErrors {
   ciudad?: string;
 }
 
-const CreateCenterForm: React.FC = () => {
+interface CreateCenterFormProps {
+  onSuccess?: () => void;
+}
+
+const CreateCenterForm: React.FC<CreateCenterFormProps> = ({ onSuccess }) => {
   const router = useRouter();
   const { token, isAuthenticated } = useAuth();
 
@@ -113,10 +117,16 @@ const CreateCenterForm: React.FC = () => {
           horario_apertura: "",
           horario_cierre: "",
         });
-        // Redirigir después de 2 segundos
-        setTimeout(() => {
-          router.push("/admin");
-        }, 2000);
+
+        // Si hay callback, llamarlo; si no, redirigir
+        if (onSuccess) {
+          onSuccess();
+        } else {
+          // Redirigir después de 2 segundos
+          setTimeout(() => {
+            router.push("/admin");
+          }, 2000);
+        }
       } else {
         setApiError(result.error || "Error al crear el centro");
       }
