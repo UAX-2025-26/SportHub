@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/lib/auth';
+import { adminService } from '@/lib/api';
 import CreateCenterForm from '@/components/admin/forms/CreateCenterForm';
 
 interface CenterData {
@@ -37,51 +38,67 @@ const CenterAdminPanel: React.FC = () => {
   }, [token]);
 
   const loadCenterData = async () => {
-    if (!token) return;
+    if (!token) {
+      console.log('[CENTER ADMIN] Token no disponible');
+      setLoading(false);
+      return;
+    }
 
     try {
       setLoading(true);
+      console.log('[CENTER ADMIN] Iniciando carga de datos del centro...');
+      console.log('[CENTER ADMIN] Token disponible:', token.substring(0, 20) + '...');
 
-      const response = await fetch('/api/admin/mi-centro', {
-        headers: {
-          'Authorization': `Bearer ${token}`,
-        },
-      });
+      const { data, error, status } = await adminService.getMyCenterData(token);
 
-      if (response.status === 400) {
+      console.log('[CENTER ADMIN] Respuesta del servidor:', status);
+
+      if (status === 400) {
+        console.log('[CENTER ADMIN] Usuario no tiene centro asignado');
         setShowCreateCenter(true);
+        setCenter(null);
+        setFacilities([]);
+        setError('');
         setLoading(false);
         return;
       }
 
-      if (!response.ok) {
-        setError('Error al cargar datos del centro');
+      if (error || status >= 400) {
+        console.error('[CENTER ADMIN] Error al cargar datos:', error);
+        setError('Error al cargar datos del centro: ' + (error || 'Unknown error'));
+        setShowCreateCenter(false);
         setLoading(false);
         return;
       }
 
-      const data = await response.json();
-      setCenter(data.center);
-      setFacilities(data.facilities || []);
+      if (data) {
+        console.log('[CENTER ADMIN] Datos cargados exitosamente:', data);
+        setCenter(data.center);
+        setFacilities(data.facilities || []);
+        setShowCreateCenter(false);
+        setError('');
+      }
       setLoading(false);
     } catch (err) {
-      console.error('Error loading center data:', err);
+      console.error('[CENTER ADMIN] Error inesperado:', err);
       setError('Error al cargar los datos del centro');
+      setShowCreateCenter(false);
       setLoading(false);
     }
   };
 
   const containerStyle: React.CSSProperties = {
-    width: '100%',
-    maxWidth: '1000px',
+    width: '600px',
+    minWidth: '500px',
+    maxWidth: '600px',
     margin: '0 auto',
-    padding: '2rem',
+    padding: '0',
   };
 
   const sectionStyle: React.CSSProperties = {
     background: '#ffffff',
     borderRadius: '25px',
-    padding: '2rem',
+    padding: '32px',
     boxShadow: '0 10px 40px rgba(0, 0, 0, 0.15)',
   };
 
@@ -138,20 +155,11 @@ const CenterAdminPanel: React.FC = () => {
   }
 
   if (!center && showCreateCenter) {
-    return (
-      <div style={containerStyle}>
-        <div style={sectionStyle}>
-          <h2 style={headingStyle}>Crear Tu Centro Deportivo</h2>
-          <p style={{ color: '#636366', marginBottom: '1.5rem' }}>
-            Como administrador de centro, necesitas crear tu primer centro para comenzar a gestionar instalaciones y reservas.
-          </p>
-          <CreateCenterForm onSuccess={() => {
-            setShowCreateCenter(false);
-            loadCenterData();
-          }} />
-        </div>
-      </div>
-    );
+    return <CreateCenterForm onSuccess={() => {
+      console.log('[CENTER ADMIN] Centro creado, recargando datos...');
+      setShowCreateCenter(false);
+      loadCenterData();
+    }} />;
   }
 
   if (!center) {

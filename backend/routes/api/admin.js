@@ -3,6 +3,13 @@ const router = express.Router();
 const { checkJwt, requireRole } = require('../../src/auth');
 const adminCtrl = require('../../controllers/adminController.js');
 
+// Middleware de logging para depuración
+router.use((req, res, next) => {
+  console.log('[ADMIN ROUTE]', new Date().toISOString(), req.method, req.path);
+  console.log('[AUTH HEADER]', req.headers.authorization ? 'Present' : 'Missing');
+  next();
+});
+
 router.use(checkJwt);
 
 // center admin - gestión de su propio centro

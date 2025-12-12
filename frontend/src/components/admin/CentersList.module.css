@@ -1,22 +1,24 @@
 .container {
-  width: 100%;
-  max-width: 1200px;
+  width: var(--form-max-width);
+  min-width: var(--form-min-width);
+  max-width: var(--form-max-width);
   margin: 0 auto;
-  padding: 2rem;
+  padding: 0;
 }
 
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 2rem;
-  gap: 1rem;
+  margin-bottom: var(--spacing-2xl);
+  gap: var(--spacing-lg);
+  flex-wrap: wrap;
 }
 
 .header h2 {
   margin: 0;
-  font-size: 2rem;
-  color: #636366;
+  font-size: var(--font-size-2xl);
+  color: var(--color-text);
   text-shadow: none;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   font-weight: 400;
@@ -24,22 +26,24 @@
 
 .createButton {
   display: inline-block;
-  padding: 0.75rem 1.5rem;
-  background: #34beed;
+  padding: var(--spacing-md) var(--spacing-xl);
+  background: var(--color-primary);
   color: white;
   text-decoration: none;
-  border-radius: 25px;
+  border-radius: var(--border-radius-xl);
   font-weight: bold;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 10px rgba(52, 190, 237, 0.3);
+  box-shadow: var(--shadow-md);
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  font-size: var(--font-size-base);
+  white-space: nowrap;
 }
 
 .createButton:hover {
   transform: translateY(-2px);
   box-shadow: 0 6px 15px rgba(52, 190, 237, 0.4);
-  background: #0473a9;
+  background: var(--color-primary-hover);
 }
 
 .emptyState {
@@ -47,38 +51,40 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 3rem 2rem;
+  padding: var(--spacing-2xl);
   text-align: center;
-  background: #ffffff;
-  border-radius: 25px;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+  background: var(--color-background);
+  border-radius: var(--border-radius-xl);
+  box-shadow: var(--shadow-lg);
 }
 
 .emptyState p {
-  color: #636366;
-  font-size: 1.1rem;
-  margin-bottom: 1.5rem;
+  color: var(--color-text);
+  font-size: var(--font-size-lg);
+  margin-bottom: var(--spacing-xl);
   font-weight: 500;
 }
 
 .createButtonEmpty {
   display: inline-block;
-  padding: 0.75rem 1.5rem;
-  background: #34beed;
+  padding: var(--spacing-md) var(--spacing-xl);
+  background: var(--color-primary);
   color: white;
   text-decoration: none;
-  border-radius: 25px;
+  border-radius: var(--border-radius-xl);
   font-weight: bold;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 10px rgba(52, 190, 237, 0.3);
+  box-shadow: var(--shadow-md);
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  font-size: var(--font-size-base);
 }
 
 .createButtonEmpty:hover {
   transform: translateY(-2px);
   box-shadow: 0 6px 15px rgba(52, 190, 237, 0.4);
-  background: #0473a9;
+  background: var(--color-primary-hover);
+}
 }
 
 .centersTable {

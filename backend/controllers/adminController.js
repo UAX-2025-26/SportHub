@@ -23,10 +23,29 @@ const centerSummary = async (req, res) => {
 
 const getMyCenterData = async (req, res) => {
   try {
+    console.log('[GET MY CENTER] Iniciando...');
+    console.log('[GET MY CENTER] req.auth:', req.auth ? 'Present' : 'Missing');
+    console.log('[GET MY CENTER] req.auth.user:', req.auth?.user ? req.auth.user.id : 'Missing');
+    console.log('[GET MY CENTER] req.auth.profile:', req.auth?.profile ? 'Present' : 'Missing');
+
     const profileId = await getUserProfileId(req);
-    const { data: profile } = await supabase.from('profiles').select('center_id').eq('id', profileId).single();
+    console.log('[GET MY CENTER] Profile ID obtenido:', profileId);
+
+    if (!profileId) {
+      console.log('[GET MY CENTER] FAIL: No profile ID');
+      return res.status(401).json({ error: 'No profile found' });
+    }
+
+    const { data: profile } = await supabase
+      .from('profiles')
+      .select('center_id')
+      .eq('id', profileId)
+      .single();
+
+    console.log('[GET MY CENTER] Profile data:', profile);
 
     if (!profile || !profile.center_id) {
+      console.log('[GET MY CENTER] FAIL: No center_id in profile');
       return res.status(400).json({ error: 'No tienes un centro asignado' });
     }
 
@@ -38,6 +57,7 @@ const getMyCenterData = async (req, res) => {
       .single();
 
     if (centerError || !center) {
+      console.log('[GET MY CENTER] FAIL: Center not found:', centerError);
       return res.status(404).json({ error: 'Centro no encontrado' });
     }
 
@@ -48,6 +68,7 @@ const getMyCenterData = async (req, res) => {
       .eq('center_id', profile.center_id);
 
     if (facilitiesError) {
+      console.log('[GET MY CENTER] FAIL: Facilities error:', facilitiesError);
       return res.status(400).json({ error: facilitiesError.message });
     }
 
@@ -72,12 +93,14 @@ const getMyCenterData = async (req, res) => {
       }
     }
 
+    console.log('[GET MY CENTER] SUCCESS: Data retrieved');
     res.json({
       center,
       facilities,
       stats
     });
   } catch (error) {
+    console.log('[GET MY CENTER] CATCH ERROR:', error.message);
     res.status(500).json({ error: 'Error al obtener datos del centro: ' + error.message });
   }
 };

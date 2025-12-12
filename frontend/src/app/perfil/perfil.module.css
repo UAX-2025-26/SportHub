@@ -1,18 +1,24 @@
 .perfilContainer {
-    width: 100%;
-    max-width: 900px;
+    width: var(--form-max-width);
+    min-width: var(--form-min-width);
+    max-width: var(--form-max-width);
     margin: 0 auto;
-    padding: 2rem;
+    padding: 0;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
 }
 
 .title {
-    font-size: 2.5rem;
+    font-size: 1.8rem;
     font-weight: 400;
-    margin-bottom: 2rem;
-    color: #636366;
+    margin-bottom: 0.5rem;
+    color: var(--color-text);
     text-align: center;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    flex-shrink: 0;
 }
 
 .loadingContainer,
@@ -21,16 +27,17 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 3rem;
+    padding: 1.5rem;
     text-align: center;
-    background: #ffffff;
-    border-radius: 25px;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+    background: var(--color-background);
+    border-radius: var(--border-radius-xl);
+    box-shadow: var(--shadow-lg);
+    height: 100%;
 }
 
 .errorMessage {
     color: #ee5a52;
-    font-size: 1.2rem;
+    font-size: 1rem;
     margin-bottom: 1rem;
     font-weight: 600;
 }
@@ -38,25 +45,25 @@
 .errorBanner {
     background: #f44336;
     color: white;
-    padding: 1.2rem;
-    border-radius: 20px;
-    margin-bottom: 1.5rem;
+    padding: 0.8rem;
+    border-radius: 15px;
+    margin-bottom: 0.8rem;
     text-align: center;
     box-shadow: 0 4px 12px rgba(244, 67, 54, 0.3);
     font-weight: 600;
 }
 
 .actionButton {
-    padding: 1rem 2rem;
-    background: #34beed;
+    padding: 0.6rem 1.2rem;
+    background: var(--color-primary);
     color: white;
     border: none;
-    border-radius: 30px;
-    font-size: 1.1rem;
+    border-radius: 25px;
+    font-size: 0.95rem;
     font-weight: bold;
     cursor: pointer;
     transition: all 0.3s ease;
-    box-shadow: 0 4px 10px rgba(52, 190, 237, 0.3);
+    box-shadow: var(--shadow-md);
     text-transform: uppercase;
     letter-spacing: 0.5px;
 }
@@ -64,22 +71,23 @@
 .actionButton:hover {
     transform: translateY(-2px);
     box-shadow: 0 6px 15px rgba(52, 190, 237, 0.4);
-    background: #0473a9;
+    background: var(--color-primary-hover);
 }
 
 .actionButton:active {
     transform: translateY(0);
-    box-shadow: 0 2px 8px rgba(52, 190, 237, 0.3);
+    box-shadow: var(--shadow-sm);
 }
 
 .profileCard {
-    background: #ffffff;
-    border-radius: 25px;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+    background: var(--color-background);
+    border-radius: 20px;
+    box-shadow: var(--shadow-lg);
     overflow: hidden;
-    margin-bottom: 2rem;
-    border: 2px solid #d1d1d6;
+    margin-bottom: 0.5rem;
+    border: 2px solid var(--color-border);
     transition: all 0.3s ease;
+    flex-shrink: 0;
 }
 
 .profileCard:hover {
@@ -88,12 +96,12 @@
 }
 
 .profileHeader {
-    background: #d1d1d6;
-    color: #636366;
-    padding: 2rem;
+    background: var(--color-background-secondary);
+    color: var(--color-text);
+    padding: 1rem;
     display: flex;
     align-items: center;
-    gap: 1.5rem;
+    gap: 1rem;
 }
 
 .avatar {

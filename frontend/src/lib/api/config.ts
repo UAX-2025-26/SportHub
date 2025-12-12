@@ -57,6 +57,7 @@ export const API_ENDPOINTS = {
   // Admin
   admin: {
     // Center admin routes
+    myCenter: '/api/admin/mi-centro',
     centerSummary: '/api/admin/centro/resumen',
     centerBookings: '/api/admin/centro/reservas',
 

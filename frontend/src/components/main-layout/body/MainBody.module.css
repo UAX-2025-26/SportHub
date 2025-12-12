@@ -13,6 +13,7 @@
     height: 62vh;
     display: flex;
     align-items: center;
+    overflow: hidden;
 }
 .footer {
     height: 18vh;
@@ -25,5 +26,14 @@
     height: 100%;
     padding-left: 10vw;
     padding-right: 10vw;
+}
+
+.footerButtons {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+    padding-left: clamp(5vw, 10vw, 15vw);
+    padding-right: clamp(5vw, 10vw, 15vw);
 }
 

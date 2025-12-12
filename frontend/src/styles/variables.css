@@ -1,0 +1,72 @@
+/* Variables CSS Responsivas Globales */
+/* Este archivo define variables que se adaptan a diferentes tamaños de pantalla */
+
+:root {
+  /* Tamaños de fuente base */
+  --font-size-base: 16px;
+  --font-size-lg: 18px;
+  --font-size-xl: 20px;
+  --font-size-2xl: 22px;
+  --font-size-3xl: 24px;
+
+  /* Espaciado más compacto */
+  --spacing-xs: 6px;
+  --spacing-sm: 10px;
+  --spacing-md: 14px;
+  --spacing-lg: 18px;
+  --spacing-xl: 22px;
+  --spacing-2xl: 28px;
+
+  /* Ancho máximo de contenedores - TODOS IGUALES Y ANCHOS */
+  --form-max-width: 600px;
+  --form-min-width: 500px;
+
+  /* Alto máximo más restrictivo */
+  --form-max-height: 85vh;
+
+  /* Border radius */
+  --border-radius-sm: 8px;
+  --border-radius-md: 12px;
+  --border-radius-lg: 15px;
+  --border-radius-xl: 25px;
+
+  /* Sombras */
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 10px rgba(0, 0, 0, 0.15);
+  --shadow-lg: 0 10px 40px rgba(0, 0, 0, 0.15);
+
+  /* Colores consistentes */
+  --color-primary: #34beed;
+  --color-primary-hover: #0473a9;
+  --color-background: #ffffff;
+  --color-background-secondary: #d1d1d6;
+  --color-text: #636366;
+  --color-text-dark: #1f2933;
+  --color-border: #d1d1d6;
+  --color-input-bg: #f8fafc;
+}
+
+/* Ajustes para pantallas muy pequeñas (mobile) */
+@media (max-width: 480px) {
+  :root {
+    --form-max-width: clamp(200px, 95vw, 400px);
+    --container-max-width: clamp(200px, 95vw, 400px);
+  }
+}
+
+/* Ajustes para tablets */
+@media (min-width: 768px) and (max-width: 1024px) {
+  :root {
+    --form-max-width: clamp(300px, 80vw, 500px);
+    --container-max-width: clamp(300px, 85vw, 900px);
+  }
+}
+
+/* Ajustes para pantallas grandes (desktop) */
+@media (min-width: 1920px) {
+  :root {
+    --form-max-width: clamp(400px, 40vw, 600px);
+    --container-max-width: clamp(600px, 85vw, 1200px);
+  }
+}
+

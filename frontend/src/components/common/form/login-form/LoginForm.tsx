@@ -85,17 +85,23 @@ export default function LoginForm() {
         setApiError("");
 
         try {
+            console.log('[LOGIN] Enviando credenciales...');
             const result = await login(formData.email, formData.contraseña);
 
+            console.log('[LOGIN] Respuesta del servidor:', result);
+
             if (!result.success) {
-                setApiError(result.error || "Error al iniciar sesión");
+                const errorMsg = result.error || "Error al iniciar sesión";
+                console.error('[LOGIN] FAIL:', errorMsg);
+                setApiError(errorMsg);
                 return;
             }
 
+            console.log('[LOGIN] SUCCESS: Login exitoso, redirigiendo...');
             // Redirigir a la página principal o home
             router.push('/home');
         } catch (error) {
-            console.error("Error al iniciar sesión:", error);
+            console.error("[LOGIN] Error al iniciar sesión:", error);
             setApiError("Error al iniciar sesión. Por favor, intenta de nuevo.");
         } finally {
             setLoading(false);

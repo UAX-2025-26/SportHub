@@ -174,6 +174,7 @@ const CreateCenterForm: React.FC<CreateCenterFormProps> = ({ onSuccess }) => {
           className={styles.input}
           placeholder="Ej: Centro de Deportes Madrid"
           required
+          disabled={loading}
         />
         {errors.nombre && <span className={styles.error}>{errors.nombre}</span>}
       </label>
@@ -188,6 +189,7 @@ const CreateCenterForm: React.FC<CreateCenterFormProps> = ({ onSuccess }) => {
           className={styles.input}
           placeholder="Ej: Calle Principal 123"
           required
+          disabled={loading}
         />
         {errors.direccion && <span className={styles.error}>{errors.direccion}</span>}
       </label>
@@ -202,6 +204,7 @@ const CreateCenterForm: React.FC<CreateCenterFormProps> = ({ onSuccess }) => {
           className={styles.input}
           placeholder="Ej: Madrid"
           required
+          disabled={loading}
         />
         {errors.ciudad && <span className={styles.error}>{errors.ciudad}</span>}
       </label>
@@ -214,6 +217,7 @@ const CreateCenterForm: React.FC<CreateCenterFormProps> = ({ onSuccess }) => {
           value={formData.horario_apertura}
           onChange={handleChange}
           className={styles.input}
+          disabled={loading}
         />
       </label>
 
@@ -225,6 +229,7 @@ const CreateCenterForm: React.FC<CreateCenterFormProps> = ({ onSuccess }) => {
           value={formData.horario_cierre}
           onChange={handleChange}
           className={styles.input}
+          disabled={loading}
         />
       </label>
     </>

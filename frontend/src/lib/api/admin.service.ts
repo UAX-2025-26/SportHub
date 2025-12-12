@@ -7,6 +7,13 @@ import { API_ENDPOINTS } from './config';
 import { Center } from './centers.service';
 
 /**
+ * Obtiene datos del centro actual (para center_admin)
+ */
+export async function getMyCenterData(token: string) {
+  return await get<any>(API_ENDPOINTS.admin.myCenter, { token });
+}
+
+/**
  * Obtiene estadísticas generales (requiere rol admin)
  */
 export async function getAdminStats(token: string) {
@@ -35,6 +42,7 @@ export async function updateUserById(id: string, data: any, token: string) {
 }
 
 export const adminService = {
+  getMyCenterData,
   getAdminStats,
   listCenters,
   getUserById,

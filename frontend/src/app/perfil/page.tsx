@@ -306,7 +306,6 @@ const PerfilPage: FunctionComponent = () => {
             </MainContent>
             <div className={clsx(bodyStyles.footer)}>
                 <MainFooter>
-                    <p>© 2024 SportHub. Todos los derechos reservados.</p>
                 </MainFooter>
             </div>
         </MainBody>

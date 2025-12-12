@@ -13,7 +13,7 @@ router.get('/:id/instalaciones', facilitiesCtrl.listByCenter);
 router.use(checkJwt);
 router.post('/', requireRole('center_admin', 'admin'), validate(createCenterSchema), centersCtrl.create);
 router.put('/:id', requireRole('center_admin', 'admin'), centersCtrl.update);
-router.delete('/:id', requireRole('center_admin', 'admin'), centersCtrl.delete);
+router.delete('/:id', requireRole('center_admin', 'admin'), centersCtrl.deletCenter);
 router.post('/:id/instalaciones', requireRole('center_admin', 'admin'), validate(createFacilitySchema), facilitiesCtrl.create);
 
 module.exports = router;
