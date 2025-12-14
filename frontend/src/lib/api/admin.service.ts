@@ -48,4 +48,3 @@ export const adminService = {
   getUserById,
   updateUserById,
 };
-

@@ -266,4 +266,3 @@ const ScheduleForm: React.FC<ScheduleFormProps> = ({ sport, centerId }) => {
 };
 
 export default ScheduleForm;
-

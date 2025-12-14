@@ -12,4 +12,3 @@ router.post('/register', authCtrl.register);
 router.post('/logout', authCtrl.logout);
 
 module.exports = router;
-

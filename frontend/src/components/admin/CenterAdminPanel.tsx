@@ -1,438 +1,300 @@
-'use client';
+"use client"
 
-import React, { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { useAuth } from '@/lib/auth';
-import { adminService } from '@/lib/api';
-import CreateCenterForm from '@/components/admin/forms/CreateCenterForm';
+import type React from "react"
+import { useEffect, useState } from "react"
+import { useRouter } from "next/navigation"
+import { useAuth } from "@/lib/auth"
+import { adminService } from "@/lib/api"
+import CreateCenterForm from "@/components/admin/forms/CreateCenterForm"
+import styles from "./center-admin.module.css"
 
 interface CenterData {
-  id: string;
-  nombre: string;
-  direccion: string;
-  ciudad: string;
-  horario_apertura: string;
-  horario_cierre: string;
+  id: string
+  nombre: string
+  direccion: string
+  ciudad: string
+  horario_apertura: string
+  horario_cierre: string
 }
 
 interface FacilityData {
-  id: string;
-  nombre: string;
-  tipo: string;
-  capacidad: number;
-  precio_hora: number;
-  activo: boolean;
+  id: string
+  nombre: string
+  tipo: string
+  capacidad: number
+  precio_hora: number
+  activo: boolean
 }
 
 interface BookingData {
-  id: string;
-  fecha: string;
-  hora_inicio: string;
-  hora_fin: string;
-  usuario: string;
-  instalacion: string;
-  total_precio: number;
-  estado: string;
+  id: string
+  fecha: string
+  hora_inicio: string
+  hora_fin: string
+  usuario: string
+  instalacion: string
+  total_precio: number
+  estado: string
 }
 
 const CenterAdminPanel: React.FC = () => {
-  const router = useRouter();
-  const { token } = useAuth();
-  const [center, setCenter] = useState<CenterData | null>(null);
-  const [facilities, setFacilities] = useState<FacilityData[]>([]);
-  const [bookings, setBookings] = useState<BookingData[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string>('');
-  const [showCreateCenter, setShowCreateCenter] = useState(false);
+  const router = useRouter()
+  const { token } = useAuth()
+  const [center, setCenter] = useState<CenterData | null>(null)
+  const [facilities, setFacilities] = useState<FacilityData[]>([])
+  const [bookings, setBookings] = useState<BookingData[]>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string>("")
+  const [showCreateCenter, setShowCreateCenter] = useState(false)
 
-  // Función para traducir estados
   const getStatusLabel = (estado: string): string => {
     const statusMap: { [key: string]: string } = {
-      'PENDIENTE_PAGO': 'Pendiente de Pago',
-      'CONFIRMADA': 'Confirmada',
-      'CANCELADA': 'Cancelada',
-      'COMPLETADA': 'Completada',
-      'confirmada': 'Confirmada',
-      'cancelada': 'Cancelada',
-      'pendiente': 'Pendiente',
-      'CONFIRMED': 'Confirmada',
-      'CANCELLED': 'Cancelada',
-      'COMPLETED': 'Completada',
-      'PENDING_PAYMENT': 'Pendiente de Pago'
-    };
-    return statusMap[estado] || estado;
-  };
+      PENDIENTE_PAGO: "Pendiente de Pago",
+      CONFIRMADA: "Confirmada",
+      CANCELADA: "Cancelada",
+      COMPLETADA: "Completada",
+      confirmada: "Confirmada",
+      cancelada: "Cancelada",
+      pendiente: "Pendiente",
+      CONFIRMED: "Confirmada",
+      CANCELLED: "Cancelada",
+      COMPLETED: "Completada",
+      PENDING_PAYMENT: "Pendiente de Pago",
+    }
+    return statusMap[estado] || estado
+  }
 
   useEffect(() => {
-    loadCenterData();
-  }, [token]);
+    loadCenterData()
+  }, [token])
 
   const loadCenterData = async () => {
     if (!token) {
-      console.log('[CENTER ADMIN] Token no disponible');
-      setLoading(false);
-      return;
+      console.log("[CENTER ADMIN] Token no disponible")
+      setLoading(false)
+      return
     }
 
     try {
-      setLoading(true);
-      console.log('[CENTER ADMIN] Iniciando carga de datos del centro...');
-      console.log('[CENTER ADMIN] Token disponible:', token.substring(0, 20) + '...');
+      setLoading(true)
+      console.log("[CENTER ADMIN] Iniciando carga de datos del centro...")
+      console.log("[CENTER ADMIN] Token disponible:", token.substring(0, 20) + "...")
 
-      const { data, error, status } = await adminService.getMyCenterData(token);
+      const { data, error, status } = await adminService.getMyCenterData(token)
 
-      console.log('[CENTER ADMIN] Respuesta del servidor:', status);
+      console.log("[CENTER ADMIN] Respuesta del servidor:", status)
 
       if (status === 400) {
-        console.log('[CENTER ADMIN] Usuario no tiene centro asignado');
-        setShowCreateCenter(true);
-        setCenter(null);
-        setFacilities([]);
-        setBookings([]);
-        setError('');
-        setLoading(false);
-        return;
+        console.log("[CENTER ADMIN] Usuario no tiene centro asignado")
+        setShowCreateCenter(true)
+        setCenter(null)
+        setFacilities([])
+        setBookings([])
+        setError("")
+        setLoading(false)
+        return
       }
 
       if (error || status >= 400) {
-        console.error('[CENTER ADMIN] Error al cargar datos:', error);
-        setError('Error al cargar datos del centro: ' + (error || 'Unknown error'));
-        setShowCreateCenter(false);
-        setLoading(false);
-        return;
+        console.error("[CENTER ADMIN] Error al cargar datos:", error)
+        setError("Error al cargar datos del centro: " + (error || "Unknown error"))
+        setShowCreateCenter(false)
+        setLoading(false)
+        return
       }
 
       if (data) {
-        console.log('[CENTER ADMIN] Datos cargados exitosamente:', data);
-        setCenter(data.center);
-        setFacilities(data.facilities || []);
-        setBookings(data.bookings || []);
-        setShowCreateCenter(false);
-        setError('');
+        console.log("[CENTER ADMIN] Datos cargados exitosamente:", data)
+        setCenter(data.center)
+        setFacilities(data.facilities || [])
+        setBookings(data.bookings || [])
+        setShowCreateCenter(false)
+        setError("")
       }
-      setLoading(false);
+      setLoading(false)
     } catch (err) {
-      console.error('[CENTER ADMIN] Error inesperado:', err);
-      setError('Error al cargar los datos del centro');
-      setShowCreateCenter(false);
-      setLoading(false);
+      console.error("[CENTER ADMIN] Error inesperado:", err)
+      setError("Error al cargar los datos del centro")
+      setShowCreateCenter(false)
+      setLoading(false)
     }
-  };
-
-  const containerStyle: React.CSSProperties = {
-    width: '600px',
-    minWidth: '500px',
-    maxWidth: '600px',
-    margin: '0 auto',
-    padding: '0',
-  };
-
-  const sectionStyle: React.CSSProperties = {
-    background: '#ffffff',
-    borderRadius: '25px',
-    padding: '32px',
-    boxShadow: '0 10px 40px rgba(0, 0, 0, 0.15)',
-  };
-
-  const headingStyle: React.CSSProperties = {
-    margin: '0 0 1.5rem 0',
-    color: '#636366',
-    fontSize: '2rem',
-    fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
-    fontWeight: 400,
-  };
-
-  const centerInfoStyle: React.CSSProperties = {
-    background: '#f8fafc',
-    borderRadius: '15px',
-    padding: '1.5rem',
-    marginBottom: '2rem',
-    border: '1px solid #d1d1d6',
-  };
-
-  const buttonStyle: React.CSSProperties = {
-    padding: '0.75rem 1.5rem',
-    background: '#34beed',
-    color: 'white',
-    border: 'none',
-    borderRadius: '25px',
-    fontSize: '1rem',
-    fontWeight: 'bold',
-    cursor: 'pointer',
-    transition: 'all 0.3s ease',
-    boxShadow: '0 4px 10px rgba(52, 190, 237, 0.3)',
-    textTransform: 'uppercase',
-    letterSpacing: '0.5px',
-  };
+  }
 
   if (loading) {
-    return <div style={containerStyle}><p>Cargando...</p></div>;
+    return (
+      <div className={styles.container}>
+        <p>Cargando...</p>
+      </div>
+    )
   }
 
   if (error) {
     return (
-      <div style={containerStyle}>
-        <div style={{
-          padding: '1rem 1.5rem',
-          background: '#ffebee',
-          color: '#c62828',
-          borderRadius: '15px',
-          borderLeft: '4px solid #ee5a52',
-          fontWeight: 500,
-        }}>
-          {error}
-        </div>
+      <div className={styles.container}>
+        <div className={styles.error}>{error}</div>
       </div>
-    );
+    )
   }
 
   if (!center && showCreateCenter) {
-    return <CreateCenterForm onSuccess={() => {
-      console.log('[CENTER ADMIN] Centro creado, recargando datos...');
-      setShowCreateCenter(false);
-      loadCenterData();
-    }} />;
+    return (
+      <CreateCenterForm
+        onSuccess={() => {
+          console.log("[CENTER ADMIN] Centro creado, recargando datos...")
+          setShowCreateCenter(false)
+          loadCenterData()
+        }}
+      />
+    )
   }
 
   if (!center) {
-    return <div style={containerStyle}><p>No tienes un centro asignado</p></div>;
+    return (
+      <div className={styles.container}>
+        <p>No tienes un centro asignado</p>
+      </div>
+    )
   }
 
   return (
-    <div style={containerStyle}>
-      <div style={sectionStyle}>
-        <h2 style={headingStyle}>Mi Centro: {center.nombre}</h2>
+    <div className={styles.panelWrapper}>
+      {/* Left column: Center info, facilities, stats */}
+      <div className={styles.mainColumn}>
+        <div className={styles.section}>
+          <h2 className={styles.heading}>Mi Centro: {center.nombre}</h2>
 
-        <div style={centerInfoStyle}>
-          <div style={{ marginBottom: '1rem' }}>
-            <label style={{ display: 'block', fontWeight: 600, color: '#636366', marginBottom: '0.5rem', fontSize: '0.9rem' }}>
-              Ubicación
-            </label>
-            <p style={{ margin: 0, color: '#1f2933', fontSize: '1rem' }}>{center.direccion}, {center.ciudad}</p>
-          </div>
-          <div style={{ marginBottom: '1rem' }}>
-            <label style={{ display: 'block', fontWeight: 600, color: '#636366', marginBottom: '0.5rem', fontSize: '0.9rem' }}>
-              Horario
-            </label>
-            <p style={{ margin: 0, color: '#1f2933', fontSize: '1rem' }}>{center.horario_apertura} - {center.horario_cierre}</p>
-          </div>
-          <div style={{ marginTop: '1.5rem' }}>
-            <button
-              onClick={() => router.push(`/admin-center/${center!.id}`)}
-              style={buttonStyle}
-            >
-              Editar Centro
-            </button>
-          </div>
-        </div>
-
-        <div style={{ marginTop: '2rem' }}>
-          <h3 style={{ ...headingStyle, fontSize: '1.5rem', margin: '0 0 1rem 0' }}>
-            Instalaciones ({facilities.length})
-          </h3>
-
-          {facilities.length === 0 ? (
-            <div style={{
-              textAlign: 'center',
-              padding: '2rem',
-              background: '#f8fafc',
-              borderRadius: '15px',
-              border: '2px dashed #d1d1d6',
-            }}>
-              <p style={{ color: '#636366', margin: '0 0 1rem 0', fontWeight: 500 }}>
-                No tienes instalaciones aún
+          <div className={styles.centerInfo}>
+            <div className={styles.infoGroup}>
+              <label>Ubicación</label>
+              <p>
+                {center.direccion}, {center.ciudad}
               </p>
-              <button
-                onClick={() => router.push(`/admin-center/${center!.id}/facilities/new`)}
-                style={{ ...buttonStyle, marginTop: '1rem', width: '100%', display: 'block' }}
-              >
-                + Crear Primera Instalación
+            </div>
+            <div className={styles.infoGroup}>
+              <label>Horario</label>
+              <p>
+                {center.horario_apertura} - {center.horario_cierre}
+              </p>
+            </div>
+            <div className={styles.actions}>
+              <button onClick={() => router.push(`/admin-center/${center!.id}`)} className={styles.editButton}>
+                Editar Centro
               </button>
             </div>
-          ) : (
-            <div style={{ display: 'grid', gap: '1rem' }}>
-              {facilities.map(facility => (
-                <div
-                  key={facility.id}
-                  style={{
-                    background: '#f8fafc',
-                    border: '1px solid #d1d1d6',
-                    borderRadius: '15px',
-                    padding: '1.5rem',
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
-                  }}
+          </div>
+
+          <div className={styles.facilitiesSection}>
+            <h3>Instalaciones ({facilities.length})</h3>
+
+            {facilities.length === 0 ? (
+              <div className={styles.empty}>
+                <p>No tienes instalaciones aún</p>
+                <button
+                  onClick={() => router.push(`/admin-center/${center!.id}/facilities/new`)}
+                  className={styles.createButton}
                 >
-                  <div>
-                    <h4 style={{ margin: '0 0 0.5rem 0', color: '#636366', fontSize: '1.2rem' }}>
-                      {facility.nombre}
-                    </h4>
-                    <p style={{ margin: '0 0 1rem 0', color: '#999', fontSize: '0.9rem', fontWeight: 500 }}>
-                      {facility.tipo}
-                    </p>
-                    <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
-                      <span style={{
-                        fontSize: '0.9rem',
-                        color: '#1f2933',
-                        padding: '0.4rem 0.8rem',
-                        background: 'white',
-                        borderRadius: '15px',
-                        border: '1px solid #e0e0e0',
-                      }}>
-                        Capacidad: {facility.capacidad}
-                      </span>
-                      <span style={{
-                        fontSize: '0.9rem',
-                        color: '#1f2933',
-                        padding: '0.4rem 0.8rem',
-                        background: 'white',
-                        borderRadius: '15px',
-                        border: '1px solid #e0e0e0',
-                      }}>
-                        ${facility.precio_hora}/h
-                      </span>
-                      <span style={{
-                        fontSize: '0.9rem',
-                        padding: '0.4rem 0.8rem',
-                        borderRadius: '15px',
-                        ...(facility.activo ? {
-                          background: '#4caf50',
-                          color: 'white',
-                          border: '1px solid #4caf50',
-                        } : {
-                          background: '#f44336',
-                          color: 'white',
-                          border: '1px solid #f44336',
-                        }),
-                      }}>
-                        {facility.activo ? 'Activa' : 'Inactiva'}
-                      </span>
+                  + Crear Primera Instalación
+                </button>
+              </div>
+            ) : (
+              <div className={styles.facilitiesList}>
+                {facilities.map((facility) => (
+                  <div key={facility.id} className={styles.facilityCard}>
+                    <div className={styles.facilityInfo}>
+                      <h4>{facility.nombre}</h4>
+                      <p className={styles.facilityType}>{facility.tipo}</p>
+                      <div className={styles.details}>
+                        <span>Capacidad: {facility.capacidad}</span>
+                        <span>${facility.precio_hora}/h</span>
+                        <span className={facility.activo ? styles.active : styles.inactive}>
+                          {facility.activo ? "Activa" : "Inactiva"}
+                        </span>
+                      </div>
                     </div>
+                    <button
+                      onClick={() => router.push(`/admin-center/${center!.id}/facilities/${facility.id}`)}
+                      className={styles.smallButton}
+                    >
+                      Editar
+                    </button>
                   </div>
-                  <button
-                    onClick={() => router.push(`/admin-center/${center!.id}/facilities/${facility.id}`)}
-                    style={{ ...buttonStyle, padding: '0.5rem 1rem', fontSize: '0.9rem' }}
-                  >
-                    Editar
-                  </button>
-                </div>
-              ))}
-              <button
-                onClick={() => router.push(`/admin-center/${center!.id}/facilities/new`)}
-                style={{ ...buttonStyle, marginTop: '1rem', width: '100%', display: 'block' }}
-              >
-                + Crear Instalación
-              </button>
-            </div>
-          )}
-        </div>
-
-        <div style={{ marginTop: '2rem', paddingTop: '2rem', borderTop: '1px solid #d1d1d6' }}>
-          <h3 style={{ ...headingStyle, fontSize: '1.5rem', margin: '0 0 1rem 0' }}>
-            Estadísticas
-          </h3>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', gap: '1rem' }}>
-            <div style={{
-              background: 'linear-gradient(135deg, #34beed 0%, #0473a9 100%)',
-              color: 'white',
-              borderRadius: '15px',
-              padding: '1.5rem',
-              textAlign: 'center',
-              boxShadow: '0 4px 10px rgba(52, 190, 237, 0.3)',
-            }}>
-              <p style={{ margin: '0 0 0.5rem 0', fontSize: '0.9rem', fontWeight: 600, opacity: 0.9 }}>
-                Instalaciones
-              </p>
-              <p style={{ margin: 0, fontSize: '2rem', fontWeight: 'bold' }}>
-                {facilities.length}
-              </p>
-            </div>
-            <div style={{
-              background: 'linear-gradient(135deg, #34beed 0%, #0473a9 100%)',
-              color: 'white',
-              borderRadius: '15px',
-              padding: '1.5rem',
-              textAlign: 'center',
-              boxShadow: '0 4px 10px rgba(52, 190, 237, 0.3)',
-            }}>
-              <p style={{ margin: '0 0 0.5rem 0', fontSize: '0.9rem', fontWeight: 600, opacity: 0.9 }}>
-                Reservas
-              </p>
-              <p style={{ margin: 0, fontSize: '2rem', fontWeight: 'bold' }}>{bookings.length}</p>
-            </div>
-            <div style={{
-              background: 'linear-gradient(135deg, #34beed 0%, #0473a9 100%)',
-              color: 'white',
-              borderRadius: '15px',
-              padding: '1.5rem',
-              textAlign: 'center',
-              boxShadow: '0 4px 10px rgba(52, 190, 237, 0.3)',
-            }}>
-              <p style={{ margin: '0 0 0.5rem 0', fontSize: '0.9rem', fontWeight: 600, opacity: 0.9 }}>
-                Ingresos
-              </p>
-              <p style={{ margin: 0, fontSize: '2rem', fontWeight: 'bold' }}>
-                ${bookings.reduce((sum, b) => sum + (b.total_precio || 0), 0).toFixed(2)}
-              </p>
-            </div>
+                ))}
+                <button
+                  onClick={() => router.push(`/admin-center/${center!.id}/facilities/new`)}
+                  className={styles.createButton}
+                >
+                  + Crear Instalación
+                </button>
+              </div>
+            )}
           </div>
 
-          {bookings.length > 0 && (
-            <div style={{ marginTop: '2rem' }}>
-              <h3 style={{ ...headingStyle, fontSize: '1.5rem', margin: '0 0 1rem 0' }}>
-                Reservas Recientes ({bookings.length})
-              </h3>
-              <div style={{
-                overflowX: 'auto',
-                borderRadius: '15px',
-                boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)',
-              }}>
-                <table style={{
-                  width: '100%',
-                  borderCollapse: 'collapse',
-                  backgroundColor: 'white',
-                }}>
-                  <thead>
-                    <tr style={{ backgroundColor: '#f0f0f0', borderBottom: '2px solid #d1d1d6' }}>
-                      <th style={{ padding: '1rem', textAlign: 'left', fontWeight: 600, color: '#636366' }}>Instalación</th>
-                      <th style={{ padding: '1rem', textAlign: 'left', fontWeight: 600, color: '#636366' }}>Usuario</th>
-                      <th style={{ padding: '1rem', textAlign: 'left', fontWeight: 600, color: '#636366' }}>Fecha</th>
-                      <th style={{ padding: '1rem', textAlign: 'left', fontWeight: 600, color: '#636366' }}>Hora</th>
-                      <th style={{ padding: '1rem', textAlign: 'left', fontWeight: 600, color: '#636366' }}>Precio</th>
-                      <th style={{ padding: '1rem', textAlign: 'left', fontWeight: 600, color: '#636366' }}>Estado</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {bookings.slice(0, 5).map((booking) => (
-                      <tr key={booking.id} style={{ borderBottom: '1px solid #e0e0e0', transition: 'background 0.2s' }}>
-                        <td style={{ padding: '1rem', color: '#1f2933' }}>{booking.instalacion}</td>
-                        <td style={{ padding: '1rem', color: '#1f2933' }}>{booking.usuario}</td>
-                        <td style={{ padding: '1rem', color: '#1f2933' }}>{new Date(booking.fecha).toLocaleDateString()}</td>
-                        <td style={{ padding: '1rem', color: '#1f2933' }}>{booking.hora_inicio} - {booking.hora_fin}</td>
-                        <td style={{ padding: '1rem', color: '#1f2933', fontWeight: 600 }}>${booking.total_precio}</td>
-                        <td style={{
-                          padding: '1rem',
-                          color: 'white',
-                          backgroundColor: booking.estado === 'CONFIRMADA' ? '#4caf50' : booking.estado === 'CANCELADA' ? '#f44336' : '#ff9800',
-                          borderRadius: '4px',
-                          textAlign: 'center',
-                          fontWeight: 500
-                        }}>
-                          {getStatusLabel(booking.estado)}
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
+          <div className={styles.statsSection}>
+            <h3>Estadísticas</h3>
+            <div className={styles.statCards}>
+              <div className={styles.statCard}>
+                <p className={styles.statLabel}>Instalaciones</p>
+                <p className={styles.statValue}>{facilities.length}</p>
+              </div>
+              <div className={styles.statCard}>
+                <p className={styles.statLabel}>Reservas</p>
+                <p className={styles.statValue}>{bookings.length}</p>
+              </div>
+              <div className={styles.statCard}>
+                <p className={styles.statLabel}>Ingresos</p>
+                <p className={styles.statValue}>
+                  ${bookings.reduce((sum, b) => sum + (b.total_precio || 0), 0).toFixed(2)}
+                </p>
               </div>
             </div>
-          )}
+          </div>
         </div>
       </div>
+
+      {/* Right column: Recent bookings */}
+      {bookings.length > 0 && (
+        <div className={styles.bookingsColumn}>
+          <div className={styles.section}>
+            <h3>Reservas Recientes ({bookings.length})</h3>
+            <div className={styles.bookingsList}>
+              {bookings.slice(0, 10).map((booking) => (
+                <div key={booking.id} className={styles.bookingCard}>
+                  <div className={styles.bookingHeader}>
+                    <span className={styles.bookingFacility}>{booking.instalacion}</span>
+                    <span
+                      className={styles.bookingStatus}
+                      style={{
+                        backgroundColor:
+                          booking.estado === "CONFIRMADA"
+                            ? "#4caf50"
+                            : booking.estado === "CANCELADA"
+                              ? "#f44336"
+                              : "#ff9800",
+                      }}
+                    >
+                      {getStatusLabel(booking.estado)}
+                    </span>
+                  </div>
+                  <div className={styles.bookingDetails}>
+                    <p>
+                      <strong>Usuario:</strong> {booking.usuario}
+                    </p>
+                    <p>
+                      <strong>Fecha:</strong> {new Date(booking.fecha).toLocaleDateString()}
+                    </p>
+                    <p>
+                      <strong>Hora:</strong> {booking.hora_inicio} - {booking.hora_fin}
+                    </p>
+                    <p className={styles.bookingPrice}>${booking.total_precio}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
-  );
-};
+  )
+}
 
-export default CenterAdminPanel;
-
+export default CenterAdminPanel

@@ -54,4 +54,3 @@ const BookingSchedulePage: React.FC = () => {
 };
 
 export default BookingSchedulePage;
-

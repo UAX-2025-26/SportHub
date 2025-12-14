@@ -316,4 +316,3 @@ const EditFacilityForm: React.FC<EditFacilityFormProps> = ({ centerId, facilityI
 };
 
 export default EditFacilityForm;
-

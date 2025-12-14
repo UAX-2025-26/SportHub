@@ -48,4 +48,3 @@ const CreateCenterPage: React.FC = () => {
 };
 
 export default CreateCenterPage;
-

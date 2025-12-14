@@ -81,4 +81,3 @@ function requireRole(...roles) {
 }
 
 module.exports = { checkJwt, requireRole, getRoleFromToken };
-

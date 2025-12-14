@@ -270,4 +270,3 @@ const CreateFacilityForm: React.FC = () => {
 };
 
 export default CreateFacilityForm;
-

@@ -73,4 +73,3 @@ export const centersService = {
   updateCenter,
   deleteCenter,
 };
-

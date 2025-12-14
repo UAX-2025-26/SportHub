@@ -153,4 +153,3 @@ const FacilitiesList: React.FC<FacilitiesListProps> = ({ centerId }) => {
 };
 
 export default FacilitiesList;
-

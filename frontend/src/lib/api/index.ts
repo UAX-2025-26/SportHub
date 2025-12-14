@@ -18,4 +18,3 @@ export { centersService } from './centers.service';
 export { facilitiesService } from './facilities.service';
 export { bookingsService } from './bookings.service';
 export { adminService } from './admin.service';
-

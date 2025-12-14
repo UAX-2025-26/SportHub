@@ -69,4 +69,3 @@ export function getRoleFriendlyName(role: string | null | undefined): string {
       return 'Usuario';
   }
 }
-

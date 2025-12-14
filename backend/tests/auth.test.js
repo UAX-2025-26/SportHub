@@ -33,4 +33,3 @@ describe('requireRole middleware', () => {
     expect(err.status).toBe(403);
   });
 });
-

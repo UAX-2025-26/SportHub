@@ -108,4 +108,3 @@ export const facilitiesService = {
   updateFacility,
   deleteFacility,
 };
-

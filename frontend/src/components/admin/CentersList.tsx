@@ -150,4 +150,3 @@ const CentersList: React.FC = () => {
 };
 
 export default CentersList;
-

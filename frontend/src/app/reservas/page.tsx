@@ -252,4 +252,3 @@ const ReservasPage: FunctionComponent = () => {
 };
 
 export default ReservasPage;
-

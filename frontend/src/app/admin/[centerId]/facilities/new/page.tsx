@@ -54,4 +54,3 @@ const CreateFacilityPage: React.FC = () => {
 };
 
 export default CreateFacilityPage;
-

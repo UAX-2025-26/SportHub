@@ -24,4 +24,3 @@ const BackArrow: React.FC<BackArrowProps> = ({ size = 'large' }) => {
 };
 
 export default BackArrow;
-

@@ -41,4 +41,3 @@ export const usersService = {
   getCurrentUser,
   updateCurrentUser,
 };
-

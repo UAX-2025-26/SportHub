@@ -319,4 +319,3 @@ CREATE TRIGGER on_auth_user_created
 -- 1. Crear usuarios en Authentication → Users
 -- 2. Probar los endpoints de la API
 -- 3. Los perfiles se crearán automáticamente al registrar usuarios
-

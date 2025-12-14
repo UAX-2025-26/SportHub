@@ -1,4 +1,4 @@
- /**
+/**
  * Servicio de autenticación con Supabase
  */
 
@@ -114,4 +114,3 @@ export const authService = {
   setStoredUser,
   isAuthenticated,
 };
-

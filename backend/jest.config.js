@@ -6,4 +6,3 @@ module.exports = {
   collectCoverageFrom: ['controllers/**/*.js', 'src/**/*.js', 'utils/**/*.js'],
   coveragePathIgnorePatterns: ['/node_modules/'],
 };
-

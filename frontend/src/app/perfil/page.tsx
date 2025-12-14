@@ -314,4 +314,3 @@ const PerfilPage: FunctionComponent = () => {
 };
 
 export default PerfilPage;
-

@@ -39,4 +39,3 @@ describe('validate middleware', () => {
     expect(req.body.age).toBe(21);
   });
 });
-

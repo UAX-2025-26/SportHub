@@ -54,4 +54,3 @@ const CenterFacilitiesPage: React.FC = () => {
 };
 
 export default CenterFacilitiesPage;
-

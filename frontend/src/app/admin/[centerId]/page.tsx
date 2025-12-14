@@ -68,4 +68,3 @@ const EditCenterPage: React.FC = () => {
 };
 
 export default EditCenterPage;
-

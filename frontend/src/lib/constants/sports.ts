@@ -114,6 +114,3 @@ export const getSportSearchVariants = (sport: string): string[] => {
 
   return Array.from(variants);
 };
-
-
-

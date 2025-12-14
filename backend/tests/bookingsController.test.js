@@ -96,4 +96,3 @@ describe('bookingsController.cancel', () => {
     expect(res.json).toHaveBeenCalledWith(expect.objectContaining({ ok: true, booking: expect.objectContaining({ id: 'bk-1', estado: 'CANCELADA' }) }));
   });
 });
-

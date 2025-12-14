@@ -22,4 +22,3 @@ async function getUserProfileId(req) {
 }
 
 module.exports = { getUserProfileId, getRoleFromTokenSafe };
-

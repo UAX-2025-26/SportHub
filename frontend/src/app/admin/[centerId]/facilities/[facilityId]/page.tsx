@@ -69,4 +69,3 @@ const EditFacilityPage: React.FC = () => {
 };
 
 export default EditFacilityPage;
-

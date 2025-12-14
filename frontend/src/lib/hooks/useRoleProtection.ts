@@ -70,4 +70,3 @@ export function useHasAnyRole(roles: string[]): boolean {
   const { user } = useAuth();
   return roles.includes(user?.rol || '');
 }
-

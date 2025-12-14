@@ -244,4 +244,3 @@ const CenterCarouselPage: React.FC = () => {
 };
 
 export default CenterCarouselPage;
-
