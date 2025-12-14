@@ -75,7 +75,7 @@ CREATE TABLE IF NOT EXISTS bookings (
     user_id UUID REFERENCES profiles(id) ON DELETE CASCADE NOT NULL,
     fecha DATE NOT NULL,
     hora_inicio TIME NOT NULL,
-    estado TEXT DEFAULT 'CONFIRMED' CHECK (estado IN ('PENDING_PAYMENT', 'CONFIRMED', 'CANCELLED', 'COMPLETED')),
+    estado TEXT DEFAULT 'CONFIRMADA',
     created_at TIMESTAMPTZ DEFAULT NOW(),
     cancelled_at TIMESTAMPTZ,
     price_paid DECIMAL(8,2),

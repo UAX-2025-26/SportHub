@@ -79,7 +79,7 @@ describe('bookingsController.cancel', () => {
           update: () => ({
             eq: () => ({
               eq: () => ({
-                select: () => ({ single: () => ({ data: { id: 'bk-1', estado: 'CANCELLED' }, error: null }) })
+                select: () => ({ single: () => ({ data: { id: 'bk-1', estado: 'CANCELADA' }, error: null }) })
               })
             })
           })
@@ -93,7 +93,7 @@ describe('bookingsController.cancel', () => {
 
     await ctrl.cancel(req, res);
 
-    expect(res.json).toHaveBeenCalledWith(expect.objectContaining({ id: 'bk-1', estado: 'CANCELLED' }));
+    expect(res.json).toHaveBeenCalledWith(expect.objectContaining({ ok: true, booking: expect.objectContaining({ id: 'bk-1', estado: 'CANCELADA' }) }));
   });
 });
 
