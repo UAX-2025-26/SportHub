@@ -92,15 +92,8 @@
     background: #ffffff;
     border-radius: 20px;
     padding: 0.8rem;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease;
     border: 2px solid #d1d1d6;
-}
-
-.bookingCard:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 50px rgba(0, 0, 0, 0.2);
-    border-color: #34beed;
 }
 
 .bookingHeader {

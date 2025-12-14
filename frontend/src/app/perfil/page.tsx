@@ -10,6 +10,7 @@ import MainFooter from "@/components/main-layout/footer/MainFooter";
 import bodyStyles from "@/components/main-layout/body/MainBody.module.css";
 import headerStyles from "@/components/main-layout/header/MainHeader.module.css";
 import contentStyles from "@/components/main-layout/content/MainContent.module.css";
+import footerStyles from "@/components/main-layout/footer/MainFooter.module.css";
 import { useAuth } from "@/lib/auth/AuthContext";
 import { usersService, User, UpdateUserData } from "@/lib/api/users.service";
 import styles from './perfil.module.css';
@@ -153,9 +154,8 @@ const PerfilPage: FunctionComponent = () => {
     return (
         <MainBody bodyClassName={clsx(bodyStyles.content)}>
             <MainHeader bodyClassName={clsx(headerStyles.container, headerStyles.title, bodyStyles.header)} />
-            <MainContent bodyClassName={clsx(contentStyles.container, bodyStyles.body)}>
+            <MainContent bodyClassName={clsx(contentStyles.container2, contentStyles.flexContainer, bodyStyles.body)}>
                 <div className={styles.perfilContainer}>
-                    <h1 className={styles.title}>Mi Perfil</h1>
 
                     {error && (
                         <div className={styles.errorBanner}>
@@ -306,6 +306,7 @@ const PerfilPage: FunctionComponent = () => {
             </MainContent>
             <div className={clsx(bodyStyles.footer)}>
                 <MainFooter>
+                    <h1>Mi Perfil</h1>
                 </MainFooter>
             </div>
         </MainBody>

@@ -38,7 +38,7 @@ const CenterAdminPage: React.FC = () => {
   return (
     <MainBody bodyClassName={clsx(bodyStyles.content)}>
       <MainHeader bodyClassName={clsx(headerStyles.container, headerStyles.title, bodyStyles.header)} />
-      <MainContent bodyClassName={clsx(contentStyles.container, bodyStyles.body)}>
+      <MainContent bodyClassName={clsx(contentStyles.container)}>
         <CenterAdminPanel />
       </MainContent>
       <div className={clsx(bodyStyles.footer)}>

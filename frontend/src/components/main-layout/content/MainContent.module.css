@@ -12,3 +12,8 @@
     justify-items: center;
 }
 
+.container2 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

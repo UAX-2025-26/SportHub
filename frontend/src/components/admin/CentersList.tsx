@@ -108,7 +108,7 @@ const CentersList: React.FC = () => {
                 <th>Ciudad</th>
                 <th>Dirección</th>
                 <th>Horario</th>
-                <th>Acciones</th>
+                <th className={styles.actionsHeader}>Acciones</th>
               </tr>
             </thead>
             <tbody className={styles.tableBody}>

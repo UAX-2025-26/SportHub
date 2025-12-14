@@ -1,6 +1,5 @@
 .container {
     border-radius: var(--border-radius-xl);
-    box-shadow: var(--shadow-lg);
     width: var(--form-max-width);
     min-width: var(--form-min-width);
     max-width: var(--form-max-width);

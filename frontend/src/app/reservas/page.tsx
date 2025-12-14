@@ -244,6 +244,7 @@ const ReservasPage: FunctionComponent = () => {
             </MainContent>
             <div className={clsx(bodyStyles.footer)}>
                 <MainFooter>
+                    <h1>Mis reservas</h1>
                 </MainFooter>
             </div>
         </MainBody>
