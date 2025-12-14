@@ -17,8 +17,8 @@ interface AuthContextType {
   isAuthenticated: boolean;
   isLoading: boolean;
   userRole: string | null;
-  login: (email: string, password: string) => Promise<{ success: boolean; error?: string }>;
-  register: (data: RegisterData) => Promise<{ success: boolean; error?: string }>;
+  login: (email: string, password: string) => Promise<{ success: boolean; error?: string; user?: User }>;
+  register: (data: RegisterData) => Promise<{ success: boolean; error?: string; user?: User }>;
   logout: () => void;
 }
 
@@ -80,7 +80,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         authService.setStoredUser(data.user);
 
         console.log('[AUTH CONTEXT] Datos guardados en localStorage');
-        return { success: true };
+        return { success: true, user: data.user };
       }
 
       console.error('[AUTH CONTEXT] No hay datos en la respuesta');
@@ -104,7 +104,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         setUser(responseData.user);
         authService.setStoredToken(responseData.token);
         authService.setStoredUser(responseData.user);
-        return { success: true };
+        return { success: true, user: responseData.user };
       }
 
       return { success: false, error: 'Error desconocido' };

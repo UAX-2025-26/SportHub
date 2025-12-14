@@ -9,6 +9,7 @@ import Input from "@/components/common/input/Input";
 import FormContainer from "@/components/common/form/FormContainer";
 import styles from "./RegistroForm.module.css";
 import { useAuth } from "@/lib/auth";
+import { getRedirectPathByRole } from "@/lib/utils/roleRedirect";
 
 interface FormData {
     email: string;
@@ -129,8 +130,14 @@ export default function RegistroForm() {
                 return;
             }
 
-            // Redirigir a la página principal o home
-            router.push('/home');
+            // Redirigir según el rol del usuario registrado
+            const userRole = result.user?.rol;
+            const redirectPath = getRedirectPathByRole(userRole);
+
+            console.log('[REGISTRO] Usuario registrado con rol:', userRole);
+            console.log('[REGISTRO] Redirigiendo a:', redirectPath);
+
+            router.push(redirectPath);
         } catch (error) {
             console.error("Error al registrar:", error);
             setApiError("Error al registrar. Por favor, intenta de nuevo.");

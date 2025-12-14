@@ -1,8 +1,8 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useRouter } from 'next/navigation';
-import { useAuth } from '@/lib/auth';
+import { useRoleProtection } from '@/lib/hooks/useRoleProtection';
 import clsx from 'clsx';
 import MainBody from '@/components/main-layout/body/MainBody';
 import MainContent from '@/components/main-layout/content/MainContent';
@@ -16,17 +16,7 @@ import CenterAdminPanel from '@/components/admin/CenterAdminPanel';
 
 const CenterAdminPage: React.FC = () => {
   const router = useRouter();
-  const { userRole, isAuthenticated, isLoading } = useAuth();
-
-  useEffect(() => {
-    if (isLoading) return;
-
-    if (!isAuthenticated) {
-      router.push('/login');
-    } else if (userRole !== 'center_admin') {
-      router.push('/home');
-    }
-  }, [isAuthenticated, userRole, router, isLoading]);
+  const { isLoading, isAuthenticated, user } = useRoleProtection(['center_admin']);
 
   if (isLoading) {
     return (
@@ -41,7 +31,7 @@ const CenterAdminPage: React.FC = () => {
     );
   }
 
-  if (!isAuthenticated || userRole !== 'center_admin') {
+  if (!isAuthenticated || user?.rol !== 'center_admin') {
     return null;
   }
 

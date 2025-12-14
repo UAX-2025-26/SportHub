@@ -9,6 +9,7 @@ import Input from "@/components/common/input/Input";
 import FormContainer from "@/components/common/form/FormContainer";
 import styles from "./LoginForm.module.css";
 import { useAuth } from "@/lib/auth";
+import { getRedirectPathByRole } from "@/lib/utils/roleRedirect";
 
 interface FormData {
     email: string;
@@ -98,8 +99,15 @@ export default function LoginForm() {
             }
 
             console.log('[LOGIN] SUCCESS: Login exitoso, redirigiendo...');
-            // Redirigir a la página principal o home
-            router.push('/home');
+
+            // Redirigir según el rol del usuario
+            const userRole = result.user?.rol;
+            const redirectPath = getRedirectPathByRole(userRole);
+
+            console.log('[LOGIN] Rol del usuario:', userRole);
+            console.log('[LOGIN] Redirigiendo a:', redirectPath);
+
+            router.push(redirectPath);
         } catch (error) {
             console.error("[LOGIN] Error al iniciar sesión:", error);
             setApiError("Error al iniciar sesión. Por favor, intenta de nuevo.");
