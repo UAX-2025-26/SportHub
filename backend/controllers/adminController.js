@@ -72,31 +72,37 @@ const getMyCenterData = async (req, res) => {
       return res.status(400).json({ error: facilitiesError.message });
     }
 
-    // Obtener estadísticas del centro
-    const facilityIds = (facilities || []).map(f => f.id);
+    // Obtener reservas del centro
+    let bookings = [];
     let stats = {
       total_facilities: facilities?.length || 0,
       total_bookings: 0,
       revenue: 0
     };
 
+    const facilityIds = (facilities || []).map(f => f.id);
     if (facilityIds.length > 0) {
-      const { data: bookings, error: bookingsError } = await supabase
+      const { data: allBookings, error: bookingsError } = await supabase
         .from('bookings')
         .select('*')
         .in('facility_id', facilityIds)
-        .eq('estado', 'COMPLETED');
+        .order('created_at', { ascending: false });
 
-      if (!bookingsError && bookings) {
-        stats.total_bookings = bookings.length;
-        stats.revenue = bookings.reduce((sum, b) => sum + (b.price_paid || 0), 0);
+      if (!bookingsError && allBookings) {
+        bookings = allBookings;
+        stats.total_bookings = allBookings.filter(b => b.estado === 'COMPLETED').length;
+        stats.revenue = allBookings
+          .filter(b => b.estado === 'COMPLETED')
+          .reduce((sum, b) => sum + (b.price_paid || b.precio_total || 0), 0);
       }
     }
 
     console.log('[GET MY CENTER] SUCCESS: Data retrieved');
+    console.log('[GET MY CENTER] Bookings count:', bookings.length);
     res.json({
       center,
       facilities,
+      bookings,
       stats
     });
   } catch (error) {

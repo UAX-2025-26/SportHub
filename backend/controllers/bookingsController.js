@@ -18,17 +18,54 @@ async function availability(req, res) {
 async function create(req, res) {
   const profileId = await getUserProfileId(req);
   if (!profileId) return res.status(400).json({ error: 'profile_id_missing' });
-  const payload = { ...req.body, user_id: profileId };
-  const { data, error } = await supabase.from('bookings').insert(payload).select('*').single();
-  if (error) {
-    const msg = error.message || '';
-    const lower = msg.toLowerCase();
-    if (lower.includes('duplicate key') || lower.includes('unique')) {
-      return res.status(409).json({ error: 'duplicate_booking' });
+
+  const { facility_id, fecha, hora_inicio, hora_fin } = req.body;
+
+  try {
+    // Obtener datos de la instalación para el precio
+    const { data: facility, error: facilityError } = await supabase
+      .from('facilities')
+      .select('precio_hora')
+      .eq('id', facility_id)
+      .single();
+
+    if (facilityError || !facility) {
+      return res.status(400).json({ error: 'facility_not_found' });
     }
-    return res.status(400).json({ error: msg });
+
+    // Calcular duración en horas
+    const startTime = dayjs(`${fecha} ${hora_inicio}`, 'YYYY-MM-DD HH:mm');
+    const endTime = dayjs(`${fecha} ${hora_fin}`, 'YYYY-MM-DD HH:mm');
+    const durationHours = endTime.diff(startTime, 'hour', true);
+
+    if (durationHours <= 0) {
+      return res.status(400).json({ error: 'invalid_time_range' });
+    }
+
+    // Calcular precio total
+    const precioTotal = facility.precio_hora * durationHours;
+
+    const payload = {
+      ...req.body,
+      user_id: profileId,
+      precio_total: precioTotal,
+      estado: 'PENDING_PAYMENT'
+    };
+
+    const { data, error } = await supabase.from('bookings').insert(payload).select('*').single();
+    if (error) {
+      const msg = error.message || '';
+      const lower = msg.toLowerCase();
+      if (lower.includes('duplicate key') || lower.includes('unique')) {
+        return res.status(409).json({ error: 'duplicate_booking' });
+      }
+      return res.status(400).json({ error: msg });
+    }
+    res.status(201).json(data);
+  } catch (error) {
+    console.error('[BOOKING CREATE] Error:', error.message);
+    res.status(400).json({ error: error.message });
   }
-  res.status(201).json(data);
 }
 
 async function list(req, res) {

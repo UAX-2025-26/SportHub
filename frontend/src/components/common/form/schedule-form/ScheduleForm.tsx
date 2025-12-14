@@ -20,6 +20,8 @@ const ScheduleForm: React.FC<ScheduleFormProps> = ({ sport, centerId }) => {
 
     const [date, setDate] = useState("");
     const [time, setTime] = useState("");
+    const [endTime, setEndTime] = useState("");
+    const [estimatedPrice, setEstimatedPrice] = useState<number>(0);
     const [facilities, setFacilities] = useState<Facility[]>([]);
     const [selectedFacility, setSelectedFacility] = useState<string>("");
     const [loading, setLoading] = useState(false);
@@ -52,6 +54,31 @@ const ScheduleForm: React.FC<ScheduleFormProps> = ({ sport, centerId }) => {
         }
     }, [centerId, sport]);
 
+    // Calcular precio estimado cuando cambian las horas o instalación
+    useEffect(() => {
+        if (time && endTime && selectedFacility) {
+            const facility = facilities.find(f => f.id === selectedFacility);
+            if (facility && facility.precio_hora) {
+                // Calcular duración en horas
+                const [startHour, startMinute] = time.split(':').map(Number);
+                const [endHour, endMinute] = endTime.split(':').map(Number);
+
+                let startTotalMinutes = startHour * 60 + startMinute;
+                let endTotalMinutes = endHour * 60 + endMinute;
+
+                if (endTotalMinutes <= startTotalMinutes) {
+                    endTotalMinutes += 24 * 60; // Suma un día si la hora de fin es menor
+                }
+
+                const durationHours = (endTotalMinutes - startTotalMinutes) / 60;
+                const price = facility.precio_hora * durationHours;
+                setEstimatedPrice(Math.max(0, price));
+            }
+        } else {
+            setEstimatedPrice(0);
+        }
+    }, [time, endTime, selectedFacility, facilities]);
+
     // Validar autenticación en flujo de booking
     useEffect(() => {
         if (centerId && sport && !isAuthenticated) {
@@ -63,8 +90,13 @@ const ScheduleForm: React.FC<ScheduleFormProps> = ({ sport, centerId }) => {
         event.preventDefault();
 
         // Validación básica
-        if (!date || !time) {
+        if (!date || !time || !endTime) {
             setError("Por favor completa todos los campos");
+            return;
+        }
+
+        if (time >= endTime) {
+            setError("La hora de fin debe ser posterior a la hora de inicio");
             return;
         }
 
@@ -83,6 +115,7 @@ const ScheduleForm: React.FC<ScheduleFormProps> = ({ sport, centerId }) => {
                     facility_id: selectedFacility,
                     fecha: date,
                     hora_inicio: time,
+                    hora_fin: endTime,
                 };
 
                 const result = await bookingsService.createBooking(bookingData, token);
@@ -105,10 +138,11 @@ const ScheduleForm: React.FC<ScheduleFormProps> = ({ sport, centerId }) => {
             }
         } else {
             // Flujo simple sin booking
-            console.log("Horario enviado:", { date, time });
+            console.log("Horario enviado:", { date, time, endTime });
             setSuccess(true);
             setDate("");
             setTime("");
+            setEndTime("");
         }
     };
 
@@ -169,7 +203,7 @@ const ScheduleForm: React.FC<ScheduleFormProps> = ({ sport, centerId }) => {
                 />
             </label>
             <label className={styles.label}>
-                Hora
+                Hora de inicio
                 <input
                     type="time"
                     value={time}
@@ -178,6 +212,36 @@ const ScheduleForm: React.FC<ScheduleFormProps> = ({ sport, centerId }) => {
                     required
                 />
             </label>
+            <label className={styles.label}>
+                Hora de fin
+                <input
+                    type="time"
+                    value={endTime}
+                    onChange={(e) => setEndTime(e.target.value)}
+                    className={styles.input}
+                    required
+                />
+            </label>
+            {isBokingFlow && estimatedPrice > 0 && (
+                <div style={{
+                    padding: '1rem',
+                    backgroundColor: '#e3f2fd',
+                    borderRadius: '4px',
+                    border: '1px solid #90caf9',
+                    marginTop: '1rem'
+                }}>
+                    <div style={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        color: '#1565c0',
+                        fontWeight: 600
+                    }}>
+                        <span>Precio estimado:</span>
+                        <span style={{ fontSize: '1.2em' }}>${estimatedPrice.toFixed(2)}</span>
+                    </div>
+                </div>
+            )}
         </>
     );
 

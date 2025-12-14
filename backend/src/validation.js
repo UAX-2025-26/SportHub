@@ -36,7 +36,8 @@ const availabilityQuerySchema = z.object({
 const createBookingSchema = z.object({
   facility_id: uuidSchema,
   fecha: z.string().regex(dateRegex),
-  hora_inicio: z.string().regex(timeRegex)
+  hora_inicio: z.string().regex(timeRegex),
+  hora_fin: z.string().regex(timeRegex)
 });
 
 const updateProfileSchema = z.object({

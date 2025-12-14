@@ -24,11 +24,23 @@ interface FacilityData {
   activo: boolean;
 }
 
+interface BookingData {
+  id: string;
+  fecha: string;
+  hora_inicio: string;
+  hora_fin: string;
+  usuario: string;
+  instalacion: string;
+  total_precio: number;
+  estado: string;
+}
+
 const CenterAdminPanel: React.FC = () => {
   const router = useRouter();
   const { token } = useAuth();
   const [center, setCenter] = useState<CenterData | null>(null);
   const [facilities, setFacilities] = useState<FacilityData[]>([]);
+  const [bookings, setBookings] = useState<BookingData[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string>('');
   const [showCreateCenter, setShowCreateCenter] = useState(false);
@@ -58,6 +70,7 @@ const CenterAdminPanel: React.FC = () => {
         setShowCreateCenter(true);
         setCenter(null);
         setFacilities([]);
+        setBookings([]);
         setError('');
         setLoading(false);
         return;
@@ -75,6 +88,7 @@ const CenterAdminPanel: React.FC = () => {
         console.log('[CENTER ADMIN] Datos cargados exitosamente:', data);
         setCenter(data.center);
         setFacilities(data.facilities || []);
+        setBookings(data.bookings || []);
         setShowCreateCenter(false);
         setError('');
       }
@@ -186,7 +200,7 @@ const CenterAdminPanel: React.FC = () => {
           </div>
           <div style={{ marginTop: '1.5rem' }}>
             <button
-              onClick={() => router.push(`/admin/${center.id}`)}
+              onClick={() => router.push(`/admin-center/${center!.id}`)}
               style={buttonStyle}
             >
               Editar Centro
@@ -211,7 +225,7 @@ const CenterAdminPanel: React.FC = () => {
                 No tienes instalaciones aún
               </p>
               <button
-                onClick={() => router.push(`/admin/${center.id}/facilities/new`)}
+                onClick={() => router.push(`/admin-center/${center!.id}/facilities/new`)}
                 style={{ ...buttonStyle, marginTop: '1rem', width: '100%', display: 'block' }}
               >
                 + Crear Primera Instalación
@@ -279,7 +293,7 @@ const CenterAdminPanel: React.FC = () => {
                     </div>
                   </div>
                   <button
-                    onClick={() => router.push(`/admin/${center.id}/facilities/${facility.id}`)}
+                    onClick={() => router.push(`/admin-center/${center!.id}/facilities/${facility.id}`)}
                     style={{ ...buttonStyle, padding: '0.5rem 1rem', fontSize: '0.9rem' }}
                   >
                     Editar
@@ -287,7 +301,7 @@ const CenterAdminPanel: React.FC = () => {
                 </div>
               ))}
               <button
-                onClick={() => router.push(`/admin/${center.id}/facilities/new`)}
+                onClick={() => router.push(`/admin-center/${center!.id}/facilities/new`)}
                 style={{ ...buttonStyle, marginTop: '1rem', width: '100%', display: 'block' }}
               >
                 + Crear Instalación
@@ -327,7 +341,7 @@ const CenterAdminPanel: React.FC = () => {
               <p style={{ margin: '0 0 0.5rem 0', fontSize: '0.9rem', fontWeight: 600, opacity: 0.9 }}>
                 Reservas
               </p>
-              <p style={{ margin: 0, fontSize: '2rem', fontWeight: 'bold' }}>0</p>
+              <p style={{ margin: 0, fontSize: '2rem', fontWeight: 'bold' }}>{bookings.length}</p>
             </div>
             <div style={{
               background: 'linear-gradient(135deg, #34beed 0%, #0473a9 100%)',
@@ -340,9 +354,62 @@ const CenterAdminPanel: React.FC = () => {
               <p style={{ margin: '0 0 0.5rem 0', fontSize: '0.9rem', fontWeight: 600, opacity: 0.9 }}>
                 Ingresos
               </p>
-              <p style={{ margin: 0, fontSize: '2rem', fontWeight: 'bold' }}>$0</p>
+              <p style={{ margin: 0, fontSize: '2rem', fontWeight: 'bold' }}>
+                ${bookings.reduce((sum, b) => sum + (b.total_precio || 0), 0).toFixed(2)}
+              </p>
             </div>
           </div>
+
+          {bookings.length > 0 && (
+            <div style={{ marginTop: '2rem' }}>
+              <h3 style={{ ...headingStyle, fontSize: '1.5rem', margin: '0 0 1rem 0' }}>
+                Reservas Recientes ({bookings.length})
+              </h3>
+              <div style={{
+                overflowX: 'auto',
+                borderRadius: '15px',
+                boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)',
+              }}>
+                <table style={{
+                  width: '100%',
+                  borderCollapse: 'collapse',
+                  backgroundColor: 'white',
+                }}>
+                  <thead>
+                    <tr style={{ backgroundColor: '#f0f0f0', borderBottom: '2px solid #d1d1d6' }}>
+                      <th style={{ padding: '1rem', textAlign: 'left', fontWeight: 600, color: '#636366' }}>Instalación</th>
+                      <th style={{ padding: '1rem', textAlign: 'left', fontWeight: 600, color: '#636366' }}>Usuario</th>
+                      <th style={{ padding: '1rem', textAlign: 'left', fontWeight: 600, color: '#636366' }}>Fecha</th>
+                      <th style={{ padding: '1rem', textAlign: 'left', fontWeight: 600, color: '#636366' }}>Hora</th>
+                      <th style={{ padding: '1rem', textAlign: 'left', fontWeight: 600, color: '#636366' }}>Precio</th>
+                      <th style={{ padding: '1rem', textAlign: 'left', fontWeight: 600, color: '#636366' }}>Estado</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {bookings.slice(0, 5).map((booking) => (
+                      <tr key={booking.id} style={{ borderBottom: '1px solid #e0e0e0', transition: 'background 0.2s' }}>
+                        <td style={{ padding: '1rem', color: '#1f2933' }}>{booking.instalacion}</td>
+                        <td style={{ padding: '1rem', color: '#1f2933' }}>{booking.usuario}</td>
+                        <td style={{ padding: '1rem', color: '#1f2933' }}>{new Date(booking.fecha).toLocaleDateString()}</td>
+                        <td style={{ padding: '1rem', color: '#1f2933' }}>{booking.hora_inicio} - {booking.hora_fin}</td>
+                        <td style={{ padding: '1rem', color: '#1f2933', fontWeight: 600 }}>${booking.total_precio}</td>
+                        <td style={{
+                          padding: '1rem',
+                          color: 'white',
+                          backgroundColor: booking.estado === 'confirmada' ? '#4caf50' : booking.estado === 'cancelada' ? '#f44336' : '#ff9800',
+                          borderRadius: '4px',
+                          textAlign: 'center',
+                          fontWeight: 500
+                        }}>
+                          {booking.estado}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>
