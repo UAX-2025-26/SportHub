@@ -1,71 +1,85 @@
-/* Variables CSS Responsivas Globales */
-/* Este archivo define variables que se adaptan a diferentes tamaños de pantalla */
+@import url("https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&display=swap");
 
 :root {
-  /* Tamaños de fuente base */
+  --font-wii: "Nunito", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+
+  --font-size-xs: 12px;
+  --font-size-sm: 14px;
   --font-size-base: 16px;
   --font-size-lg: 18px;
   --font-size-xl: 20px;
-  --font-size-2xl: 22px;
-  --font-size-3xl: 24px;
+  --font-size-2xl: 24px;
+  --font-size-3xl: 28px;
+  --font-size-4xl: 32px;
 
-  /* Espaciado más compacto */
   --spacing-xs: 6px;
   --spacing-sm: 10px;
   --spacing-md: 14px;
   --spacing-lg: 18px;
-  --spacing-xl: 22px;
-  --spacing-2xl: 28px;
+  --spacing-xl: 24px;
+  --spacing-2xl: 32px;
 
-  /* Ancho máximo de contenedores - TODOS IGUALES Y ANCHOS */
-  --form-max-width: 600px;
-  --form-min-width: 500px;
-
-  /* Alto máximo más restrictivo */
+  /* Increased form max-width for larger components */
+  --form-max-width: 700px;
+  --form-min-width: 320px;
   --form-max-height: 85vh;
 
-  /* Border radius */
-  --border-radius-sm: 8px;
-  --border-radius-md: 12px;
-  --border-radius-lg: 15px;
-  --border-radius-xl: 25px;
+  --border-radius-sm: 12px;
+  --border-radius-md: 16px;
+  --border-radius-lg: 20px;
+  --border-radius-xl: 28px;
+  --border-radius-pill: 50px;
 
-  /* Sombras */
-  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
-  --shadow-md: 0 4px 10px rgba(0, 0, 0, 0.15);
-  --shadow-lg: 0 10px 40px rgba(0, 0, 0, 0.15);
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.08);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.12);
+  --shadow-button: 0 4px 12px rgba(52, 190, 237, 0.25);
 
-  /* Colores consistentes */
-  --color-primary: #34beed;
-  --color-primary-hover: #0473a9;
-  --color-background: #ffffff;
-  --color-background-secondary: #d1d1d6;
-  --color-text: #636366;
-  --color-text-dark: #1f2933;
-  --color-border: #d1d1d6;
+  --color-wii-blue: #009eda;
+  --color-wii-blue-hover: #007bb5;
+  --color-wii-blue-light: #e8f7fc;
+  --color-wii-gray: #e8e8e8;
+  --color-wii-gray-dark: #8e8e93;
+  --color-wii-white: #ffffff;
+  --color-wii-black: #1c1c1e;
+
+  --color-primary: var(--color-wii-blue);
+  --color-primary-hover: var(--color-wii-blue-hover);
+  --color-background: var(--color-wii-white);
+  --color-background-secondary: var(--color-wii-gray);
+  --color-text: #4a4a4a;
+  --color-text-dark: var(--color-wii-black);
+  --color-text-muted: var(--color-wii-gray-dark);
+  --color-border: #d4d4d8;
   --color-input-bg: #f8fafc;
+
+  --color-success: #34c759;
+  --color-warning: #ff9500;
+  --color-error: #ff3b30;
 }
 
-/* Ajustes para pantallas muy pequeñas (mobile) */
+/* Updated responsive breakpoints for better scaling */
 @media (max-width: 480px) {
   :root {
-    --form-max-width: clamp(200px, 95vw, 400px);
-    --container-max-width: clamp(200px, 95vw, 400px);
+    --form-max-width: 95vw;
+    --form-min-width: 280px;
   }
 }
 
-/* Ajustes para tablets */
-@media (min-width: 768px) and (max-width: 1024px) {
+@media (min-width: 481px) and (max-width: 768px) {
   :root {
-    --form-max-width: clamp(300px, 80vw, 500px);
-    --container-max-width: clamp(300px, 85vw, 900px);
+    --form-max-width: 90vw;
   }
 }
 
-/* Ajustes para pantallas grandes (desktop) */
-@media (min-width: 1920px) {
+@media (min-width: 769px) and (max-width: 1024px) {
   :root {
-    --form-max-width: clamp(400px, 40vw, 600px);
-    --container-max-width: clamp(600px, 85vw, 1200px);
+    --form-max-width: 600px;
+  }
+}
+
+@media (min-width: 1025px) {
+  :root {
+    --form-max-width: 700px;
   }
 }

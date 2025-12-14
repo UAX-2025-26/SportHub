@@ -1,118 +1,118 @@
-'use client';
+"use client"
 
-import React, { useEffect, useState } from 'react';
-import { useRouter, useParams } from 'next/navigation';
-import clsx from 'clsx';
-import MainBody from '@/components/main-layout/body/MainBody';
-import MainContent from '@/components/main-layout/content/MainContent';
-import MainHeader from "@/components/main-layout/header/MainHeader";
-import MainDownComponent from "@/components/main-layout/footer/MainFooter";
-import ProfileButton from "@/components/common/button/profile-button/ProfileButton";
-import bodyStyles from "@/components/main-layout/body/MainBody.module.css";
-import headerStyles from "@/components/main-layout/header/MainHeader.module.css";
-import contentStyles from "@/components/main-layout/content/MainContent.module.css";
-import FormButton from "@/components/common/button/form-button/FormButton";
-import { centersService, Center } from '@/lib/api/centers.service';
-import { facilitiesService, Facility } from '@/lib/api/facilities.service';
-import { useBookingContext } from '@/lib/contexts/BookingContext';
-import { getSportDisplayName, getSportSearchVariants } from '@/lib/constants/sports';
-import styles from './centers-carousel.module.css';
-import Image from 'next/image';
+import type React from "react"
+import { useEffect, useState } from "react"
+import { useRouter, useParams } from "next/navigation"
+import clsx from "clsx"
+import MainBody from "@/components/main-layout/body/MainBody"
+import MainContent from "@/components/main-layout/content/MainContent"
+import MainHeader from "@/components/main-layout/header/MainHeader"
+import MainDownComponent from "@/components/main-layout/footer/MainFooter"
+import ProfileButton from "@/components/common/button/profile-button/ProfileButton"
+import Imagen from "@/components/common/image/Imagen"
+import bodyStyles from "@/components/main-layout/body/MainBody.module.css"
+import headerStyles from "@/components/main-layout/header/MainHeader.module.css"
+import contentStyles from "@/components/main-layout/content/MainContent.module.css"
+import FormButton from "@/components/common/button/form-button/FormButton"
+import { centersService, type Center } from "@/lib/api/centers.service"
+import { facilitiesService, type Facility } from "@/lib/api/facilities.service"
+import { useBookingContext } from "@/lib/contexts/BookingContext"
+import { useAuth } from "@/lib/auth"
+import { getSportDisplayName, getSportSearchVariants } from "@/lib/constants/sports"
+import styles from "./centers-carousel.module.css"
+import Image from "next/image"
 
 interface CenterWithFacilities {
-  center: Center;
-  facilities: Facility[];
-  image: string;
+  center: Center
+  facilities: Facility[]
+  image: string
 }
 
 const CenterCarouselPage: React.FC = () => {
-  const router = useRouter();
-  const params = useParams();
-  const sport = params?.sport as string;
-  const { setSport, setCenter, setFacility } = useBookingContext();
+  const router = useRouter()
+  const params = useParams()
+  const sport = params?.sport as string
+  const { setSport, setCenter, setFacility } = useBookingContext()
+  const { userRole } = useAuth()
 
-  const [centers, setCenters] = useState<CenterWithFacilities[]>([]);
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const canMakeReservations = userRole !== 'admin' && userRole !== 'center_admin'
+
+  const [centers, setCenters] = useState<CenterWithFacilities[]>([])
+  const [currentIndex, setCurrentIndex] = useState(0)
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
     const fetchCenters = async () => {
       try {
-        setLoading(true);
-        const response = await centersService.getCenters();
+        setLoading(true)
+        const response = await centersService.getCenters()
 
         if (!response.data) {
-          setError('Error al cargar los centros');
-          return;
+          setError("Error al cargar los centros")
+          return
         }
 
-        // Obtener todas las variantes de búsqueda para el deporte
-        const sportVariants = getSportSearchVariants(sport);
+        const sportVariants = getSportSearchVariants(sport)
 
-        // Para cada centro, obtener las instalaciones que coincidan con el deporte
         const centersWithFacilities = await Promise.all(
           response.data.map(async (center) => {
-            const facilitiesResponse = await facilitiesService.getFacilitiesByCenter(center.id);
-            const allFacilities = facilitiesResponse.data || [];
+            const facilitiesResponse = await facilitiesService.getFacilitiesByCenter(center.id)
+            const allFacilities = facilitiesResponse.data || []
 
-            // Filtrar por tipo de deporte usando variantes
-            const relevantFacilities = allFacilities.filter(f => {
-              const facilityTypeToCheck = f.tipo.toLowerCase();
-              const facilityNameToCheck = f.nombre.toLowerCase();
+            const relevantFacilities = allFacilities.filter((f) => {
+              const facilityTypeToCheck = f.tipo.toLowerCase()
+              const facilityNameToCheck = f.nombre.toLowerCase()
 
-              // Buscar si alguna variante del deporte coincide
-              return sportVariants.some(variant =>
-                facilityTypeToCheck.includes(variant) ||
-                facilityNameToCheck.includes(variant)
-              );
-            });
+              return sportVariants.some(
+                (variant) => facilityTypeToCheck.includes(variant) || facilityNameToCheck.includes(variant),
+              )
+            })
 
             return {
               center,
               facilities: relevantFacilities,
               image: `/content.jpg`,
-            };
-          })
-        );
+            }
+          }),
+        )
 
-        // Filtrar solo centros con instalaciones para el deporte
-        const filtered = centersWithFacilities.filter(c => c.facilities.length > 0);
+        const filtered = centersWithFacilities.filter((c) => c.facilities.length > 0)
 
         if (filtered.length === 0) {
-          setError(`No hay centros disponibles para ${getSportDisplayName(sport)}`);
+          setError(`No hay centros disponibles para ${getSportDisplayName(sport)}`)
         } else {
-          setCenters(filtered);
-          setSport(sport);
+          setCenters(filtered)
+          setSport(sport)
         }
       } catch (err) {
-        console.error('Error fetching centers:', err);
-        setError('Error al cargar los centros');
+        console.error("Error fetching centers:", err)
+        setError("Error al cargar los centros")
       } finally {
-        setLoading(false);
+        setLoading(false)
       }
-    };
+    }
 
     if (sport) {
-      fetchCenters();
+      fetchCenters()
     }
-  }, [sport, setSport]);
+  }, [sport, setSport])
 
   const handleSelectCenter = (centerData: CenterWithFacilities) => {
-    setCenter(centerData.center);
+    setCenter(centerData.center)
     if (centerData.facilities.length > 0) {
-      setFacility(centerData.facilities[0]);
+      setFacility(centerData.facilities[0])
     }
-    router.push(`/booking/schedule/${sport}/${centerData.center.id}`);
-  };
+    router.push(`/booking/schedule/${sport}/${centerData.center.id}`)
+  }
 
   const handlePrev = () => {
-    setCurrentIndex((prev) => (prev - 1 + centers.length) % centers.length);
-  };
+    setCurrentIndex((prev) => (prev - 1 + centers.length) % centers.length)
+  }
 
   const handleNext = () => {
-    setCurrentIndex((prev) => (prev + 1) % centers.length);
-  };
+    setCurrentIndex((prev) => (prev + 1) % centers.length)
+  }
 
   if (loading) {
     return (
@@ -124,7 +124,7 @@ const CenterCarouselPage: React.FC = () => {
           </div>
         </MainContent>
       </MainBody>
-    );
+    )
   }
 
   if (error) {
@@ -138,7 +138,7 @@ const CenterCarouselPage: React.FC = () => {
           </div>
         </MainContent>
       </MainBody>
-    );
+    )
   }
 
   if (centers.length === 0) {
@@ -152,10 +152,10 @@ const CenterCarouselPage: React.FC = () => {
           </div>
         </MainContent>
       </MainBody>
-    );
+    )
   }
 
-  const currentCenter = centers[currentIndex];
+  const currentCenter = centers[currentIndex]
 
   return (
     <MainBody bodyClassName={clsx(bodyStyles.content)}>
@@ -165,22 +165,18 @@ const CenterCarouselPage: React.FC = () => {
           <h2>Selecciona un centro para {getSportDisplayName(sport)}</h2>
 
           <div className={styles.carouselWrapper}>
-            <button
-              className={styles.navButton}
-              onClick={handlePrev}
-              aria-label="Centro anterior"
-            >
+            <button className={styles.navButton} onClick={handlePrev} aria-label="Centro anterior">
               ‹
             </button>
 
             <div className={styles.centerCard}>
               <div className={styles.cardImage}>
                 <Image
-                  src={currentCenter.image}
+                  src={currentCenter.image || "/placeholder.svg"}
                   alt={currentCenter.center.nombre}
                   width={300}
                   height={200}
-                  style={{ objectFit: 'cover' }}
+                  style={{ objectFit: "cover" }}
                 />
               </div>
               <div className={styles.cardContent}>
@@ -191,25 +187,23 @@ const CenterCarouselPage: React.FC = () => {
                 </p>
                 <div className={styles.facilitiesInfo}>
                   <p className={styles.facilitiesCount}>
-                    {currentCenter.facilities.length} instalación{currentCenter.facilities.length !== 1 ? 'es' : ''} disponible{currentCenter.facilities.length !== 1 ? 's' : ''}
+                    {currentCenter.facilities.length} instalación{currentCenter.facilities.length !== 1 ? "es" : ""}{" "}
+                    disponible{currentCenter.facilities.length !== 1 ? "s" : ""}
                   </p>
                 </div>
                 <div className={styles.buttonContainer}>
-                  <FormButton
-                    onClick={() => handleSelectCenter(currentCenter)}
-                    type="button"
-                  >
-                    Seleccionar
-                  </FormButton>
+                  {canMakeReservations ? (
+                    <FormButton onClick={() => handleSelectCenter(currentCenter)} type="button">
+                      Seleccionar
+                    </FormButton>
+                  ) : (
+                    <p className={styles.adminMessage}>Los administradores no pueden hacer reservas</p>
+                  )}
                 </div>
               </div>
             </div>
 
-            <button
-              className={styles.navButton}
-              onClick={handleNext}
-              aria-label="Centro siguiente"
-            >
+            <button className={styles.navButton} onClick={handleNext} aria-label="Centro siguiente">
               ›
             </button>
           </div>
@@ -218,7 +212,7 @@ const CenterCarouselPage: React.FC = () => {
             {centers.map((_, index) => (
               <div
                 key={index}
-                className={`${styles.dot} ${index === currentIndex ? styles.activeDot : ''}`}
+                className={`${styles.dot} ${index === currentIndex ? styles.activeDot : ""}`}
                 onClick={() => setCurrentIndex(index)}
                 role="button"
                 tabIndex={0}
@@ -228,19 +222,23 @@ const CenterCarouselPage: React.FC = () => {
           </div>
         </div>
       </MainContent>
-
       <div className={clsx(bodyStyles.footer)}>
         <MainDownComponent>
-          <h1>Centro {currentIndex + 1} de {centers.length}</h1>
+          <h1>
+            Centro {currentIndex + 1} de {centers.length}
+          </h1>
           <div className={clsx(bodyStyles.footerButtons)}>
-            <ProfileButton onClick={() => router.back()}>
-              <span style={{ fontSize: '2.5rem', fontWeight: 'bold' }}>←</span>
+            <ProfileButton>
+              <Imagen src={"/botones/reservas.svg"} alt={"home"} href={"/home"} />
+            </ProfileButton>
+            <ProfileButton>
+              <Imagen src={"/botones/perfil.svg"} alt={"perfil"} href={"/perfil"} />
             </ProfileButton>
           </div>
         </MainDownComponent>
       </div>
     </MainBody>
-  );
-};
+  )
+}
 
-export default CenterCarouselPage;
+export default CenterCarouselPage

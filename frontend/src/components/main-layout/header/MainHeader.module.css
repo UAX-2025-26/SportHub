@@ -1,17 +1,20 @@
 .container {
-    margin: 0 auto;
-    padding: 0 var(--spacing-lg);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
+  margin: 0 auto;
+  padding: 0 var(--spacing-lg);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
 }
 
+/* Título estilo Wii */
 .title {
-    font-size: clamp(2rem, 6vw, 4rem);
-    color: black;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
-    text-align: center;
-    letter-spacing: -0.07em;
-    margin: 0;
+  font-family: "Nunito", sans-serif;
+  font-size: clamp(2.4rem, 5vw, 3.6rem);
+  font-weight: 800;
+  color: var(--color-text);
+  text-align: center;
+  letter-spacing: -0.03em;
+  margin: 0;
+  text-shadow: none;
 }

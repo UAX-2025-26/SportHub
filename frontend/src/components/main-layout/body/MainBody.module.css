@@ -1,38 +1,38 @@
 .content {
-    display: flex;
-    flex-direction: column;
-    width: 100vw;
-    height: 100vh;
-    background: rgba(142, 142, 147, 0.2);
+  display: flex;
+  flex-direction: column;
+  /* Use 100% instead of 100vw to prevent horizontal scrollbar */
+  width: 100%;
+  height: 100vh;
+  background: linear-gradient(180deg, #f0f4f8 0%, #e8ecf0 100%);
+  overflow: hidden;
 }
 
 .header {
-    height: 20vh;
+  height: 20vh;
+  flex-shrink: 0;
 }
+
 .body {
-    height: 62vh;
-    display: flex;
-    align-items: center;
-    overflow: hidden;
+  height: 62vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* Allow vertical scroll if content exceeds, hide horizontal */
+  overflow-y: auto;
+  overflow-x: hidden;
 }
+
 .footer {
-    height: 18vh;
+  height: 18vh;
+  flex-shrink: 0;
 }
 
 .footerButtons {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    height: 100%;
-    padding-left: 10vw;
-    padding-right: 10vw;
-}
-
-.footerButtons {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    height: 100%;
-    padding-left: clamp(5vw, 10vw, 15vw);
-    padding-right: clamp(5vw, 10vw, 15vw);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+  padding-left: clamp(8vw, 12vw, 16vw);
+  padding-right: clamp(8vw, 12vw, 16vw);
 }

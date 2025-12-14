@@ -1,50 +1,52 @@
+/* Formulario crear centro estilo Wii */
 .formContainer {
-    border-radius: var(--border-radius-xl);
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    margin: 0 auto;
-    background-color: var(--color-background);
-    display: flex;
-    flex-direction: column;
+  border-radius: var(--border-radius-xl);
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  margin: 0 auto;
+  background-color: var(--color-wii-white);
+  display: flex;
+  flex-direction: column;
+  box-shadow: var(--shadow-lg);
 }
 
 .label {
-    display: flex;
-    flex-direction: column;
-    gap: var(--spacing-sm);
-    margin-bottom: var(--spacing-lg);
-    color: var(--color-text);
-    font-weight: 600;
-    width: 100%;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  margin-bottom: 1rem;
+  color: var(--color-text);
+  font-family: "Nunito", sans-serif;
+  font-weight: 600;
+  width: 100%;
+  font-size: 0.9rem;
 }
 
 .input {
-    padding: var(--spacing-md) var(--spacing-lg);
-    border: 2px solid var(--color-border);
-    border-radius: var(--border-radius-md);
-    font-size: var(--font-size-base);
-    font-family: inherit;
-    transition: all 0.3s ease;
-    background: var(--color-input-bg);
-    color: var(--color-text-dark);
-    width: 100%;
-    box-sizing: border-box;
+  padding: 0.75rem 1rem;
+  border: 2px solid var(--color-border);
+  border-radius: var(--border-radius-md);
+  font-family: "Nunito", sans-serif;
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  background: var(--color-wii-white);
+  color: var(--color-text-dark);
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .input:focus {
-    outline: none;
-    border-color: var(--color-primary);
-    box-shadow: 0 0 0 3px rgba(52, 190, 237, 0.2);
-    transform: translateY(-1px);
-    background: var(--color-background);
+  outline: none;
+  border-color: var(--color-wii-blue);
+  box-shadow: 0 0 0 3px var(--color-wii-blue-light);
 }
 
 .error {
-    display: block;
-    color: #ee5a52;
-    font-size: var(--font-size-base);
-    margin-top: var(--spacing-xs);
-    font-weight: 500;
+  display: block;
+  color: var(--color-error);
+  font-size: 0.85rem;
+  margin-top: 0.25rem;
+  font-weight: 500;
 }

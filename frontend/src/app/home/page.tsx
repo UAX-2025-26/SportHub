@@ -1,4 +1,7 @@
+"use client";
+
 import React, { FunctionComponent } from 'react';
+import { useAuth } from "@/lib/auth";
 import MainDownComponent from "@/components/main-layout/footer/MainFooter";
 import clsx from "clsx";
 import bodyStyles from "@/components/main-layout/body/MainBody.module.css";
@@ -12,6 +15,17 @@ import ProfileButton from "@/components/common/button/profile-button/ProfileButt
 
 
 const HomePage: FunctionComponent = () => {
+    const { userRole } = useAuth();
+
+    const getReservasHref = (): string => {
+        if (userRole === 'admin') {
+            return '/admin';
+        } else if (userRole === 'center_admin') {
+            return '/admin-center';
+        }
+        return '/reservas';
+    };
+
     return (
         <MainBody bodyClassName={clsx(bodyStyles.content)}>
             <MainHeader bodyClassName={clsx(headerStyles.container, headerStyles.title, bodyStyles.header)} />
@@ -36,7 +50,7 @@ const HomePage: FunctionComponent = () => {
                 <h1>Elige tu deporte</h1>
                 <div className={clsx(bodyStyles.footerButtons)}>
                     <ProfileButton>
-                        <Imagen src={"/botones/reservas.svg"} alt={"reservas"} href={"/reservas"}/>
+                        <Imagen src={"/botones/reservas.svg"} alt={"reservas"} href={getReservasHref()}/>
                     </ProfileButton>
                     <ProfileButton>
                         <Imagen src={"/botones/perfil.svg"} alt={"perfil"} href={"/perfil"}/>
