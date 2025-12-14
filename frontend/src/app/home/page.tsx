@@ -1,0 +1,66 @@
+"use client";
+
+import React, { FunctionComponent } from 'react';
+import { useAuth } from "@/lib/auth";
+import MainDownComponent from "@/components/main-layout/footer/MainFooter";
+import clsx from "clsx";
+import bodyStyles from "@/components/main-layout/body/MainBody.module.css";
+import MainHeader from "@/components/main-layout/header/MainHeader";
+import headerStyles from "@/components/main-layout/header/MainHeader.module.css";
+import MainContent from "@/components/main-layout/content/MainContent";
+import contentStyles from "@/components/main-layout/content/MainContent.module.css";
+import Imagen from "@/components/common/image/Imagen";
+import MainBody from "@/components/main-layout/body/MainBody";
+import ProfileButton from "@/components/common/button/profile-button/ProfileButton";
+
+
+const HomePage: FunctionComponent = () => {
+    const { userRole } = useAuth();
+
+    const getReservasHref = (): string => {
+        if (userRole === 'admin') {
+            return '/admin';
+        } else if (userRole === 'center_admin') {
+            return '/admin-center';
+        }
+        return '/reservas';
+    };
+
+    return (
+        <MainBody bodyClassName={clsx(bodyStyles.content)}>
+            <MainHeader bodyClassName={clsx(headerStyles.container, headerStyles.title, bodyStyles.header)} />
+            <MainContent bodyClassName={clsx(contentStyles.container, bodyStyles.body)}>
+                <div className={clsx(contentStyles.flexContainer)}>
+                    <Imagen src={"/deportes/archery.jpg"} alt={"tiro-con-arco"} isSport />
+                    <Imagen src={"/deportes/basketball.jpg"} alt={"baloncesto"} isSport />
+                    <Imagen src={"/deportes/golf.jpg"} alt={"golf"} isSport />
+                    <Imagen src={"/deportes/volleyball.jpg"} alt={"voleibol"} isSport />
+                    <Imagen src={"/deportes/boxing.jpg"} alt={"boxeo"} isSport />
+                    <Imagen src={"/deportes/rock-climbing.jpg"} alt={"escalada"} isSport />
+                    <Imagen src={"/deportes/swimming.jpg"} alt={"natacion"} isSport />
+                    <Imagen src={"/deportes/trampolining.jpg"} alt={"trampolin"} isSport />
+                    <Imagen src={"/deportes/equitation.jpg"} alt={"equitacion"} isSport />
+                    <Imagen src={"/deportes/bowling.jpg"} alt={"bolos"} isSport />
+                    <Imagen src={"/deportes/baseball.jpg"} alt={"beisbol"} isSport />
+                    <Imagen src={"/deportes/tennis.jpg"} alt={"tenis"} isSport />
+                </div>
+            </MainContent>
+            <div className={clsx(bodyStyles.footer)}>
+            <MainDownComponent>
+                <h1>Elige tu deporte</h1>
+                <div className={clsx(bodyStyles.footerButtons)}>
+                    <ProfileButton>
+                        <Imagen src={"/botones/reservas.svg"} alt={"reservas"} href={getReservasHref()}/>
+                    </ProfileButton>
+                    <ProfileButton>
+                        <Imagen src={"/botones/perfil.svg"} alt={"perfil"} href={"/perfil"}/>
+                    </ProfileButton>
+                </div>
+            </MainDownComponent>
+            </div>
+
+        </MainBody>
+    );
+};
+
+export default HomePage;

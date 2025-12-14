@@ -1,0 +1,226 @@
+/* Reservas estilo Wii */
+.reservasContainer {
+  width: var(--form-max-width);
+  min-width: var(--form-min-width);
+  max-width: var(--form-max-width);
+  margin: 0 auto;
+  padding: 0;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.title {
+  display: none;
+}
+
+.loadingContainer,
+.errorContainer,
+.emptyContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  text-align: center;
+  background: var(--color-wii-white);
+  border-radius: var(--border-radius-xl);
+  box-shadow: var(--shadow-lg);
+  height: 100%;
+}
+
+.errorMessage {
+  color: var(--color-error);
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.emptyMessage {
+  color: var(--color-text);
+  font-family: "Nunito", sans-serif;
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.actionButton,
+.retryButton {
+  padding: 0.75rem 1.5rem;
+  background: linear-gradient(180deg, var(--color-wii-blue) 0%, var(--color-wii-blue-hover) 100%);
+  color: white;
+  border: none;
+  border-radius: var(--border-radius-pill);
+  font-family: "Nunito", sans-serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: var(--shadow-button);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.actionButton:hover,
+.retryButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 158, 218, 0.35);
+}
+
+/* Lista reservas estilo Wii */
+.bookingsList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  flex: 1;
+  overflow-y: auto;
+  padding: 0.5rem;
+}
+
+.bookingCard {
+  background: var(--color-wii-white);
+  border-radius: var(--border-radius-lg);
+  padding: 1rem;
+  transition: all 0.2s ease;
+  border: 2px solid var(--color-border);
+  box-shadow: var(--shadow-sm);
+}
+
+.bookingCard:hover {
+  border-color: var(--color-wii-blue);
+  box-shadow: var(--shadow-md);
+}
+
+.bookingHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.estado {
+  padding: 0.35rem 0.75rem;
+  border-radius: var(--border-radius-pill);
+  font-family: "Nunito", sans-serif;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.estadoConfirmada {
+  background: var(--color-success);
+  color: white;
+}
+
+.estadoPendiente {
+  background: var(--color-warning);
+  color: white;
+}
+
+.estadoCancelada {
+  background: var(--color-error);
+  color: white;
+}
+
+.estadoCompletada {
+  background: var(--color-wii-blue);
+  color: white;
+}
+
+.bookingId {
+  color: var(--color-wii-gray-dark);
+  font-size: 0.8rem;
+  font-family: monospace;
+}
+
+.bookingDetails {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.detailRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.25rem 0;
+}
+
+.detailLabel {
+  font-family: "Nunito", sans-serif;
+  font-weight: 600;
+  color: var(--color-wii-gray-dark);
+  font-size: 0.9rem;
+}
+
+.detailValue {
+  color: var(--color-text-dark);
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+.bookingActions {
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--color-border);
+  display: flex;
+  justify-content: center;
+  margin-top: 0.5rem;
+}
+
+.cancelButton {
+  padding: 0.6rem 1.25rem;
+  background: linear-gradient(180deg, var(--color-error) 0%, #d32f2f 100%);
+  color: white;
+  border: none;
+  border-radius: var(--border-radius-pill);
+  font-family: "Nunito", sans-serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.cancelButton:hover:not(:disabled) {
+  transform: translateY(-2px);
+}
+
+.cancelButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.navigationButtons {
+  display: none;
+}
+
+.backButton {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .reservasContainer {
+    padding: 0.5rem;
+  }
+
+  .bookingCard {
+    padding: 0.75rem;
+  }
+
+  .bookingHeader {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .detailRow {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.15rem;
+  }
+}

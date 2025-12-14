@@ -1,0 +1,312 @@
+.perfilContainer {
+  /* Use responsive width with clamp for all screen sizes */
+  width: clamp(320px, 85vw, 700px);
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 1rem;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.title {
+  font-size: 1.8rem;
+  font-weight: 400;
+  margin-bottom: 0.5rem;
+  color: var(--color-text);
+  text-align: center;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+  font-family: "Nunito", sans-serif;
+  flex-shrink: 0;
+}
+
+.loadingContainer,
+.errorContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  text-align: center;
+  background: var(--color-wii-white);
+  border-radius: var(--border-radius-xl);
+  box-shadow: var(--shadow-lg);
+  height: 100%;
+}
+
+.errorMessage {
+  color: var(--color-error);
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.errorBanner {
+  background: var(--color-error);
+  color: white;
+  padding: 0.75rem 1rem;
+  border-radius: var(--border-radius-lg);
+  margin-bottom: 0.75rem;
+  text-align: center;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.actionButton {
+  padding: 0.75rem 1.5rem;
+  background: linear-gradient(180deg, var(--color-wii-blue) 0%, var(--color-wii-blue-hover) 100%);
+  color: white;
+  border: none;
+  border-radius: var(--border-radius-pill);
+  font-family: "Nunito", sans-serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: var(--shadow-button);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.actionButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 158, 218, 0.35);
+}
+
+.actionButton:active {
+  transform: translateY(0);
+  box-shadow: var(--shadow-sm);
+}
+
+.profileCard {
+  background: var(--color-wii-white);
+  border-radius: var(--border-radius-xl);
+  overflow: hidden;
+  border: 2px solid var(--color-border);
+  box-shadow: var(--shadow-lg);
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.profileHeader {
+  background: linear-gradient(180deg, var(--color-wii-gray) 0%, #dcdcdc 100%);
+  color: var(--color-text);
+  /* Reduced padding for better fit */
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-shrink: 0;
+}
+
+.avatar {
+  /* Reduced avatar size */
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: linear-gradient(180deg, #ffffff 0%, #f0f0f0 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Nunito", sans-serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  border: 3px solid white;
+  box-shadow: var(--shadow-md);
+  color: var(--color-wii-blue);
+  flex-shrink: 0;
+}
+
+.headerInfo h2 {
+  margin: 0 0 0.15rem 0;
+  font-family: "Nunito", sans-serif;
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.email {
+  margin: 0 0 0.35rem 0;
+  opacity: 0.8;
+  font-size: 0.85rem;
+}
+
+.rolBadge {
+  display: inline-block;
+  padding: 0.2rem 0.6rem;
+  background: var(--color-wii-blue);
+  color: white;
+  border-radius: var(--border-radius-pill);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.profileBody {
+  /* Reduced padding and made scrollable */
+  padding: 1rem 1.25rem;
+  flex: 1;
+  overflow-y: auto;
+  min-height: 0;
+}
+
+.formGroup {
+  /* Reduced margin */
+  margin-bottom: 0.75rem;
+}
+
+.label {
+  display: block;
+  font-family: "Nunito", sans-serif;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  margin-bottom: 0.15rem;
+  font-size: 0.8rem;
+}
+
+.value {
+  margin: 0;
+  color: var(--color-text-dark);
+  font-size: 0.95rem;
+  font-weight: 500;
+  padding: 0.15rem 0;
+}
+
+.input {
+  width: 100%;
+  padding: 0.6rem 0.85rem;
+  border: 2px solid var(--color-border);
+  border-radius: var(--border-radius-md);
+  font-family: "Nunito", sans-serif;
+  font-size: 0.95rem;
+  transition: all 0.2s ease;
+}
+
+.input:focus {
+  outline: none;
+  border-color: var(--color-wii-blue);
+  box-shadow: 0 0 0 3px var(--color-wii-blue-light);
+}
+
+.hint {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--color-wii-gray-dark);
+  margin-top: 0.15rem;
+}
+
+.profileActions {
+  /* Reduced padding */
+  padding: 0.75rem 1.25rem;
+  background: var(--color-wii-gray);
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.editButton,
+.saveButton {
+  padding: 0.6rem 1.5rem;
+  background: linear-gradient(180deg, var(--color-wii-blue) 0%, var(--color-wii-blue-hover) 100%);
+  color: white;
+  border: none;
+  border-radius: var(--border-radius-pill);
+  font-family: "Nunito", sans-serif;
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: var(--shadow-button);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.editButton:hover,
+.saveButton:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 158, 218, 0.35);
+}
+
+.saveButton:disabled {
+  background: var(--color-wii-gray);
+  color: var(--color-wii-gray-dark);
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.cancelButton {
+  padding: 0.6rem 1.5rem;
+  background: linear-gradient(180deg, #8e8e93 0%, #636366 100%);
+  color: white;
+  border: none;
+  border-radius: var(--border-radius-pill);
+  font-family: "Nunito", sans-serif;
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px rgba(99, 99, 102, 0.25);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.cancelButton:hover:not(:disabled) {
+  transform: translateY(-2px);
+}
+
+.cancelButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.navigationButtons {
+  display: none;
+}
+
+.secondaryButton,
+.logoutButton {
+  display: none;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .perfilContainer {
+    padding: 0.5rem;
+    width: 95vw;
+  }
+
+  .profileHeader {
+    flex-direction: column;
+    text-align: center;
+    padding: 0.75rem;
+  }
+
+  .avatar {
+    width: 50px;
+    height: 50px;
+    font-size: 1.25rem;
+  }
+
+  .headerInfo h2 {
+    font-size: 1.1rem;
+  }
+
+  .profileBody {
+    padding: 0.75rem 1rem;
+  }
+
+  .profileActions {
+    flex-direction: column;
+    padding: 0.75rem 1rem;
+  }
+
+  .editButton,
+  .saveButton,
+  .cancelButton {
+    width: 100%;
+  }
+}

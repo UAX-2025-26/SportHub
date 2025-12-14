@@ -3,9 +3,17 @@ const router = express.Router();
 const { checkJwt, requireRole } = require('../../src/auth');
 const adminCtrl = require('../../controllers/adminController.js');
 
+// Middleware de logging para depuración
+router.use((req, res, next) => {
+  console.log('[ADMIN ROUTE]', new Date().toISOString(), req.method, req.path);
+  console.log('[AUTH HEADER]', req.headers.authorization ? 'Present' : 'Missing');
+  next();
+});
+
 router.use(checkJwt);
 
-// center admin
+// center admin - gestión de su propio centro
+router.get('/mi-centro', requireRole('center_admin'), adminCtrl.getMyCenterData);
 router.get('/centro/resumen', requireRole('center_admin', 'admin'), adminCtrl.centerSummary);
 router.get('/centro/reservas', requireRole('center_admin', 'admin'), adminCtrl.centerBookings);
 

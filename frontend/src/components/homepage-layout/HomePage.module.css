@@ -1,0 +1,14 @@
+/* Home-Page */
+
+.homePage {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.bodyContainer {
+    flex: 1;
+    overflow: hidden;
+}

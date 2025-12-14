@@ -1,0 +1,49 @@
+.container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.bgSvg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  overflow: visible;
+}
+
+.shapeFill {
+  stroke: none;
+}
+
+/* Borde superior azul Wii */
+.topBorder {
+  fill: none;
+  stroke: var(--color-wii-blue);
+  stroke-width: 4px;
+  vector-effect: non-scaling-stroke;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.content {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+/* Texto footer estilo Wii */
+.content h1 {
+  position: absolute;
+  top: 60%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  margin: 0;
+  font-family: "Nunito", sans-serif;
+  font-size: 2.4vh;
+  font-weight: 700;
+  color: var(--color-text);
+  z-index: 1;
+}

@@ -1,0 +1,112 @@
+/* Input estilo Wii */
+.inputContainer {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.label {
+  position: absolute;
+  top: 50%;
+  left: 1rem;
+  transform: translateY(-50%);
+  font-family: "Nunito", sans-serif;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--color-wii-gray-dark);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: none;
+  background-color: transparent;
+  padding: 0;
+  z-index: 1;
+}
+
+.labelFloating {
+  top: -0.65rem;
+  left: 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--color-wii-blue);
+  background-color: var(--color-wii-white);
+  padding: 0 0.35rem;
+}
+
+.errorLabel {
+  color: var(--color-error);
+}
+
+/* Input Wii - bordes redondeados, fondo claro */
+.input {
+  background-color: var(--color-wii-white);
+  padding: 0.85rem 1rem;
+  font-family: "Nunito", sans-serif;
+  font-size: 0.95rem;
+  font-weight: 500;
+  border: 2px solid var(--color-border);
+  border-radius: var(--border-radius-md);
+  outline: none;
+  transition: all 0.2s ease;
+  color: var(--color-text-dark);
+}
+
+.input::placeholder {
+  color: transparent;
+}
+
+.input:hover {
+  border-color: var(--color-wii-gray-dark);
+}
+
+.input:focus {
+  border-color: var(--color-wii-blue);
+  background-color: var(--color-wii-white);
+  box-shadow: 0 0 0 3px var(--color-wii-blue-light);
+}
+
+.inputFocused {
+  border-color: var(--color-wii-blue);
+  background-color: var(--color-wii-white);
+  box-shadow: 0 0 0 3px var(--color-wii-blue-light);
+}
+
+.error {
+  border-color: var(--color-error);
+}
+
+.error:focus {
+  border-color: var(--color-error);
+  box-shadow: 0 0 0 3px rgba(255, 59, 48, 0.15);
+}
+
+.errorMessage {
+  font-family: "Nunito", sans-serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--color-error);
+  margin-top: 0.25rem;
+  padding-left: 0.5rem;
+}
+
+.helperText {
+  font-family: "Nunito", sans-serif;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--color-wii-gray-dark);
+  margin-top: 0.25rem;
+  padding-left: 0.5rem;
+}
+
+.input:-webkit-autofill,
+.input:-webkit-autofill:hover,
+.input:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0 1000px var(--color-wii-white) inset;
+  -webkit-text-fill-color: var(--color-text-dark);
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+.input:disabled {
+  background-color: var(--color-wii-gray);
+  color: var(--color-wii-gray-dark);
+  cursor: not-allowed;
+}

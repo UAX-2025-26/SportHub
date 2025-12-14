@@ -7,4 +7,3 @@ function pick(obj, keys) {
 }
 
 module.exports = { pick };
-

@@ -1,0 +1,59 @@
+/* Formulario crear instalación estilo Wii */
+.formContainer {
+  border-radius: var(--border-radius-xl);
+  width: var(--form-max-width);
+  max-width: 550px;
+  height: auto;
+  max-height: 85vh;
+  overflow-y: auto;
+  margin: 0 auto;
+  background-color: var(--color-wii-white);
+  display: flex;
+  flex-direction: column;
+  box-shadow: var(--shadow-lg);
+}
+
+.label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  margin-bottom: 1rem;
+  font-family: "Nunito", sans-serif;
+  font-size: 0.9rem;
+  color: var(--color-text);
+  font-weight: 600;
+  width: 100%;
+}
+
+.input {
+  padding: 0.75rem 1rem;
+  border: 2px solid var(--color-border);
+  border-radius: var(--border-radius-md);
+  font-family: "Nunito", sans-serif;
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  background: var(--color-wii-white);
+  color: var(--color-text-dark);
+}
+
+.input:focus {
+  outline: none;
+  border-color: var(--color-wii-blue);
+  box-shadow: 0 0 0 3px var(--color-wii-blue-light);
+}
+
+.error {
+  display: block;
+  color: var(--color-error);
+  font-size: 0.85rem;
+  margin-top: 0.25rem;
+  font-weight: 500;
+}
+
+@media (max-width: 768px) {
+  .formContainer {
+    width: 95vw;
+    max-height: none;
+  }
+}

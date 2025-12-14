@@ -1,0 +1,230 @@
+/* Lista instalaciones estilo Wii */
+.container {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 1.5rem;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  gap: 1rem;
+}
+
+.header h2 {
+  margin: 0;
+  font-family: "Nunito", sans-serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.createButton {
+  display: inline-block;
+  padding: 0.65rem 1.25rem;
+  background: linear-gradient(180deg, var(--color-wii-blue) 0%, var(--color-wii-blue-hover) 100%);
+  color: white;
+  text-decoration: none;
+  border-radius: var(--border-radius-pill);
+  font-family: "Nunito", sans-serif;
+  font-weight: 700;
+  transition: all 0.2s ease;
+  box-shadow: var(--shadow-button);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-size: 0.85rem;
+}
+
+.createButton:hover {
+  transform: translateY(-2px);
+}
+
+.emptyState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2.5rem;
+  text-align: center;
+  background: var(--color-wii-white);
+  border-radius: var(--border-radius-xl);
+  box-shadow: var(--shadow-lg);
+}
+
+.emptyState p {
+  color: var(--color-text);
+  font-family: "Nunito", sans-serif;
+  font-size: 1.1rem;
+  margin-bottom: 1.25rem;
+  font-weight: 600;
+}
+
+.createButtonEmpty {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  background: linear-gradient(180deg, var(--color-wii-blue) 0%, var(--color-wii-blue-hover) 100%);
+  color: white;
+  text-decoration: none;
+  border-radius: var(--border-radius-pill);
+  font-family: "Nunito", sans-serif;
+  font-weight: 700;
+  transition: all 0.2s ease;
+  box-shadow: var(--shadow-button);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.createButtonEmpty:hover {
+  transform: translateY(-2px);
+}
+
+.facilitiesTable {
+  overflow-x: auto;
+  border-radius: var(--border-radius-xl);
+  box-shadow: var(--shadow-lg);
+}
+
+.facilitiesTable table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--color-wii-white);
+}
+
+.tableHead {
+  background: linear-gradient(180deg, var(--color-wii-gray) 0%, #dcdcdc 100%);
+  border-bottom: 2px solid var(--color-border);
+}
+
+.tableHead th {
+  padding: 0.85rem 1rem;
+  text-align: left;
+  font-family: "Nunito", sans-serif;
+  font-weight: 700;
+  color: var(--color-text);
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.tableBody tr {
+  border-bottom: 1px solid var(--color-border);
+  transition: all 0.2s ease;
+}
+
+.tableBody tr:hover {
+  background-color: var(--color-wii-blue-light);
+}
+
+.tableBody td {
+  padding: 0.85rem 1rem;
+  color: var(--color-text-dark);
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.boldText {
+  font-weight: 700;
+  color: var(--color-wii-blue);
+}
+
+.status {
+  display: inline-block;
+  padding: 0.35rem 0.75rem;
+  border-radius: var(--border-radius-pill);
+  font-family: "Nunito", sans-serif;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.active {
+  background: var(--color-success);
+  color: white;
+}
+
+.inactive {
+  background: var(--color-error);
+  color: white;
+}
+
+.actions {
+  display: flex;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+}
+
+.linkButton {
+  display: inline-block;
+  padding: 0.4rem 0.65rem;
+  background: linear-gradient(180deg, var(--color-wii-blue) 0%, var(--color-wii-blue-hover) 100%);
+  color: white;
+  text-decoration: none;
+  border-radius: var(--border-radius-pill);
+  font-family: "Nunito", sans-serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  transition: all 0.2s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.linkButton:hover {
+  transform: translateY(-1px);
+}
+
+.deleteButton {
+  padding: 0.4rem 0.65rem;
+  background: linear-gradient(180deg, var(--color-error) 0%, #d32f2f 100%);
+  color: white;
+  border: none;
+  border-radius: var(--border-radius-pill);
+  font-family: "Nunito", sans-serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.deleteButton:hover:not(:disabled) {
+  transform: translateY(-1px);
+}
+
+.deleteButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.errorMessage {
+  padding: 0.85rem 1.25rem;
+  background: #fff0f0;
+  color: var(--color-error);
+  border-radius: var(--border-radius-lg);
+  border-left: 4px solid var(--color-error);
+  font-weight: 600;
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 1rem;
+  }
+
+  .header {
+    flex-direction: column;
+  }
+
+  .createButton {
+    width: 100%;
+    text-align: center;
+  }
+
+  .tableHead th,
+  .tableBody td {
+    padding: 0.65rem 0.5rem;
+  }
+}

@@ -1,0 +1,16 @@
+.authButton {
+    background-color: #E3E8EF;
+    border: 0.25rem solid #34BEED; /* 4px -> rem */
+    box-shadow: 0 0 0.3125rem #34BEED, inset 0.625rem 0.625rem 3.75rem #FFFFFF, inset 0 -0.3125rem 0.625rem 0.625rem #B1BCCA; /* px -> rem */
+    border-radius: 10rem; /* 170px -> rem */
+
+    /* Tamaño fluido con límites: ancho y alto ya no fijos en px */
+    inline-size: clamp(12rem, 40vw, 23rem); /* antes: width: 370px */
+    block-size: clamp(3.5rem, 12vw, 7.5rem); /* antes: height: 120px */
+
+    /* Mantener proporción visual aproximada en dispositivos extremos */
+    aspect-ratio: 37 / 12; /* referente al diseño original 370x120 */
+
+    /* Tipografía coherente con el botón base */
+    font-size: clamp(1rem, 2.5vw, 1.5rem);
+}

@@ -9,6 +9,9 @@ const { createFacilitySchema, availabilityQuerySchema } = require('../../src/val
 // availability
 router.get('/:id/disponibilidad', validate(availabilityQuerySchema, 'query'), bookingsCtrl.availability);
 
+// get facility details (public)
+router.get('/:id', facilitiesCtrl.getById);
+
 // secured for mutations
 router.use(checkJwt);
 router.post('/centros/:id', requireRole('center_admin', 'admin'), validate(createFacilitySchema), facilitiesCtrl.create);

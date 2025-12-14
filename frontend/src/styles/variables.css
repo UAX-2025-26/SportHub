@@ -1,0 +1,85 @@
+@import url("https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&display=swap");
+
+:root {
+  --font-wii: "Nunito", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+
+  --font-size-xs: 12px;
+  --font-size-sm: 14px;
+  --font-size-base: 16px;
+  --font-size-lg: 18px;
+  --font-size-xl: 20px;
+  --font-size-2xl: 24px;
+  --font-size-3xl: 28px;
+  --font-size-4xl: 32px;
+
+  --spacing-xs: 6px;
+  --spacing-sm: 10px;
+  --spacing-md: 14px;
+  --spacing-lg: 18px;
+  --spacing-xl: 24px;
+  --spacing-2xl: 32px;
+
+  /* Increased form max-width for larger components */
+  --form-max-width: 700px;
+  --form-min-width: 320px;
+  --form-max-height: 85vh;
+
+  --border-radius-sm: 12px;
+  --border-radius-md: 16px;
+  --border-radius-lg: 20px;
+  --border-radius-xl: 28px;
+  --border-radius-pill: 50px;
+
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.08);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.12);
+  --shadow-button: 0 4px 12px rgba(52, 190, 237, 0.25);
+
+  --color-wii-blue: #009eda;
+  --color-wii-blue-hover: #007bb5;
+  --color-wii-blue-light: #e8f7fc;
+  --color-wii-gray: #e8e8e8;
+  --color-wii-gray-dark: #8e8e93;
+  --color-wii-white: #ffffff;
+  --color-wii-black: #1c1c1e;
+
+  --color-primary: var(--color-wii-blue);
+  --color-primary-hover: var(--color-wii-blue-hover);
+  --color-background: var(--color-wii-white);
+  --color-background-secondary: var(--color-wii-gray);
+  --color-text: #4a4a4a;
+  --color-text-dark: var(--color-wii-black);
+  --color-text-muted: var(--color-wii-gray-dark);
+  --color-border: #d4d4d8;
+  --color-input-bg: #f8fafc;
+
+  --color-success: #34c759;
+  --color-warning: #ff9500;
+  --color-error: #ff3b30;
+}
+
+/* Updated responsive breakpoints for better scaling */
+@media (max-width: 480px) {
+  :root {
+    --form-max-width: 95vw;
+    --form-min-width: 280px;
+  }
+}
+
+@media (min-width: 481px) and (max-width: 768px) {
+  :root {
+    --form-max-width: 90vw;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  :root {
+    --form-max-width: 600px;
+  }
+}
+
+@media (min-width: 1025px) {
+  :root {
+    --form-max-width: 700px;
+  }
+}

@@ -1,0 +1,365 @@
+/* Panel admin estilo Wii */
+.panelWrapper {
+  display: flex;
+  gap: 1.5rem;
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 1rem;
+  height: 100%;
+  overflow: auto;
+}
+
+.mainColumn {
+  flex: 1;
+  min-width: 0;
+}
+
+.bookingsColumn {
+  width: 320px;
+  flex-shrink: 0;
+}
+
+.container {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 1.5rem;
+}
+
+/* Sección estilo Wii */
+.section {
+  background: var(--color-wii-white);
+  border-radius: var(--border-radius-xl);
+  padding: 1.25rem;
+  box-shadow: var(--shadow-lg);
+  border: 2px solid var(--color-border);
+  height: fit-content;
+}
+
+.heading {
+  margin: 0 0 1.25rem 0;
+  color: var(--color-text);
+  font-family: "Nunito", sans-serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.section h2 {
+  margin: 0 0 1.25rem 0;
+  color: var(--color-text);
+  font-family: "Nunito", sans-serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.section h3 {
+  margin: 0 0 1rem 0;
+  color: var(--color-text);
+  font-family: "Nunito", sans-serif;
+  font-size: 1.15rem;
+  font-weight: 700;
+}
+
+.centerInfo {
+  background: var(--color-wii-gray);
+  border-radius: var(--border-radius-lg);
+  padding: 1.25rem;
+  margin-bottom: 1.25rem;
+  border: 1px solid var(--color-border);
+}
+
+.infoGroup {
+  margin-bottom: 0.75rem;
+}
+
+.infoGroup:last-child {
+  margin-bottom: 0;
+}
+
+.infoGroup label {
+  display: block;
+  font-family: "Nunito", sans-serif;
+  font-weight: 600;
+  color: var(--color-wii-gray-dark);
+  margin-bottom: 0.25rem;
+  font-size: 0.85rem;
+}
+
+.infoGroup p {
+  margin: 0;
+  color: var(--color-text-dark);
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.actions {
+  margin-top: 1rem;
+  display: flex;
+  gap: 0.75rem;
+}
+
+/* Botones estilo Wii */
+.editButton,
+.createButton,
+.smallButton {
+  padding: 0.65rem 1.25rem;
+  background: linear-gradient(180deg, var(--color-wii-blue) 0%, var(--color-wii-blue-hover) 100%);
+  color: white;
+  border: none;
+  border-radius: var(--border-radius-pill);
+  font-family: "Nunito", sans-serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: var(--shadow-button);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.editButton:hover,
+.createButton:hover,
+.smallButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 158, 218, 0.35);
+}
+
+.createButton {
+  margin-top: 0.75rem;
+  width: 100%;
+  display: block;
+}
+
+.smallButton {
+  padding: 0.5rem 0.85rem;
+  font-size: 0.8rem;
+}
+
+.facilitiesSection {
+  margin-top: 1.25rem;
+}
+
+.empty {
+  text-align: center;
+  padding: 1.5rem;
+  background: var(--color-wii-gray);
+  border-radius: var(--border-radius-lg);
+  border: 2px dashed var(--color-border);
+}
+
+.empty p {
+  color: var(--color-text);
+  margin: 0 0 1rem 0;
+  font-weight: 600;
+}
+
+.facilitiesList {
+  display: grid;
+  gap: 0.75rem;
+}
+
+/* Tarjeta instalación estilo Wii */
+.facilityCard {
+  background: var(--color-wii-gray);
+  border: 2px solid var(--color-border);
+  border-radius: var(--border-radius-lg);
+  padding: 0.85rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: all 0.2s ease;
+}
+
+.facilityCard:hover {
+  border-color: var(--color-wii-blue);
+  box-shadow: var(--shadow-md);
+}
+
+.facilityInfo h4 {
+  margin: 0 0 0.15rem 0;
+  color: var(--color-text-dark);
+  font-family: "Nunito", sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.facilityType {
+  margin: 0 0 0.35rem 0;
+  color: var(--color-wii-gray-dark);
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.details {
+  display: flex;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+}
+
+.details span {
+  font-size: 0.75rem;
+  color: var(--color-text-dark);
+  padding: 0.2rem 0.5rem;
+  background: white;
+  border-radius: var(--border-radius-pill);
+  border: 1px solid var(--color-border);
+  font-weight: 500;
+}
+
+.details .active {
+  background: var(--color-success);
+  color: white;
+  border-color: var(--color-success);
+}
+
+.details .inactive {
+  background: var(--color-error);
+  color: white;
+  border-color: var(--color-error);
+}
+
+.statsSection {
+  margin-top: 1.25rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--color-border);
+}
+
+/* Stats estilo Wii */
+.statCards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.75rem;
+}
+
+.statCard {
+  background: linear-gradient(180deg, var(--color-wii-blue) 0%, var(--color-wii-blue-hover) 100%);
+  color: white;
+  border-radius: var(--border-radius-lg);
+  padding: 0.85rem;
+  text-align: center;
+  box-shadow: var(--shadow-button);
+}
+
+.statLabel {
+  margin: 0 0 0.15rem 0;
+  font-family: "Nunito", sans-serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  opacity: 0.9;
+}
+
+.statValue {
+  margin: 0;
+  font-family: "Nunito", sans-serif;
+  font-size: 1.35rem;
+  font-weight: 800;
+}
+
+.error {
+  padding: 0.85rem 1.25rem;
+  background: #fff0f0;
+  color: var(--color-error);
+  border-radius: var(--border-radius-lg);
+  border-left: 4px solid var(--color-error);
+  font-weight: 600;
+}
+
+/* Reservas estilo Wii */
+.bookingsList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  max-height: calc(100% - 2.5rem);
+  overflow-y: auto;
+}
+
+.bookingCard {
+  background: var(--color-wii-gray);
+  border: 2px solid var(--color-border);
+  border-radius: var(--border-radius-md);
+  padding: 0.65rem;
+  transition: all 0.2s ease;
+}
+
+.bookingCard:hover {
+  border-color: var(--color-wii-blue);
+}
+
+.bookingHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.35rem;
+}
+
+.bookingFacility {
+  font-family: "Nunito", sans-serif;
+  font-weight: 700;
+  color: var(--color-wii-blue);
+  font-size: 0.85rem;
+}
+
+.bookingStatus {
+  color: white;
+  padding: 0.15rem 0.4rem;
+  border-radius: var(--border-radius-pill);
+  font-family: "Nunito", sans-serif;
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.bookingDetails {
+  font-size: 0.75rem;
+  color: var(--color-text);
+}
+
+.bookingDetails p {
+  margin: 0.15rem 0;
+}
+
+.bookingPrice {
+  font-weight: 700;
+  color: var(--color-text-dark);
+  font-size: 0.85rem !important;
+  margin-top: 0.35rem !important;
+}
+
+@media (max-width: 900px) {
+  .panelWrapper {
+    flex-direction: column;
+  }
+
+  .bookingsColumn {
+    width: 100%;
+  }
+
+  .statCards {
+    grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .panelWrapper {
+    padding: 0.5rem;
+  }
+
+  .section {
+    padding: 1rem;
+  }
+
+  .facilityCard {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .facilityCard button {
+    width: 100%;
+    margin-top: 0.5rem;
+  }
+
+  .statCards {
+    grid-template-columns: 1fr;
+  }
+}

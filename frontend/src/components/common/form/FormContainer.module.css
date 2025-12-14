@@ -1,0 +1,76 @@
+/* Contenedor formulario estilo Wii */
+.container {
+  border-radius: var(--border-radius-xl);
+  width: var(--form-max-width);
+  min-width: var(--form-min-width);
+  max-width: var(--form-max-width);
+  height: auto;
+  max-height: 85vh;
+  overflow: hidden;
+  margin: 0 auto;
+  background-color: var(--color-wii-white);
+  display: flex;
+  flex-direction: column;
+  box-shadow: var(--shadow-lg);
+  border: 2px solid rgba(255, 255, 255, 0.8);
+}
+
+/* Barra título estilo Wii */
+.titleBar {
+  background: linear-gradient(180deg, var(--color-wii-gray) 0%, #dcdcdc 100%);
+  padding: 1.25rem 2rem;
+  border-bottom: 1px solid var(--color-border);
+  flex-shrink: 0;
+}
+
+.title {
+  font-family: "Nunito", sans-serif;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--color-text);
+  margin: 0;
+  text-align: center;
+}
+
+.content {
+  padding: 1.5rem 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  flex: 1;
+  overflow-y: auto;
+}
+
+.inputSection {
+  gap: 1rem;
+  width: 100%;
+}
+
+.buttonSection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+  flex-shrink: 0;
+  padding-top: 0.5rem;
+}
+
+/* Scrollbar estilo Wii */
+.content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.content::-webkit-scrollbar-track {
+  background: var(--color-wii-gray);
+  border-radius: 4px;
+}
+
+.content::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 4px;
+}
+
+.content::-webkit-scrollbar-thumb:hover {
+  background: var(--color-wii-gray-dark);
+}

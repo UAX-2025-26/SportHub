@@ -1,0 +1,68 @@
+/* Botón formulario estilo Wii */
+.formButton {
+  /* Forma del botón - estilo Wii píldora */
+  border-radius: var(--border-radius-pill);
+  border: none;
+  cursor: pointer;
+  outline: none;
+
+  /* Fondo gradiente Wii */
+  background: linear-gradient(180deg, var(--color-wii-blue) 0%, var(--color-wii-blue-hover) 100%);
+  color: white;
+
+  /* Transiciones suaves */
+  transition: all 0.2s ease;
+
+  /* Sombras Wii */
+  box-shadow: var(--shadow-button);
+
+  /* Prevenir ajustes automáticos del sistema */
+  -webkit-text-size-adjust: 100%;
+  -moz-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+
+  /* Tipografía Wii */
+  font-family: "Nunito", system-ui, -apple-system, sans-serif;
+  font-weight: 700;
+  line-height: 1.4;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+
+  /* Dimensiones */
+  min-width: 18rem;
+  padding: 1rem 2.5rem;
+  font-size: 1.5rem;
+
+  /* Centrado del texto */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+
+  /* Prevenir selección de texto */
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.formButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 158, 218, 0.35);
+}
+
+.formButton:active {
+  transform: translateY(0) scale(0.98);
+  box-shadow: var(--shadow-sm);
+}
+
+.formButton:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+  background: var(--color-wii-gray);
+  color: var(--color-wii-gray-dark);
+  box-shadow: none;
+}
+
+.formButton:disabled:hover {
+  transform: none;
+  box-shadow: none;
+}
