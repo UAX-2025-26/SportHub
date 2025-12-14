@@ -14,6 +14,16 @@ async function listByCenter(req, res) {
   res.json(data);
 }
 
+async function getById(req, res) {
+  const { data, error } = await supabase
+    .from('facilities')
+    .select('*')
+    .eq('id', req.params.id)
+    .single();
+  if (error || !data) return res.status(404).json({ error: 'Instalación no encontrada' });
+  res.json(data);
+}
+
 async function create(req, res) {
   const client = adminSupabase || supabase;
   const centerId = req.params.id;
@@ -68,4 +78,4 @@ async function remove(req, res) {
   res.status(204).end();
 }
 
-module.exports = { listByCenter, create, update, remove };
+module.exports = { listByCenter, getById, create, update, remove };

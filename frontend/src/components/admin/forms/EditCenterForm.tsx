@@ -28,7 +28,7 @@ interface EditCenterFormProps {
 
 const EditCenterForm: React.FC<EditCenterFormProps> = ({ centerId }) => {
   const router = useRouter();
-  const { token, isAuthenticated } = useAuth();
+  const { token, isAuthenticated, isLoading: authLoading } = useAuth();
 
   const [formData, setFormData] = useState<FormData>({
     nombre: "",
@@ -46,19 +46,40 @@ const EditCenterForm: React.FC<EditCenterFormProps> = ({ centerId }) => {
 
   // Cargar datos del centro
   useEffect(() => {
-    if (isAuthenticated === false) {
+    // Esperar a que termine de cargar el auth context
+    if (authLoading) {
+      console.log('[EDIT CENTER] Waiting for auth context...');
+      return;
+    }
+
+    if (!isAuthenticated) {
+      console.log('[EDIT CENTER] User not authenticated, redirecting...');
       router.push("/login");
       return;
     }
 
     const loadCenter = async () => {
-      if (!token || !centerId) return;
+      if (!token) {
+        console.log('[EDIT CENTER] No token available');
+        setApiError('No tienes permiso para editar este centro');
+        setLoadingData(false);
+        return;
+      }
+
+      if (!centerId) {
+        console.log('[EDIT CENTER] No center ID provided');
+        setApiError('ID de centro no proporcionado');
+        setLoadingData(false);
+        return;
+      }
 
       try {
         setLoadingData(true);
+        console.log('[EDIT CENTER] Loading center with ID:', centerId);
         const result = await centersService.getCenterById(centerId);
 
         if (result.data) {
+          console.log('[EDIT CENTER] Center data loaded:', result.data);
           setFormData({
             nombre: result.data.nombre || "",
             direccion: result.data.direccion || "",
@@ -67,10 +88,11 @@ const EditCenterForm: React.FC<EditCenterFormProps> = ({ centerId }) => {
             horario_cierre: result.data.horario_cierre || "",
           });
         } else {
+          console.error('[EDIT CENTER] Error loading center:', result.error);
           setApiError(result.error || "Error al cargar el centro");
         }
       } catch (error) {
-        console.error("Error loading center:", error);
+        console.error('[EDIT CENTER] Unexpected error loading center:', error);
         setApiError("Error al cargar el centro");
       } finally {
         setLoadingData(false);
@@ -78,7 +100,7 @@ const EditCenterForm: React.FC<EditCenterFormProps> = ({ centerId }) => {
     };
 
     loadCenter();
-  }, [isAuthenticated, router, token, centerId]);
+  }, [authLoading, isAuthenticated, router, token, centerId]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -139,7 +161,7 @@ const EditCenterForm: React.FC<EditCenterFormProps> = ({ centerId }) => {
       if (result.data) {
         setSuccess(true);
         setTimeout(() => {
-          router.push("/admin");
+          router.push("/admin-center");
         }, 2000);
       } else {
         setApiError(result.error || "Error al actualizar el centro");
@@ -152,11 +174,28 @@ const EditCenterForm: React.FC<EditCenterFormProps> = ({ centerId }) => {
     }
   };
 
-  if (loadingData) {
+  if (authLoading || loadingData) {
     return (
       <div className={styles.formContainer}>
         <div style={{ padding: "2rem", textAlign: "center" }}>
           <p>Cargando datos del centro...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (!token) {
+    return (
+      <div className={styles.formContainer}>
+        <div style={{
+          padding: "1rem",
+          backgroundColor: "#ffebee",
+          color: "#c62828",
+          borderRadius: "4px",
+          fontSize: "0.875rem",
+          borderLeft: "4px solid #c62828",
+        }}>
+          No tienes permiso para editar este centro. Por favor, inicia sesión.
         </div>
       </div>
     );

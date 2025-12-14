@@ -29,7 +29,7 @@ interface EditFacilityFormProps {
 
 const EditFacilityForm: React.FC<EditFacilityFormProps> = ({ centerId, facilityId }) => {
   const router = useRouter();
-  const { token } = useAuth();
+  const { token, isLoading: authLoading } = useAuth();
 
   const [formData, setFormData] = useState<FormData>({
     nombre: "",
@@ -47,13 +47,35 @@ const EditFacilityForm: React.FC<EditFacilityFormProps> = ({ centerId, facilityI
   // Cargar datos de la instalación
   useEffect(() => {
     const loadFacility = async () => {
-      if (!token || !facilityId) return;
+      // Esperar a que termine de cargar el auth context
+      if (authLoading) {
+        console.log('[EDIT FACILITY] Waiting for auth context...');
+        return;
+      }
+
+      if (!token) {
+        console.log('[EDIT FACILITY] No token provided');
+        setApiError('No tienes permiso para editar esta instalación');
+        setLoadingData(false);
+        return;
+      }
+
+      if (!facilityId) {
+        console.log('[EDIT FACILITY] No facility ID provided');
+        setApiError('ID de instalación no proporcionado');
+        setLoadingData(false);
+        return;
+      }
 
       try {
         setLoadingData(true);
+        console.log('[EDIT FACILITY] Loading facility with ID:', facilityId);
+        console.log('[EDIT FACILITY] Token:', token ? 'Present' : 'Missing');
+
         const result = await facilitiesService.getFacilityById(facilityId);
 
         if (result.data) {
+          console.log('[EDIT FACILITY] Facility data loaded:', result.data);
           setFormData({
             nombre: result.data.nombre || "",
             tipo: result.data.tipo || "",
@@ -61,10 +83,11 @@ const EditFacilityForm: React.FC<EditFacilityFormProps> = ({ centerId, facilityI
             precio_hora: result.data.precio_hora?.toString() || "",
           });
         } else {
+          console.error('[EDIT FACILITY] Error loading facility:', result.error);
           setApiError(result.error || "Error al cargar la instalación");
         }
       } catch (error) {
-        console.error("Error loading facility:", error);
+        console.error('[EDIT FACILITY] Unexpected error loading facility:', error);
         setApiError("Error al cargar la instalación");
       } finally {
         setLoadingData(false);
@@ -72,7 +95,7 @@ const EditFacilityForm: React.FC<EditFacilityFormProps> = ({ centerId, facilityI
     };
 
     loadFacility();
-  }, [token, facilityId]);
+  }, [token, facilityId, authLoading]);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -149,7 +172,7 @@ const EditFacilityForm: React.FC<EditFacilityFormProps> = ({ centerId, facilityI
       if (result.data) {
         setSuccess(true);
         setTimeout(() => {
-          router.push(`/admin/${centerId}/facilities`);
+          router.push(`/admin-center/${centerId}`);
         }, 2000);
       } else {
         setApiError(result.error || "Error al actualizar la instalación");
@@ -162,11 +185,28 @@ const EditFacilityForm: React.FC<EditFacilityFormProps> = ({ centerId, facilityI
     }
   };
 
-  if (loadingData) {
+  if (authLoading || loadingData) {
     return (
       <div className={styles.formContainer}>
         <div style={{ padding: "2rem", textAlign: "center" }}>
           <p>Cargando datos de la instalación...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (!token) {
+    return (
+      <div className={styles.formContainer}>
+        <div style={{
+          padding: "1rem",
+          backgroundColor: "#ffebee",
+          color: "#c62828",
+          borderRadius: "4px",
+          fontSize: "0.875rem",
+          borderLeft: "4px solid #c62828",
+        }}>
+          No tienes permiso para editar esta instalación. Por favor, inicia sesión.
         </div>
       </div>
     );

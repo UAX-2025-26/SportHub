@@ -72,7 +72,7 @@ const getMyCenterData = async (req, res) => {
       return res.status(400).json({ error: facilitiesError.message });
     }
 
-    // Obtener reservas del centro
+    // Obtener reservas del centro con información de instalación y usuario
     let bookings = [];
     let stats = {
       total_facilities: facilities?.length || 0,
@@ -84,12 +84,22 @@ const getMyCenterData = async (req, res) => {
     if (facilityIds.length > 0) {
       const { data: allBookings, error: bookingsError } = await supabase
         .from('bookings')
-        .select('*')
+        .select(`
+          *,
+          facility:facilities(id, nombre),
+          user:profiles(id, nombre, apellidos, email)
+        `)
         .in('facility_id', facilityIds)
         .order('created_at', { ascending: false });
 
       if (!bookingsError && allBookings) {
-        bookings = allBookings;
+        // Transformar los datos para que tengan los nombres en lugar de IDs
+        bookings = allBookings.map(booking => ({
+          ...booking,
+          instalacion: booking.facility?.nombre || 'N/A',
+          usuario: booking.user ? `${booking.user.nombre} ${booking.user.apellidos}` : 'N/A',
+          total_precio: booking.price_paid || booking.precio_total || 0
+        }));
         stats.total_bookings = allBookings.filter(b => b.estado === 'COMPLETADA').length;
         stats.revenue = allBookings
           .filter(b => b.estado === 'COMPLETADA')
