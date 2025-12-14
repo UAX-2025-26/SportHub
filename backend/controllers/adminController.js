@@ -90,9 +90,9 @@ const getMyCenterData = async (req, res) => {
 
       if (!bookingsError && allBookings) {
         bookings = allBookings;
-        stats.total_bookings = allBookings.filter(b => b.estado === 'COMPLETED').length;
+        stats.total_bookings = allBookings.filter(b => b.estado === 'COMPLETADA').length;
         stats.revenue = allBookings
-          .filter(b => b.estado === 'COMPLETED')
+          .filter(b => b.estado === 'COMPLETADA')
           .reduce((sum, b) => sum + (b.price_paid || b.precio_total || 0), 0);
       }
     }

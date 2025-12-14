@@ -12,7 +12,7 @@ export interface Booking {
   fecha: string;
   hora_inicio: string;
   hora_fin?: string;
-  estado: 'PENDING_PAYMENT' | 'CONFIRMED' | 'CANCELLED' | 'COMPLETED';
+  estado: 'PENDIENTE_PAGO' | 'CONFIRMADA' | 'CANCELADA' | 'COMPLETADA';
   precio_total?: number;
   price_paid?: number;
   payment_id?: string;

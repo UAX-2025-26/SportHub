@@ -45,6 +45,24 @@ const CenterAdminPanel: React.FC = () => {
   const [error, setError] = useState<string>('');
   const [showCreateCenter, setShowCreateCenter] = useState(false);
 
+  // Función para traducir estados
+  const getStatusLabel = (estado: string): string => {
+    const statusMap: { [key: string]: string } = {
+      'PENDIENTE_PAGO': 'Pendiente de Pago',
+      'CONFIRMADA': 'Confirmada',
+      'CANCELADA': 'Cancelada',
+      'COMPLETADA': 'Completada',
+      'confirmada': 'Confirmada',
+      'cancelada': 'Cancelada',
+      'pendiente': 'Pendiente',
+      'CONFIRMED': 'Confirmada',
+      'CANCELLED': 'Cancelada',
+      'COMPLETED': 'Completada',
+      'PENDING_PAYMENT': 'Pendiente de Pago'
+    };
+    return statusMap[estado] || estado;
+  };
+
   useEffect(() => {
     loadCenterData();
   }, [token]);
@@ -396,12 +414,12 @@ const CenterAdminPanel: React.FC = () => {
                         <td style={{
                           padding: '1rem',
                           color: 'white',
-                          backgroundColor: booking.estado === 'confirmada' ? '#4caf50' : booking.estado === 'cancelada' ? '#f44336' : '#ff9800',
+                          backgroundColor: booking.estado === 'CONFIRMADA' ? '#4caf50' : booking.estado === 'CANCELADA' ? '#f44336' : '#ff9800',
                           borderRadius: '4px',
                           textAlign: 'center',
                           fontWeight: 500
                         }}>
-                          {booking.estado}
+                          {getStatusLabel(booking.estado)}
                         </td>
                       </tr>
                     ))}

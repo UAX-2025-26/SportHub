@@ -10,7 +10,7 @@ async function availability(req, res) {
     .select('id, hora_inicio, estado')
     .eq('facility_id', facilityId)
     .eq('fecha', fecha)
-    .neq('estado', 'CANCELLED');
+    .neq('estado', 'CANCELADA');
   if (error) return res.status(500).json({ error: error.message });
   res.json({ date: fecha, bookings });
 }
@@ -49,7 +49,7 @@ async function create(req, res) {
       ...req.body,
       user_id: profileId,
       precio_total: precioTotal,
-      estado: 'PENDING_PAYMENT'
+      estado: 'PENDIENTE_PAGO'
     };
 
     const { data, error } = await supabase.from('bookings').insert(payload).select('*').single();
@@ -94,7 +94,7 @@ async function cancel(req, res) {
   if (!profileId) return res.status(400).json({ error: 'profile_id_missing' });
   const { data, error } = await supabase
     .from('bookings')
-    .update({ estado: 'CANCELLED', cancelled_at: dayjs().toISOString() })
+    .update({ estado: 'CANCELADA', cancelled_at: dayjs().toISOString() })
     .eq('id', req.params.id)
     .eq('user_id', profileId)
     .select('*')
