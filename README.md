@@ -2,6 +2,14 @@
 
 Repositorio Github: https://github.com/UAX-2025-26/SportHub.git
 
+Página en Producción: [sporthub-frontend-j94s.vercel.app]()
+
+Integrantes del Grupo:
+- Javier Yustres
+- Rares Radu
+- Pablo Lozano
+- Mario Blanco
+
 Documentación del proyecto SportHub. Contiene el resumen ejecutivo, el alcance, la arquitectura propuesta, los modelos y diagramas (casos de uso, actividad, secuencia y clases), el esquema de datos en SQL, endpoints indicativos, requisitos no funcionales, equipo y licencia.
 
 - Índice
@@ -124,11 +132,6 @@ El frontend y backend están completamente sincronizados a través de servicios 
 - **Configuración**: Los endpoints están centralizados en `config.ts` y se configuran mediante variables de entorno
 - **Cliente HTTP**: Un cliente genérico en `client.ts` maneja autenticación, errores y respuestas
 - **Tipado completo**: Todas las interfaces TypeScript coinciden con los modelos del backend
-
-Documentación detallada:
-- [Mapeo completo Backend-Frontend](docs/BACKEND_FRONTEND_MAPPING.md)
-- [Documentación de Rutas API](docs/API_ROUTES.md)
-- [Guía de Servicios Frontend](frontend/src/lib/api/README.md)
 
 ## 4. Modelos y diagramas
 
